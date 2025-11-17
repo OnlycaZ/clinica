@@ -1,0 +1,221 @@
+import React from "react";
+import Link from "next/link";
+
+type Palette = {
+  navy: string;
+  night: string;
+  teal: string;
+  sand: string;
+  slate: string;
+  border: string;
+  light: string;
+};
+
+const footerServices = [
+  "Chirurgie",
+  "Estetica dentara",
+  "Implantologie",
+  "Ortodontie",
+  "Protetică dentara",
+  "Radiologie digitala"
+];
+
+
+const socialPlatforms = [
+  { label: "Facebook", short: "Fb" },
+  { label: "Instagram", short: "Ig" },
+  { label: "YouTube", short: "Yt" }
+];
+
+export default function SiteFooter({ palette }: { palette: Palette }) {
+  const styles: { [key: string]: React.CSSProperties } = {
+    wrap: {
+      width: "100%",
+      backgroundColor: palette.night,
+      color: palette.light,
+      borderRadius: "50px 50px 0 0",
+      padding: "60px 24px 32px",
+      marginTop: "60px",
+      boxShadow: "0 -25px 60px rgba(3,18,38,0.45)"
+    },
+    columns: {
+      maxWidth: "1200px",
+      margin: "0 auto",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+      gap: "32px"
+    },
+    title: {
+      fontSize: "12px",
+      letterSpacing: "0.25em",
+      textTransform: "uppercase",
+      margin: "0 0 16px",
+      color: "rgba(255,255,255,0.6)"
+    },
+    text: {
+      margin: "0 0 12px",
+      lineHeight: 1.6,
+      color: "rgba(255,255,255,0.85)"
+    },
+    list: {
+      listStyle: "none",
+      padding: 0,
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px"
+    },
+    contactList: {
+      listStyle: "none",
+      padding: 0,
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: "6px",
+      color: "rgba(255,255,255,0.85)"
+    },
+    newsletter: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "12px"
+    },
+    input: {
+      borderRadius: "16px",
+      border: "1px solid rgba(255,255,255,0.25)",
+      padding: "12px 16px",
+      backgroundColor: "rgba(255,255,255,0.08)",
+      color: palette.light,
+      width: "100%"
+    },
+    checkboxRow: {
+      display: "flex",
+      gap: "8px",
+      alignItems: "flex-start",
+      fontSize: "13px",
+      color: "rgba(255,255,255,0.75)"
+    },
+    newsletterButton: {
+      backgroundColor: palette.teal,
+      color: palette.light,
+      border: "none",
+      padding: "12px 20px",
+      borderRadius: "14px",
+      fontWeight: 600,
+      cursor: "pointer",
+      boxShadow: "0 18px 35px rgba(0,194,199,0.35)"
+    },
+    metaRow: {
+      marginTop: "32px",
+      maxWidth: "1200px",
+      width: "100%",
+      marginLeft: "auto",
+      marginRight: "auto",
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderTop: "1px solid rgba(255,255,255,0.1)",
+      paddingTop: "24px",
+      gap: "16px",
+      color: "rgba(255,255,255,0.7)"
+    },
+    socialRow: {
+      display: "flex",
+      gap: "12px"
+    },
+    socialIcon: {
+      width: "40px",
+      height: "40px",
+      borderRadius: "50%",
+      backgroundColor: "rgba(255,255,255,0.1)",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 600,
+      letterSpacing: "0.08em"
+    }
+  };
+
+  return (
+    <footer style={styles.wrap}>
+      <div style={styles.columns}>
+        <div>
+          <p style={styles.title}>Clinica Trident</p>
+          <p style={styles.text}>
+            Servicii stomatologice moderne si medici cu experienta, in doua locatii premium din Bucuresti.
+          </p>
+          <ul style={styles.contactList}>
+            <li>Telefon: +40 310 635 000</li>
+            <li>Luni - Vineri: 08:00 - 21:00</li>
+            <li>Sambata: 09:00 - 15:00</li>
+          </ul>
+        </div>
+
+        <div>
+          <p style={styles.title}>Servicii</p>
+          <ul style={styles.list}>
+            {footerServices.map((service) => (
+              <li key={service}>
+                <Link href="/#servicii" className="footer-link">
+                  {service}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p style={styles.title}>Linkuri utile</p>
+          <ul style={styles.list}>
+            {footerLinks.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className="footer-link">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p style={styles.title}>Newsletter</p>
+          <div style={styles.newsletter}>
+            <p style={styles.text}>Aboneaza-te pentru studii de caz si noutati despre tehnologii.</p>
+            <input type="email" placeholder="Emailul tau" style={styles.input} />
+            <label style={styles.checkboxRow}>
+              <input type="checkbox" aria-label="Accept termeni" />
+              <span>
+                Sunt de acord cu{" "}
+                <Link href="/politica-confidentialitate" className="footer-link">
+                  termenii si conditiile
+                </Link>
+                .
+              </span>
+            </label>
+            <button type="button" style={styles.newsletterButton} className="btn-animate">
+              Aboneaza-te
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style={styles.metaRow}>
+        <p>© {new Date().getFullYear()} Clinica Trident · Excelenta in stomatologie premium</p>
+        <div style={styles.socialRow}>
+          {socialPlatforms.map((item) => (
+            <a
+              key={item.label}
+              href="#"
+              aria-label={`Urmareste-ne pe ${item.label}`}
+              className="social-pill"
+              style={styles.socialIcon}
+            >
+              {item.short}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  );
+}
+
