@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
-import dynamic from "next/dynamic";
+import SiteFooter from "@/components/SiteFooter";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getServiceContent, getServicePreview, serviceSlugs } from "@/lib/data/services";
 import { siteConfig } from "@/lib/seo";
@@ -17,11 +17,6 @@ const palette = {
   border: "#d9efe3",
   light: "#ffffff"
 };
-
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
-  ssr: false,
-  loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "40px auto 0" }} aria-hidden="true" />
-});
 
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
@@ -677,4 +672,3 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
 }
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), { ssr: false });
