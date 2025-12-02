@@ -503,9 +503,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
           </nav>
 
           <div style={styles.actions}>
-            <button type="button" style={styles.primaryButton}>
+            <Link href="/rezerva-vizita" style={styles.primaryButton}>
               Rezerva vizita
-            </button>
+            </Link>
           </div>
         </div>
       </div>

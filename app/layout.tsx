@@ -55,6 +55,11 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.defaultOgImage],
   },
+  icons: {
+    icon: "/cropped-CFT-1.png",
+    shortcut: "/cropped-CFT-1.png",
+    apple: "/cropped-CFT-1.png",
+  },
 };
 
 export const viewport: Viewport = {

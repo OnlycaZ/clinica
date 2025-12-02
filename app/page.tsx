@@ -49,11 +49,6 @@ const highlights = Object.freeze([
     title: "Urgente stomatologice",
     description: "Program extins si echipe dedicate pentru interventii rapide."
   },
-  {
-    icon: "ECO",
-    title: "Parcare & EV",
-    description: "Parcare privata cu statii de incarcare electrica si concierge."
-  }
 ]);
 
 const services = Object.freeze([
@@ -131,25 +126,25 @@ const galleryImages = Object.freeze([
     title: "Cabinet chirurgie",
     caption: "Spatiu dedicat interventiilor minim invazive cu monitorizare digitala.",
     tone: "deep",
-    imageUrl: "/dentnow-chair.jpg"
+    imageUrl: "https://images.pexels.com/photos/3055687/pexels-photo-3055687.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
   {
     title: "Studio estetica",
     caption: "Laborator foto-video pentru designul digital al zambetului.",
     tone: "light",
-    imageUrl: "/dentnow-consult.jpg"
+    imageUrl: "https://images.pexels.com/photos/5570001/pexels-photo-5570001.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
   {
     title: "Sterilizare trasabila",
     caption: "Linie dedicata pentru pregatirea instrumentarului in flux inchis.",
     tone: "sand",
-    imageUrl: "/dentnow-sterilizare.jpg"
+    imageUrl: "https://images.pexels.com/photos/4506110/pexels-photo-4506110.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
   {
     title: "Radiologie 3D",
     caption: "Flux complet in-house pentru investigatii rapide si sigure.",
     tone: "deep",
-    imageUrl: "/dentnow-panorama.jpg"
+    imageUrl: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1600"
   }
 ]);
 
@@ -158,6 +153,27 @@ const facilityFeatures = Object.freeze([
   { title: "Radiologie 3D", detail: "CBCT, panorame si bitewing efectuate in clinica, cu rapoarte in 15 minute." },
   { title: "Laborator estetic", detail: "Studio foto-video, mock-up digital si fatete provizorii in aceeasi zi." },
   { title: "Lounge pacienti", detail: "Spatii dedicate familiilor si pacientilor internationali." }
+]);
+
+const showcaseElements = Object.freeze([
+  {
+    title: "Bloc operator & chirurgie ghidata",
+    imageUrl: "/dentnow-chair.jpg",
+    description: "Camere sterile cu iluminare circumferentiala, filtre HEPA si echipamente Dentsply Sirona pentru interventii minim invazive.",
+    tags: ["Bloc operator", "Flux digital", "Monitorizare integrate"]
+  },
+  {
+    title: "Laborator digital si protetica rapida",
+    imageUrl: "/dentnow-service-chirurgie-orala.jpg",
+    description: "Scanare intraorala, imprimante 3D si frezare CNC conectate direct la laboratorul clinicii.",
+    tags: ["Scanare 3D", "Frezare CNC", "Control calitate"]
+  },
+  {
+    title: "Consultatii & experienta pacientilor",
+    imageUrl: "/dentnow-service-ortodontie.jpg",
+    description: "Zone dedicate pentru consultatii video, lounge pentru pacienti si concierge care ordoneaza vizitele.",
+    tags: ["Concierge medical", "Tururi virtuale", "Acces familie"]
+  }
 ]);
 
 const assurances = Object.freeze([
@@ -667,6 +683,84 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     color: palette.teal,
     fontWeight: 700
+  },
+  clinicShowcaseSection: {
+    width: "100%",
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "40px",
+    borderRadius: "36px",
+    border: `1px solid ${palette.border}`,
+    backgroundColor: "rgba(255,255,255,0.96)",
+    boxShadow: "0 30px 60px rgba(18,75,60,0.09)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px"
+  },
+  clinicShowcaseIntro: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px"
+  },
+  clinicShowcaseTitle: {
+    margin: 0,
+    fontSize: "32px",
+    color: palette.navy
+  },
+  clinicShowcaseCopy: {
+    margin: 0,
+    color: palette.slate,
+    lineHeight: 1.6
+  },
+  clinicShowcaseGrid: {
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "20px"
+  },
+  clinicShowcaseCard: {
+    borderRadius: "28px",
+    border: `1px solid rgba(18,75,60,0.12)`,
+    padding: "18px",
+    backgroundColor: "#fefefc",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    minHeight: "260px"
+  },
+  clinicShowcaseImage: {
+    borderRadius: "22px",
+    overflow: "hidden",
+    position: "relative",
+    height: "160px",
+    border: `1px solid rgba(18,75,60,0.15)`
+  },
+  clinicShowcaseCardTitle: {
+    margin: 0,
+    fontSize: "20px"
+  },
+  clinicShowcaseCardCopy: {
+    margin: 0,
+    fontSize: "15px",
+    color: palette.slate,
+    lineHeight: 1.6
+  },
+  clinicShowcaseTags: {
+    margin: 0,
+    padding: 0,
+    listStyle: "none",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px"
+  },
+  clinicShowcaseTag: {
+    fontSize: "12px",
+    padding: "4px 10px",
+    borderRadius: "999px",
+    border: `1px solid rgba(31,182,124,0.3)`,
+    color: palette.teal,
+    textTransform: "uppercase",
+    letterSpacing: "0.06em"
   }
 };
 
@@ -905,19 +999,53 @@ export default function Home() {
           })}
         </div>
 
-        <div style={styles.galleryInfoGrid}>
-          {facilityFeatures.map((feature) => (
-            <div key={feature.title}>
-              <p style={styles.galleryInfoTitle}>{feature.title}</p>
-              <p style={styles.galleryInfoText}>{feature.detail}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <div style={styles.galleryInfoGrid}>
+        {facilityFeatures.map((feature) => (
+          <div key={feature.title}>
+            <p style={styles.galleryInfoTitle}>{feature.title}</p>
+            <p style={styles.galleryInfoText}>{feature.detail}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
-      <section
-        id="programare"
-        style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
+    <section
+      style={{ ...styles.clinicShowcaseSection, ...fadeIn(0.37) }}
+      aria-labelledby="clinic-showcase-title"
+    >
+      <div style={styles.clinicShowcaseIntro}>
+        <p style={styles.sectionEyebrow}>Cabinetul DentNow</p>
+        <h2 id="clinic-showcase-title" style={styles.clinicShowcaseTitle}>
+          Suprafete, echipamente si cadre dedicate stomatologiei moderne
+        </h2>
+        <p style={styles.clinicShowcaseCopy}>
+          Fiecare spatiu este optimizat pentru siguranta si confort — de la blocul operator pana la zonele de consiliere,
+          pentru ca tu si familia ta sa simtiti ca intr-un cabinet premium.
+        </p>
+      </div>
+      <div style={styles.clinicShowcaseGrid}>
+        {showcaseElements.map((element) => (
+          <article key={element.imageUrl} style={styles.clinicShowcaseCard}>
+            <div style={styles.clinicShowcaseImage}>
+              <Image src={element.imageUrl} alt={element.title} fill sizes="(max-width: 768px) 100vw, 240px" style={{ objectFit: "cover" }} />
+            </div>
+            <h3 style={styles.clinicShowcaseCardTitle}>{element.title}</h3>
+            <p style={styles.clinicShowcaseCardCopy}>{element.description}</p>
+            <ul style={styles.clinicShowcaseTags}>
+              {element.tags.map((tag) => (
+                <li key={tag} style={styles.clinicShowcaseTag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section
+      id="programare"
+      style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
         aria-labelledby="programare-title"
         className="cta-section"
       >
@@ -1056,7 +1184,7 @@ export default function Home() {
             aspect-ratio: 4 / 5 !important;
           }
         }
-
+        
         @media (max-width: 480px) {
           .home-page {
             padding: 0 10px 48px !important;
@@ -1096,6 +1224,40 @@ export default function Home() {
           .cta-section .btn-animate,
           .cta-section .phonePill {
             max-width: 100% !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 28px;
+          }
+          section img {
+            width: 100%;
+            height: auto;
+          }
+          section h1,
+          section h2,
+          section h3,
+          section p {
+            font-size: clamp(14px, 4vw, 18px);
+          }
+          button,
+          .primaryButton,
+          .secondaryButton,
+          .btn-animate,
+          .link-animate,
+          .phonePill {
+            padding: 12px;
+          }
+          .services-grid,
+          .gallery-grid,
+          .highlight-panel,
+          .cardsGrid,
+          .highlight-section {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
