@@ -3,7 +3,7 @@
 import React from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { megaMenus, navigation } from "@/lib/navigation";
+import { navigation, megaMenus } from "@/lib/navigation";
 import { siteConfig } from "@/lib/seo";
 
 const palette = {
