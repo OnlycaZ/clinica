@@ -1,15 +1,11 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
 import { megaMenus, navigation } from "@/lib/navigation";
 
 const privacySeo = getSeoEntry("privacy");
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
-  ssr: false,
-  loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "0 auto" }} aria-hidden="true" />
-});
 
 export const metadata: Metadata = {
   title: privacySeo.title,
@@ -393,9 +389,7 @@ export default function PoliticaConfidentialitate() {
         </section>
       </div>
 
-      <React.Suspense fallback={<div style={{ width: "100%", maxWidth: "1100px", minHeight: "360px", margin: "40px auto 0" }} aria-hidden="true" />}>
-        <SiteFooter palette={palette} />
-      </React.Suspense>
+      <SiteFooter palette={palette} />
     </main>
   );
 }
