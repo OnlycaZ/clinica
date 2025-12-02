@@ -309,6 +309,14 @@ const createHeaderStyles = (palette: Palette) => {
       letterSpacing: "0.08em",
       backdropFilter: "blur(4px)"
     } as React.CSSProperties,
+    mobileMenuButton: {
+      border: "none",
+      background: "transparent",
+      fontSize: "24px",
+      marginLeft: "auto",
+      cursor: "pointer",
+      display: "none"
+    } as React.CSSProperties,
   };
 };
 
@@ -316,6 +324,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
   const pathname = usePathname();
   const [activeMenuState, setActiveMenuState] = React.useState<string | null>(null);
   const [isPinned, setIsPinned] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const styles = React.useMemo(() => createHeaderStyles(palette), [palette]);
   const [currentHash, setCurrentHash] = React.useState<string>("#hero");
   const [, startMenuTransition] = React.useTransition();
@@ -474,8 +483,8 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
                     }}
                     aria-hidden="true"
                   />
-                  {menuItems && isMenuExpanded && (
-                    <div style={{ ...styles.megaMenu, ...styles.megaMenuActive }}>
+                {menuItems && isMenuExpanded && (
+                  <div style={{ ...styles.megaMenu, ...styles.megaMenuActive }}>
                       {menuItems.map((section) => (
                         <div key={section.title} style={styles.megaColumn}>
                           <p style={styles.megaHeading}>
@@ -501,13 +510,41 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
               );
             })}
           </nav>
-
           <div style={styles.actions}>
+            <button
+              type="button"
+              style={styles.mobileMenuButton}
+              aria-label="Deschide meniul mobil"
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((prev) => !prev)}
+              className="mobile-menu-toggle"
+            >
+              ☰
+            </button>
             <Link href="/rezerva-vizita" style={styles.primaryButton}>
               Rezerva vizita
             </Link>
           </div>
         </div>
+        <nav className={`mobile-nav ${mobileOpen ? "active" : ""}`} aria-label="Meniul mobil">
+          {navigation.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="mobile-nav-link"
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/rezerva-vizita"
+            className="mobile-nav-link reserve-link"
+            onClick={() => setMobileOpen(false)}
+          >
+            Rezerva vizita
+          </Link>
+        </nav>
       </div>
       </header>
       <style jsx global>{`
@@ -534,6 +571,50 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
           100% {
             transform: translateY(0);
             opacity: 1;
+          }
+        }
+        @media (max-width: 768px) {
+          .navRow {
+            padding-right: 20px;
+          }
+          .navRow .nav,
+          .navRow .actions a {
+            display: none;
+          }
+          .mobile-menu-toggle {
+            display: inline-flex;
+          }
+          .mobile-nav {
+            display: none;
+          }
+          .mobile-nav.active {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 1px solid rgba(18, 75, 60, 0.15);
+            padding: 12px 18px;
+            box-shadow: 0 25px 45px rgba(18, 75, 60, 0.15);
+            z-index: 90;
+          }
+          .mobile-nav-link {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(31, 182, 124, 0.2);
+            text-align: center;
+            font-size: 15px;
+            color: ${palette.navy};
+            background: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+          }
+          .mobile-nav-link.reserve-link {
+            order: 99;
           }
         }
       `}</style>
