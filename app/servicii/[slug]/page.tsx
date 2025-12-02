@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import dynamic from "next/dynamic";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getServiceContent, getServicePreview, serviceSlugs } from "@/lib/data/services";
 import { siteConfig } from "@/lib/seo";
@@ -17,6 +17,11 @@ const palette = {
   border: "#d9efe3",
   light: "#ffffff"
 };
+
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+  ssr: false,
+  loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "40px auto 0" }} aria-hidden="true" />
+});
 
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
@@ -47,10 +52,12 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     color: palette.light,
     backgroundColor: "rgba(8,46,39,0.9)",
-    border: `1px solid rgba(255,255,255,0.15)`,
-    boxShadow: "0 45px 110px rgba(18,75,60,0.2)",
+    border: `1px solid rgba(255,255,255,0.2)`,
     position: "relative",
-    overflow: "hidden"
+    overflow: "hidden",
+    minHeight: "640px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   heroTexture: {
     position: "absolute",
@@ -108,8 +115,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "20px 24px",
     borderRadius: "36px",
     backgroundColor: "rgba(0,0,0,0.16)",
-    border: "1px solid rgba(255,255,255,0.25)",
-    boxShadow: "0 35px 80px rgba(5,20,17,0.4)",
+    border: "1px solid rgba(255,255,255,0.35)",
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
     gap: "12px",
@@ -129,19 +135,19 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "8px",
     height: "8px",
     borderRadius: "50%",
-    background: `linear-gradient(120deg, ${palette.teal}, #aaf7d7)`,
-    boxShadow: "0 0 10px rgba(31,182,124,0.9)"
+    background: `linear-gradient(120deg, ${palette.teal}, #aaf7d7)`
   },
   heroMedia: {
     borderRadius: "32px",
     overflow: "hidden",
     border: `1px solid ${palette.border}`,
     backgroundColor: "rgba(255,255,255,0.5)",
-    boxShadow: "0 35px 90px rgba(18,75,60,0.12)",
     position: "relative",
     zIndex: 1,
     aspectRatio: "4 / 3",
-    minHeight: "360px"
+    minHeight: "360px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   heroMediaCenter: {
     width: "100%",
@@ -155,7 +161,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginTop: "18px",
     padding: "16px 22px",
     borderRadius: "22px",
-    border: "1px solid rgba(255,255,255,0.2)",
+    border: "1px solid rgba(255,255,255,0.35)",
     backgroundColor: "rgba(3,18,15,0.7)",
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
@@ -185,8 +191,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "12px 16px",
     borderRadius: "20px",
     backgroundColor: "rgba(18,60,53,0.92)",
-    border: "1px solid rgba(255,255,255,0.25)",
-    boxShadow: "0 20px 40px rgba(12,48,40,0.55)",
+    border: "1px solid rgba(255,255,255,0.35)",
     color: palette.light,
     maxWidth: "220px"
   },
@@ -672,3 +677,4 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
 }
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), { ssr: false });

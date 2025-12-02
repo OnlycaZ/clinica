@@ -2,13 +2,17 @@
 
 import React from "react";
 import Head from "next/head";
-import SiteFooter from "@/components/SiteFooter";
-import InteractiveMap from "@/components/InteractiveMap";
+import dynamic from "next/dynamic";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
 
 const contactSeo = getSeoEntry("contact");
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), { ssr: false });
+const InteractiveMap = dynamic(() => import("@/components/InteractiveMap"), {
+  ssr: false,
+  loading: () => <div style={{ width: "100%", minHeight: "320px", borderRadius: "32px", backgroundColor: "rgba(255,255,255,0.6)" }} aria-hidden="true" />
+});
 
 const palette = {
   navy: "#123c35",
@@ -20,19 +24,18 @@ const palette = {
   light: "#ffffff"
 };
 
-const contactCards = [
-  { title: "Telefon receptie", value: siteConfig.contactPhone, description: "Linie prioritara DentNow", icon: "☎" },
-  { title: "Email programari", value: siteConfig.contactEmail, description: "Raspuns in max. 2 ore", icon: "✉" },
-  { title: "WhatsApp & urgente", value: "+40 735 223 920", description: "Disponibil 08:00 - 22:00", icon: "⚡" }
-];
-
-const clinics = [
+const contactCards = Object.freeze([
+  { title: "Telefon receptie", value: siteConfig.contactPhone, description: "Linie prioritara DentNow", icon: "TEL" },
+  { title: "Email programari", value: siteConfig.contactEmail, description: "Raspuns in max. 2 ore", icon: "MAIL" },
+  { title: "WhatsApp & urgente", value: "+40 735 223 920", description: "Disponibil 08:00 - 22:00", icon: "CHAT" }
+]);
+const clinics = Object.freeze([
   {
     label: "DentNow Dristor",
     address: "Str. Ramnicu Valcea 29, Bloc 20D, Parter",
     hours: ["Luni - Vineri: 08:00 - 21:00", "Sambata: 09:00 - 17:00"],
     highlights: ["Cabinete pentru adulti & copii", "Laborator digital intern", "Parcare dedicata"],
-    coordinator: "Bianca · Concierge DentNow",
+    coordinator: "Bianca - Concierge DentNow",
     phone: siteConfig.contactPhone
   },
   {
@@ -40,16 +43,16 @@ const clinics = [
     address: "Str. Baba Novac 15, corp B",
     hours: ["Luni - Vineri: 09:00 - 20:00", "Sambata: 09:00 - 15:00"],
     highlights: ["Sedinte media pentru planuri", "Zona VIP & coworking", "Consultatii online"],
-    coordinator: "Razvan · Concierge digital",
+    coordinator: "Razvan - Concierge digital",
     phone: "+40 720 509 803"
   }
-];
+]);
 
-const assurances = [
+const assurances = Object.freeze([
   { title: "Cum raspundem", text: "Echipa concierge monitorizeaza formularul in timp real si atribuie un consultant dedicat." },
   { title: "Ce informatii verificam", text: "Istoricul tau dentar, preferintele de programare si optiunile de plata sunt stocate criptat." },
   { title: "Ce primesti dupa trimitere", text: "Calendar propus, ghid de pregatire si link direct pentru a adauga detalii suplimentare." }
-];
+]);
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
@@ -392,7 +395,7 @@ export default function Contact() {
 
         <section style={{ ...styles.hero, ...fadeIn(0.1) }} aria-labelledby="contact-hero-title">
           <div>
-            <p style={styles.heroBadge}>DentNow · Clinica familiei tale</p>
+            <p style={styles.heroBadge}>DentNow  Clinica familiei tale</p>
             <h1 id="contact-hero-title" style={styles.heroTitle}>
               Programeaza-ti vizita in clinica DentNow
             </h1>
@@ -442,9 +445,9 @@ export default function Contact() {
             <article key={clinic.label} style={styles.clinicCard}>
               <p style={styles.heroBadge}>{clinic.label}</p>
               <h2 style={{ margin: "6px 0 4px" }}>{clinic.address}</h2>
-              <p style={{ margin: "0 0 6px", color: palette.slate }}>{clinic.hours.join(" · ")}</p>
+              <p style={{ margin: "0 0 6px", color: palette.slate }}>{clinic.hours.join("  ")}</p>
               <p style={{ margin: "0 0 12px", color: palette.slate }}>
-                {clinic.highlights.join(" · ")}
+                {clinic.highlights.join("  ")}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                 <strong>{clinic.coordinator}</strong>
@@ -467,11 +470,11 @@ export default function Contact() {
               Suntem pe Str. Ramnicu Valcea 29, langa statiile de metrou Dristor 1 &amp; 2 si in vecinatatea liniilor RATB 19/23.
             </p>
             <div style={styles.mapBulletList}>
-              {["Parcare privata cu acces din Str. Râmnicu Vâlcea", "Linii 1/10/19/23/27 la doar 2 minute", "Transfer dedicat pentru pacientii din tara"].map(
+              {["Parcare privata cu acces din Str. Rmnicu Vlcea", "Linii 1/10/19/23/27 la doar 2 minute", "Transfer dedicat pentru pacientii din tara"].map(
                 (item) => (
                   <div key={item} style={styles.mapBullet}>
                     <span aria-hidden="true" style={styles.mapBulletIcon}>
-                      •
+                      
                     </span>
                     <p style={{ margin: 0, color: palette.slate }}>{item}</p>
                   </div>
@@ -669,6 +672,23 @@ export default function Contact() {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

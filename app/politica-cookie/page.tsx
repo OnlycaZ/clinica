@@ -1,11 +1,15 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import SiteFooter from "@/components/SiteFooter";
+import dynamic from "next/dynamic";
 import SiteHeader from "@/components/SiteHeader";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
 import { megaMenus, navigation } from "@/lib/navigation";
 
 const cookiesSeo = getSeoEntry("cookies");
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+  ssr: false,
+  loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "0 auto" }} aria-hidden="true" />
+});
 
 export const metadata: Metadata = {
   title: cookiesSeo.title,
@@ -47,7 +51,7 @@ const palette = {
   light: "#ffffff"
 };
 
-const cookieCategories = [
+const cookieCategories = Object.freeze([
   {
     type: "Necesar",
     purpose: "Activeaza autentificarea, protejeaza formularele si mentine preferintele de securitate.",
@@ -72,21 +76,21 @@ const cookieCategories = [
     duration: "1-18 luni",
     cookies: ["campaign", "referrer"]
   }
-];
+]);
 
-const managementSteps = [
+const managementSteps = Object.freeze([
   "Bannerul de consimtamant iti permite sa activezi sau sa dezactivezi rapid fiecare categorie.",
   "Poti sterge cookie-urile din browser (Chrome, Safari, Edge) folosind optiunea Clear Browsing Data.",
   "Trimite-ne preferintele tale la cookie@dentnow.ro pentru asistenta directa.",
   "Optiunile pot fi schimbate oricand; actualizam preferintele in maxim 48 de ore." 
-];
+]);
 
-const auditNotes = [
+const auditNotes = Object.freeze([
   "Monitorizam partenerii externi si semnam acorduri de prelucrare a datelor.",
   "Reevaluam etichetele de marketing si politicile de retentie la fiecare 6 luni.",
   "Utilizam Content Security Policy pentru a bloca scripturi neautorizate.",
-  "Jurnalizam accesul la date pentru a detecta rapid activitati suspecte." 
-];
+  "Jurnalizam accesul la date pentru a detecta rapid activitati suspecte."
+]);
 
 const styles: Record<string, CSSProperties> = {
   page: {
@@ -148,8 +152,7 @@ const styles: Record<string, CSSProperties> = {
     padding: "12px 22px",
     borderRadius: "999px",
     fontWeight: 600,
-    cursor: "pointer",
-    boxShadow: "0 15px 30px rgba(0,194,199,0.35)"
+    cursor: "pointer"
   },
   contentWrap: {
     width: "100%",
@@ -164,10 +167,13 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: "42px",
     background: "#fff",
     padding: "48px",
-    boxShadow: "0 35px 90px rgba(11,42,61,0.15)",
     display: "flex",
     flexDirection: "column",
-    gap: "12px"
+    gap: "12px",
+    border: `1px solid ${palette.border}`,
+    minHeight: "480px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   heroLink: {
     color: palette.teal,
@@ -184,10 +190,12 @@ const styles: Record<string, CSSProperties> = {
     background: "#fff",
     border: `1px solid ${palette.border}`,
     padding: "20px",
-    boxShadow: "0 20px 60px rgba(11,42,61,0.12)",
     display: "flex",
     flexDirection: "column",
-    gap: "8px"
+    gap: "8px",
+    minHeight: "220px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   badge: {
     alignSelf: "flex-start",
@@ -204,11 +212,14 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: "32px",
     background: "#fff",
     padding: "32px",
-    boxShadow: "0 30px 70px rgba(11,42,61,0.15)",
     display: "flex",
     flexDirection: "column",
     gap: "12px",
-    lineHeight: 1.7
+    lineHeight: 1.7,
+    border: `1px solid ${palette.border}`,
+    minHeight: "260px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   splitPanel: {
     display: "grid",
@@ -219,7 +230,8 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: "24px",
     padding: "24px",
     background: "linear-gradient(135deg, rgba(0,194,199,0.12), rgba(11,42,61,0.1))",
-    border: `1px solid ${palette.border}`
+    border: `1px solid ${palette.border}`,
+    minHeight: "200px"
   },
   auditList: {
     listStyle: "none",
@@ -303,7 +315,9 @@ export default function PoliticaCookie() {
         </section>
       </div>
 
-      <SiteFooter palette={palette} />
+      <React.Suspense fallback={<div style={{ width: "100%", maxWidth: "1080px", minHeight: "360px", margin: "40px auto 0" }} aria-hidden="true" />}>
+        <SiteFooter palette={palette} />
+      </React.Suspense>
     </main>
   );
 }

@@ -989,13 +989,19 @@ export default function Home() {
           .hero-section {
             padding: 56px 24px !important;
             border-radius: 32px !important;
+            min-height: auto !important;
+            margin-top: 16px !important;
           }
           .hero-inner {
             flex-direction: column !important;
             gap: 32px !important;
+            align-items: flex-start !important;
           }
           #hero-title {
             font-size: 34px !important;
+          }
+          .hero-section p {
+            line-height: 1.55 !important;
           }
           .hero-stats {
             grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1004,6 +1010,8 @@ export default function Home() {
           .hero-info-card {
             padding: 24px !important;
             border-radius: 24px !important;
+            min-height: auto !important;
+            align-items: flex-start !important;
           }
           .highlight-wrapper {
             padding: 0 12px !important;
@@ -1036,6 +1044,58 @@ export default function Home() {
           }
           .assurance-list {
             gap: 8px !important;
+            width: 100% !important;
+          }
+          .btn-animate,
+          .phonePill {
+            width: 100% !important;
+            text-align: center !important;
+          }
+          .gallery-frame {
+            max-width: 100% !important;
+            aspect-ratio: 4 / 5 !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .home-page {
+            padding: 0 10px 48px !important;
+          }
+          #hero-title {
+            font-size: 30px !important;
+            line-height: 1.15 !important;
+          }
+          .hero-section {
+            padding: 44px 18px !important;
+            gap: 20px !important;
+          }
+          .hero-stats {
+            grid-template-columns: 1fr !important;
+          }
+          .hero-stats dt {
+            font-size: 28px !important;
+          }
+          .services-section {
+            padding: 48px 12px !important;
+          }
+          .services-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .card,
+          .hero-info-card,
+          .cta-section {
+            min-height: auto !important;
+          }
+          .gallery-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .cta-section {
+            padding: 28px 16px !important;
+            text-align: left !important;
+          }
+          .cta-section .btn-animate,
+          .cta-section .phonePill {
+            max-width: 100% !important;
           }
         }
       `}</style>

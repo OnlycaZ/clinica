@@ -1,11 +1,15 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import SiteFooter from "@/components/SiteFooter";
+import dynamic from "next/dynamic";
 import SiteHeader from "@/components/SiteHeader";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
 import { megaMenus, navigation } from "@/lib/navigation";
 
 const privacySeo = getSeoEntry("privacy");
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+  ssr: false,
+  loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "0 auto" }} aria-hidden="true" />
+});
 
 export const metadata: Metadata = {
   title: privacySeo.title,
@@ -47,13 +51,13 @@ const palette = {
   light: "#ffffff"
 };
 
-const highlights = [
+const highlights = Object.freeze([
   { title: "Date colectate", detail: "Nume, contact, documente medicale" },
   { title: "Baza legala", detail: "Consimtamant & obligatii legale" },
   { title: "Retentie", detail: "Minimum necesar conform legislatiei" }
-];
+]);
 
-const policySections = [
+const policySections = Object.freeze([
   {
     title: "Ce date colectam",
     description:
@@ -86,27 +90,32 @@ const policySections = [
       "Interes legitim pentru securitatea infrastructurii"
     ]
   }
-];
+]);
 
-const safeguards = [
+const safeguards = Object.freeze([
   { title: "Acces controlat", detail: "Doar personal autorizat cu autentificare MFA." },
   { title: "Criptare completa", detail: "Datele sunt cifrate la rest si in tranzit." },
   { title: "Audit continuu", detail: "Testam procedurile de backup si logging trimestrial." }
-];
+]);
 
-const rights = [
+const rights = Object.freeze([
   "Acces si rectificare",
   "Portabilitate",
   "Restrictie sau opozitie",
   "Scoatere din comunicari",
   "Plangere la ANSPDCP"
-];
+]);
 
 const styles: Record<string, CSSProperties> = {
   page: {
     fontFamily: "'Inter','Segoe UI',system-ui,sans-serif",
     minHeight: "100vh",
-    background: "radial-gradient(circle at top,#fefefe 0%,#f2eee4 45%,#ebe5da 100%)"
+    background: "radial-gradient(circle at top,#fefefe 0%,#f2eee4 45%,#ebe5da 100%)",
+    padding: "0 16px 80px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "24px"
   },
   header: {
     backgroundColor: palette.light,
@@ -162,8 +171,7 @@ const styles: Record<string, CSSProperties> = {
     padding: "12px 22px",
     borderRadius: "999px",
     fontWeight: 600,
-    cursor: "pointer",
-    boxShadow: "0 15px 30px rgba(0,194,199,0.35)"
+    cursor: "pointer"
   },
   contentWrap: {
     width: "100%",
@@ -177,18 +185,16 @@ const styles: Record<string, CSSProperties> = {
   hero: {
     borderRadius: "42px",
     background: "linear-gradient(140deg, #ffffff 0%, #eef4ff 60%, #f7f4ef 100%)",
-    boxShadow: "0 35px 90px rgba(11,42,61,0.15)",
     padding: "48px",
     textAlign: "center",
     position: "relative",
-    overflow: "hidden"
+    overflow: "hidden",
+    minHeight: "480px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   heroGlow: {
-    position: "absolute",
-    inset: "20px",
-    borderRadius: "999px",
-    border: `1px solid ${palette.border}`,
-    opacity: 0.35
+    display: "none"
   },
   heroContent: {
     position: "relative",
@@ -214,17 +220,21 @@ const styles: Record<string, CSSProperties> = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
     gap: "18px",
-    alignItems: "stretch"
+    alignItems: "stretch",
+    minHeight: "420px"
   },
   sectionCard: {
     borderRadius: "28px",
     background: "#fff",
     padding: "24px 26px",
-    boxShadow: "0 25px 60px rgba(11,42,61,0.12)",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-    lineHeight: 1.6
+    lineHeight: 1.6,
+    border: `1px solid ${palette.border}`,
+    minHeight: "260px",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   sectionCardTitle: {
     margin: 0,
@@ -281,7 +291,10 @@ const styles: Record<string, CSSProperties> = {
     flexWrap: "wrap",
     gap: "20px",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    border: "1px solid rgba(255,255,255,0.2)",
+    willChange: "transform",
+    transform: "translateZ(0)"
   },
   infoText: {
     maxWidth: "520px",
@@ -380,7 +393,9 @@ export default function PoliticaConfidentialitate() {
         </section>
       </div>
 
-      <SiteFooter palette={palette} />
+      <React.Suspense fallback={<div style={{ width: "100%", maxWidth: "1100px", minHeight: "360px", margin: "40px auto 0" }} aria-hidden="true" />}>
+        <SiteFooter palette={palette} />
+      </React.Suspense>
     </main>
   );
 }
