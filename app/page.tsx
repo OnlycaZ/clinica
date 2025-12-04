@@ -830,9 +830,13 @@ export default function Home() {
 
       <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
-      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section">
+      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section hero-shell">
         <div style={styles.heroGlow} className="hero-glow" aria-hidden="true" />
         <div style={styles.heroInner} className="hero-inner">
+          <div className="hero-header-pill">
+            <span>Program extins 08:00 - 21:00</span>
+            <a href={`tel:${sanitizedPhone}`}>{siteConfig.contactPhone}</a>
+          </div>
           <div style={styles.heroContent}>
             <p style={styles.heroEyebrow} className="hero-eyebrow">
               Clinica dentara integrata
@@ -845,7 +849,7 @@ export default function Home() {
               aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
             </p>
 
-            <div style={styles.heroCtas}>
+            <div style={styles.heroCtas} className="hero-cta-shell">
               <button type="button" style={styles.primaryButton} className="btn-animate">
                 Programeaza consultatia
               </button>
@@ -1106,6 +1110,62 @@ export default function Home() {
           }
         }
 
+        .hero-section {
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 251, 241, 0.9));
+          box-shadow: 0 40px 60px rgba(18, 60, 53, 0.12);
+          border-radius: 40px;
+          border: none;
+          padding: 48px;
+          max-width: 720px;
+          margin: 0 auto;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hero-shell .hero-inner {
+          gap: 32px;
+          align-items: flex-start;
+        }
+
+        .hero-header-pill {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          align-items: flex-start;
+          font-size: 13px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #0f2f25;
+        }
+
+        .hero-header-pill a {
+          font-size: 18px;
+          font-weight: 700;
+          color: #09664b;
+          text-decoration: none;
+        }
+
+        .hero-cta-shell {
+          flex-wrap: nowrap;
+        }
+
+        .hero-cta-shell button {
+          flex: 1;
+        }
+
+        .hero-section .hero-inner,
+        .hero-section .hero-content,
+        .hero-section .hero-stats,
+        .hero-section .hero-info-card {
+          position: relative;
+          z-index: 2;
+        }
+
+        .hero-section .hero-glow {
+          opacity: 1;
+          pointer-events: none;
+        }
+
         .interactive-card,
         .interactive-panel {
           transition: transform 0.5s ease, opacity 0.5s ease;
@@ -1147,6 +1207,33 @@ export default function Home() {
             border-radius: 32px !important;
             min-height: auto !important;
             margin-top: 16px !important;
+          }
+          body {
+            background: linear-gradient(180deg, #062119 0%, #073e2a 60%, #114834 100%) !important;
+          }
+          .home-page {
+            background: transparent;
+          }
+          .hero-section {
+            padding: 44px 18px !important;
+            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 35px 60px rgba(8, 39, 31, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+          }
+          .hero-section .hero-eyebrow,
+          .hero-section h1,
+          .hero-section p {
+            color: #fff !important;
+          }
+          .hero-header-pill span,
+          .hero-header-pill a {
+            color: #a5f3d1 !important;
+          }
+          .hero-cta-shell button,
+          .hero-cta-shell a {
+            width: 100%;
+            text-align: center;
           }
           .hero-inner {
             flex-direction: column !important;
