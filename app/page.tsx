@@ -830,13 +830,9 @@ export default function Home() {
 
       <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
-      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section hero-shell">
+      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section">
         <div style={styles.heroGlow} className="hero-glow" aria-hidden="true" />
         <div style={styles.heroInner} className="hero-inner">
-          <div className="hero-header-pill">
-            <span>Program extins 08:00 - 21:00</span>
-            <a href={`tel:${sanitizedPhone}`}>{siteConfig.contactPhone}</a>
-          </div>
           <div style={styles.heroContent}>
             <p style={styles.heroEyebrow} className="hero-eyebrow">
               Clinica dentara integrata
@@ -849,7 +845,7 @@ export default function Home() {
               aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
             </p>
 
-            <div style={styles.heroCtas} className="hero-cta-shell">
+            <div style={styles.heroCtas}>
               <button type="button" style={styles.primaryButton} className="btn-animate">
                 Programeaza consultatia
               </button>
@@ -1110,82 +1106,9 @@ export default function Home() {
           }
         }
 
-        .hero-section {
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 251, 241, 0.9));
-          box-shadow: 0 40px 60px rgba(18, 60, 53, 0.12);
-          border-radius: 40px;
-          border: none;
-          padding: 48px;
-          max-width: 720px;
-          margin: 0 auto;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .hero-shell .hero-inner {
-          gap: 32px;
-          align-items: flex-start;
-        }
-
-        .hero-header-pill {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          align-items: flex-start;
-          font-size: 13px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: #0f2f25;
-        }
-
-        .hero-header-pill a {
-          font-size: 18px;
-          font-weight: 700;
-          color: #09664b;
-          text-decoration: none;
-        }
-
-        .hero-cta-shell {
-          flex-wrap: nowrap;
-        }
-
-        .hero-cta-shell button {
-          flex: 1;
-        }
-
-        .hero-section .hero-inner,
-        .hero-section .hero-content,
-        .hero-section .hero-stats,
-        .hero-section .hero-info-card {
-          position: relative;
-          z-index: 2;
-        }
-
-        .hero-section .hero-glow {
-          opacity: 1;
-          pointer-events: none;
-        }
-
         .interactive-card,
         .interactive-panel {
           transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-
-        .hero-section {
-          position: relative;
-          isolation: isolate;
-        }
-
-        .hero-section .hero-inner,
-        .hero-section .hero-content,
-        .hero-section .hero-stats,
-        .hero-section .hero-info-card {
-          position: relative;
-          z-index: 1;
-        }
-
-        .hero-section .hero-glow {
-          opacity: 0;
         }
 
         .interactive-card:hover,
@@ -1198,42 +1121,34 @@ export default function Home() {
         }
 
         @media (max-width: 768px) {
+          body {
+            background: linear-gradient(180deg, #062119 0%, #073e2a 60%, #114834 100%);
+          }
           .home-page {
+            background: transparent;
             padding: 0 12px 60px !important;
             gap: 18px !important;
           }
           .hero-section {
-            padding: 56px 24px !important;
+            padding: 48px 22px !important;
             border-radius: 32px !important;
-            min-height: auto !important;
             margin-top: 16px !important;
-          }
-          body {
-            background: linear-gradient(180deg, #062119 0%, #073e2a 60%, #114834 100%) !important;
-          }
-          .home-page {
-            background: transparent;
-          }
-          .hero-section {
-            padding: 44px 18px !important;
-            border-radius: 32px;
+            min-height: auto !important;
             background: rgba(255, 255, 255, 0.08);
             box-shadow: 0 35px 60px rgba(8, 39, 31, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
           }
           .hero-section .hero-eyebrow,
           .hero-section h1,
-          .hero-section p {
+          .hero-section p,
+          .hero-section .hero-stats dt,
+          .hero-section .hero-stats dd {
             color: #fff !important;
+            text-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
           }
-          .hero-header-pill span,
-          .hero-header-pill a {
-            color: #a5f3d1 !important;
-          }
-          .hero-cta-shell button,
-          .hero-cta-shell a {
-            width: 100%;
-            text-align: center;
+          .hero-section .hero-glow {
+            opacity: 1;
           }
           .hero-inner {
             flex-direction: column !important;
@@ -1242,34 +1157,6 @@ export default function Home() {
           }
           #hero-title {
             font-size: 34px !important;
-          }
-          .hero-section p {
-            line-height: 1.55 !important;
-          }
-          .hero-section .hero-eyebrow,
-          .hero-section #hero-title,
-          .hero-section .hero-text,
-          .hero-section .hero-stats dt,
-          .hero-section .hero-stats dd,
-          .hero-section .hero-info-card p {
-            color: #fff !important;
-            text-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
-          }
-          .hero-section .hero-info-card {
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-          }
-          .hero-section .hero-contact-link {
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            color: #fff !important;
-          }
-          .hero-section .hero-contact-link small {
-            color: rgba(255, 255, 255, 0.9) !important;
-          }
-          .hero-section .hero-glow {
-            opacity: 1;
           }
           .hero-stats {
             grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1280,6 +1167,20 @@ export default function Home() {
             border-radius: 24px !important;
             min-height: auto !important;
             align-items: flex-start !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+          }
+          .hero-contact-link {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            color: #fff !important;
+          }
+          .hero-contact-link small {
+            color: rgba(255, 255, 255, 0.9) !important;
+          }
+          .hero-section .hero-glow {
+            opacity: 1;
           }
           .highlight-wrapper {
             padding: 0 12px !important;
@@ -1324,7 +1225,7 @@ export default function Home() {
             aspect-ratio: 4 / 5 !important;
           }
         }
-        
+
         @media (max-width: 480px) {
           .home-page {
             padding: 0 10px 48px !important;
