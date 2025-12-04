@@ -1122,7 +1122,7 @@ export default function Home() {
 
         @media (max-width: 768px) {
           body {
-            background: linear-gradient(180deg, #062119 0%, #073e2a 60%, #114834 100%);
+            background: linear-gradient(180deg, #e7f3ec 0%, #ebf6f2 45%, #fefaf8 100%);
           }
           .home-page {
             background: transparent;
@@ -1130,57 +1130,43 @@ export default function Home() {
             gap: 18px !important;
           }
           .hero-section {
-            padding: 48px 22px !important;
-            border-radius: 32px !important;
-            margin-top: 16px !important;
+            background: #fdfefc;
+            box-shadow: 0 10px 30px rgba(9, 64, 51, 0.1);
             min-height: auto !important;
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 35px 60px rgba(8, 39, 31, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-          }
-          .hero-section .hero-eyebrow,
-          .hero-section h1,
-          .hero-section p,
-          .hero-section .hero-stats dt,
-          .hero-section .hero-stats dd {
-            color: #fff !important;
-            text-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
-          }
-          .hero-section .hero-glow {
-            opacity: 1;
+            margin-top: 24px !important;
+            border-radius: 36px;
+            border: 1px solid rgba(18, 60, 53, 0.1);
           }
           .hero-inner {
             flex-direction: column !important;
             gap: 32px !important;
-            align-items: flex-start !important;
+            align-items: stretch !important;
           }
           #hero-title {
             font-size: 34px !important;
           }
+          .hero-section .hero-text {
+            line-height: 1.6 !important;
+            font-size: 18px !important;
+          }
           .hero-stats {
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
             gap: 12px !important;
+            margin-top: 18px;
           }
           .hero-info-card {
             padding: 24px !important;
             border-radius: 24px !important;
-            min-height: auto !important;
-            align-items: flex-start !important;
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(18, 60, 53, 0.12);
+            box-shadow: 0 12px 30px rgba(31, 182, 124, 0.1);
+          }
+          .hero-info-card p {
+            color: ${palette.navy} !important;
           }
           .hero-contact-link {
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            color: #fff !important;
-          }
-          .hero-contact-link small {
-            color: rgba(255, 255, 255, 0.9) !important;
-          }
-          .hero-section .hero-glow {
-            opacity: 1;
+            background: rgba(31, 182, 124, 0.08) !important;
+            color: ${palette.navy} !important;
           }
           .highlight-wrapper {
             padding: 0 12px !important;
