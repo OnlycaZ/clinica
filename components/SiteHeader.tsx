@@ -593,6 +593,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             </Link>
           </div>
         </div>
+      </div>
       </header>
             <style jsx global>{`
         @keyframes headerMenuFade {
