@@ -242,7 +242,16 @@ const styles: { [key: string]: React.CSSProperties } = {
     minHeight: "320px"
   },
   heroGlow: {
-    display: "none"
+    position: "absolute",
+    inset: 0,
+    borderRadius: "48px",
+    background:
+      "linear-gradient(180deg, rgba(11,42,61,0.12), rgba(6,14,24,0.9)), radial-gradient(circle at 22% 24%, rgba(255,255,255,0.35), transparent 42%)",
+    opacity: 0,
+    pointerEvents: "none",
+    transition: "opacity 0.35s ease",
+    zIndex: 0,
+    display: "block"
   },
   heroEyebrow: {
     textTransform: "uppercase",
@@ -822,14 +831,16 @@ export default function Home() {
       <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
       <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section">
-        <div style={styles.heroGlow} aria-hidden="true" />
+        <div style={styles.heroGlow} className="hero-glow" aria-hidden="true" />
         <div style={styles.heroInner} className="hero-inner">
           <div style={styles.heroContent}>
-            <p style={styles.heroEyebrow}>Clinica dentara integrata</p>
+            <p style={styles.heroEyebrow} className="hero-eyebrow">
+              Clinica dentara integrata
+            </p>
             <h1 id="hero-title" style={styles.heroTitle}>
               DentNow este clinica familiei tale din Dristor
             </h1>
-            <p style={styles.heroText}>
+            <p style={styles.heroText} className="hero-text">
               DentNow imbina expertiza medicala cu tehnologii digitale si finantare usor de accesat. Tratam adulti si copii cu
               aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
             </p>
@@ -1100,6 +1111,23 @@ export default function Home() {
           transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
+        .hero-section {
+          position: relative;
+          isolation: isolate;
+        }
+
+        .hero-section .hero-inner,
+        .hero-section .hero-content,
+        .hero-section .hero-stats,
+        .hero-section .hero-info-card {
+          position: relative;
+          z-index: 1;
+        }
+
+        .hero-section .hero-glow {
+          opacity: 0;
+        }
+
         .interactive-card:hover,
         .interactive-panel:hover {
           transform: translateY(-12px);
@@ -1130,6 +1158,31 @@ export default function Home() {
           }
           .hero-section p {
             line-height: 1.55 !important;
+          }
+          .hero-section .hero-eyebrow,
+          .hero-section #hero-title,
+          .hero-section .hero-text,
+          .hero-section .hero-stats dt,
+          .hero-section .hero-stats dd,
+          .hero-section .hero-info-card p {
+            color: #fff !important;
+            text-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+          }
+          .hero-section .hero-info-card {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+          }
+          .hero-section .hero-contact-link {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            color: #fff !important;
+          }
+          .hero-section .hero-contact-link small {
+            color: rgba(255, 255, 255, 0.9) !important;
+          }
+          .hero-section .hero-glow {
+            opacity: 1;
           }
           .hero-stats {
             grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
