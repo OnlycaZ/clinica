@@ -525,10 +525,10 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
               <a
                 href={`tel:${siteConfig.contactPhone.replace(/ /g, "")}`}
                 className="mobile-phone"
-                aria-label="Sun&#259;-ne"
+                aria-label="Sună-ne"
               >
                 <span aria-hidden="true">&#128222;</span>
-                <span className="sr-only">Sun&#259;-ne</span>
+                <span className="sr-only">Sună-ne</span>
               </a>
               <button
                 type="button"
@@ -555,6 +555,20 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             >
               <span aria-hidden="true">&times;</span>
             </button>
+            <div className="mobile-menu__search">
+              <label className="sr-only" htmlFor="search-navigation">
+                Caută în meniu
+              </label>
+              <input
+                id="search-navigation"
+                type="search"
+                placeholder="Ce vrei să cauți?"
+                className="mobile-menu__search-input"
+              />
+              <span aria-hidden="true" className="mobile-menu__search-icon">
+                🔍
+              </span>
+            </div>
             <div className="mobile-menu__links">
               {navigation.map((item) => (
                 <Link
@@ -563,7 +577,10 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
                   className="mobile-menu__link"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
+                  <span aria-hidden="true" className="mobile-menu__link-arrow">
+                    &#9656;
+                  </span>
                 </Link>
               ))}
             </div>
@@ -574,10 +591,10 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             >
               Rezerva vizita
             </Link>
+          </div>
         </div>
-      </div>
       </header>
-      <style jsx global>{`
+            <style jsx global>{`
         @keyframes headerMenuFade {
           from {
             opacity: 0;
@@ -606,6 +623,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
 
         body.nav-open {
           overflow: hidden;
+          touch-action: none;
         }
 
         .desktop-actions {
@@ -660,7 +678,97 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
           display: none;
         }
 
+        .mobile-menu__search {
+          display: flex;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 14px;
+          padding: 12px 16px;
+          gap: 8px;
+          border: 1px solid rgba(11, 42, 61, 0.08);
+          box-shadow: 0 8px 18px rgba(11, 42, 61, 0.08);
+        }
+
+        .mobile-menu__search-input {
+          flex: 1;
+          border: none;
+          font-size: 15px;
+          font-weight: 500;
+          background: transparent;
+        }
+
+        .mobile-menu__search-input:focus {
+          outline: none;
+        }
+
+        .mobile-menu__search-icon {
+          font-size: 18px;
+        }
+
+        .mobile-menu__links {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .mobile-menu__link {
+          font-size: 20px;
+          font-weight: 600;
+          color: ${palette.navy};
+          text-decoration: none;
+          padding: 16px 18px;
+          border-radius: 12px;
+          background: ${palette.light};
+          box-shadow: inset 0 -1px 0 0 rgba(11, 42, 61, 0.08);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .mobile-menu__link:hover {
+          transform: translateX(4px);
+          box-shadow: inset 0 -1px 0 0 rgba(11, 42, 61, 0.15);
+        }
+
+        .mobile-menu__link-arrow {
+          font-size: 22px;
+          color: rgba(11, 42, 61, 0.5);
+        }
+
+        .mobile-menu__cta {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          padding: 20px;
+          border-radius: 999px;
+          background: ${palette.teal};
+          color: ${palette.light};
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-decoration: none;
+          margin-top: 12px;
+          box-shadow: 0 15px 35px rgba(0, 194, 199, 0.35);
+        }
+
+        .mobile-menu-close {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          border: none;
+          background: transparent;
+          font-size: 30px;
+          line-height: 1;
+          cursor: pointer;
+          color: ${palette.navy};
+        }
+
         @media (max-width: 768px) {
+          .nav-row {
+            grid-template-columns: auto 1fr auto;
+          }
+
           .main-nav {
             display: none !important;
           }
@@ -678,7 +786,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             width: 48px;
             height: 48px;
             border-radius: 16px;
-            background: rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(11, 42, 61, 0.12);
+            box-shadow: 0 8px 20px rgba(11, 42, 61, 0.1);
           }
 
           .mobile-menu {
@@ -686,7 +796,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             position: fixed;
             inset: 0;
             z-index: 60;
-            background: rgba(247, 244, 239, 0.98);
+            background: rgba(11, 42, 61, 0.02);
             padding: 0;
             justify-content: center;
             align-items: stretch;
@@ -708,64 +818,14 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             flex-direction: column;
             position: relative;
             background: ${palette.light};
-            padding: 32px 24px 24px;
-            gap: 24px;
+            padding: 26px 24px 24px;
+            gap: 28px;
             min-height: 100vh;
+            overflow-y: auto;
           }
 
           .mobile-menu__links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 16px;
-          }
-
-          .mobile-menu__link {
-            font-size: 22px;
-            font-weight: 600;
-            color: ${palette.navy};
-            text-decoration: none;
-            padding: 18px 16px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: inset 0 0 0 1px rgba(18, 75, 60, 0.12);
-          }
-
-          .mobile-menu__link:focus-visible {
-            outline: 3px solid rgba(0, 194, 199, 0.35);
-            outline-offset: 2px;
-          }
-
-          .mobile-menu__cta {
-            margin-top: auto;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px;
-            border-radius: 999px;
-            background: ${palette.teal};
-            color: ${palette.light};
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-          }
-
-          .mobile-menu__cta:focus-visible {
-            outline: 3px solid rgba(255, 255, 255, 0.6);
-            outline-offset: 4px;
-          }
-
-          .mobile-menu-close {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            border: none;
-            background: transparent;
-            font-size: 30px;
-            line-height: 1;
-            cursor: pointer;
-            color: ${palette.navy};
+            margin-top: 8px;
           }
         }
       `}</style>
