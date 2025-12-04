@@ -309,14 +309,6 @@ const createHeaderStyles = (palette: Palette) => {
       letterSpacing: "0.08em",
       backdropFilter: "blur(4px)"
     } as React.CSSProperties,
-    mobileMenuButton: {
-      border: "none",
-      background: "transparent",
-      fontSize: "24px",
-      marginLeft: "auto",
-      cursor: "pointer",
-      display: "none"
-    } as React.CSSProperties,
   };
 };
 
@@ -329,6 +321,19 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
   const [currentHash, setCurrentHash] = React.useState<string>("#hero");
   const [, startMenuTransition] = React.useTransition();
   const activeMenu = activeMenuState;
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const target = document.body;
+    if (mobileOpen) {
+      target.classList.add("nav-open");
+    } else {
+      target.classList.remove("nav-open");
+    }
+    return () => target.classList.remove("nav-open");
+  }, [mobileOpen]);
 
   const updateActiveMenu = React.useCallback(
     (value: string | null | ((prev: string | null) => string | null)) => {
@@ -408,7 +413,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
 
   return (
     <>
-      <header style={{ ...styles.header, ...(isPinned ? styles.headerPinned : {}) }}>
+      <header className="site-header" style={{ ...styles.header, ...(isPinned ? styles.headerPinned : {}) }}>
         <div style={styles.inner}>
         <div style={styles.headerHalo} aria-hidden="true" />
         <div style={styles.utilityBar}>
@@ -427,7 +432,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
           </div>
         </div>
 
-        <div style={styles.navRow}>
+        <div className="nav-row" style={styles.navRow}>
           <div style={styles.brandCluster}>
             <Link href="/" style={styles.brand} aria-label="DentNow">
               <Image
@@ -441,7 +446,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             </Link>
           </div>
 
-          <nav style={styles.nav} aria-label="Navigare principala">
+          <nav className="main-nav" style={styles.nav} aria-label="Navigare principala">
             {navigation.map((item) => {
               const menuItems = item.menuKey ? resolvedMegaMenus[item.menuKey] : undefined;
               const isActive = computeActive(item.href);
@@ -510,41 +515,66 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
               );
             })}
           </nav>
-          <div style={styles.actions}>
-            <button
-              type="button"
-              style={styles.mobileMenuButton}
-              aria-label="Deschide meniul mobil"
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen((prev) => !prev)}
-              className="mobile-menu-toggle"
-            >
-              ☰
-            </button>
-            <Link href="/rezerva-vizita" style={styles.primaryButton}>
-              Rezerva vizita
-            </Link>
+          <div className="actions" style={styles.actions}>
+            <div className="desktop-actions">
+              <Link href="/rezerva-vizita" style={styles.primaryButton}>
+                Rezerva vizita
+              </Link>
+            </div>
+            <div className="mobile-actions">
+              <a
+                href={`tel:${siteConfig.contactPhone.replace(/ /g, "")}`}
+                className="mobile-phone"
+                aria-label="Sun&#259;-ne"
+              >
+                <span aria-hidden="true">&#128222;</span>
+                <span className="sr-only">Sun&#259;-ne</span>
+              </a>
+              <button
+                type="button"
+                className="nav-toggle"
+                aria-label="Deschide meniul mobil"
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen((prev) => !prev)}
+              >
+                <span className="sr-only">Deschide meniul mobil</span>
+                <span className="nav-toggle__bar" aria-hidden="true" />
+                <span className="nav-toggle__bar" aria-hidden="true" />
+                <span className="nav-toggle__bar" aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
-        <nav className={`mobile-nav ${mobileOpen ? "active" : ""}`} aria-label="Meniul mobil">
-          {navigation.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="mobile-nav-link"
+        <div className={`mobile-menu${mobileOpen ? " open" : ""}`} aria-hidden={!mobileOpen}>
+          <div className="mobile-menu__panel">
+            <button
+              type="button"
+              className="mobile-menu-close"
+              aria-label="Închide meniul"
               onClick={() => setMobileOpen(false)}
             >
-              {item.label}
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div className="mobile-menu__links">
+              {navigation.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="mobile-menu__link"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+            <Link
+              href="/rezerva-vizita"
+              className="mobile-menu__cta"
+              onClick={() => setMobileOpen(false)}
+            >
+              Rezerva vizita
             </Link>
-          ))}
-          <Link
-            href="/rezerva-vizita"
-            className="mobile-nav-link reserve-link"
-            onClick={() => setMobileOpen(false)}
-          >
-            Rezerva vizita
-          </Link>
-        </nav>
+        </div>
       </div>
       </header>
       <style jsx global>{`
@@ -573,51 +603,173 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             opacity: 1;
           }
         }
+
+        body.nav-open {
+          overflow: hidden;
+        }
+
+        .desktop-actions {
+          display: flex;
+        }
+
+        .mobile-actions {
+          display: none;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .nav-toggle {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          padding: 8px;
+          display: none;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .nav-toggle__bar {
+          width: 22px;
+          height: 2px;
+          background: ${palette.navy};
+          border-radius: 1px;
+          display: block;
+          margin: 3px 0;
+        }
+
+        .mobile-phone {
+          display: inline-flex;
+          align-items: center;
+          font-size: 20px;
+          color: ${palette.teal};
+        }
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        .mobile-menu {
+          display: none;
+        }
+
         @media (max-width: 768px) {
-          .navRow {
-            padding-right: 20px;
+          .main-nav {
+            display: none !important;
           }
-          .navRow .nav,
-          .navRow .actions a {
+
+          .desktop-actions {
             display: none;
           }
-          .mobile-menu-toggle {
+
+          .mobile-actions {
             display: inline-flex;
           }
-          .mobile-nav {
-            display: none;
+
+          .nav-toggle {
+            display: inline-flex;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.04);
           }
-          .mobile-nav.active {
+
+          .mobile-menu {
+            display: flex;
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background: rgba(247, 244, 239, 0.98);
+            padding: 0;
+            justify-content: center;
+            align-items: stretch;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+          }
+
+          .mobile-menu.open {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+          }
+
+          .mobile-menu__panel {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 12px;
-            left: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            border: 1px solid rgba(18, 75, 60, 0.15);
-            padding: 12px 18px;
-            box-shadow: 0 25px 45px rgba(18, 75, 60, 0.15);
-            z-index: 90;
+            position: relative;
+            background: ${palette.light};
+            padding: 32px 24px 24px;
+            gap: 24px;
+            min-height: 100vh;
           }
-          .mobile-nav-link {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(31, 182, 124, 0.2);
-            text-align: center;
-            font-size: 15px;
+
+          .mobile-menu__links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+          }
+
+          .mobile-menu__link {
+            font-size: 22px;
+            font-weight: 600;
             color: ${palette.navy};
-            background: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+            padding: 18px 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 0 0 1px rgba(18, 75, 60, 0.12);
+          }
+
+          .mobile-menu__link:focus-visible {
+            outline: 3px solid rgba(0, 194, 199, 0.35);
+            outline-offset: 2px;
+          }
+
+          .mobile-menu__cta {
+            margin-top: auto;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            border-radius: 999px;
+            background: ${palette.teal};
+            color: ${palette.light};
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-decoration: none;
           }
-          .mobile-nav-link.reserve-link {
-            order: 99;
+
+          .mobile-menu__cta:focus-visible {
+            outline: 3px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 4px;
+          }
+
+          .mobile-menu-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            border: none;
+            background: transparent;
+            font-size: 30px;
+            line-height: 1;
+            cursor: pointer;
+            color: ${palette.navy};
           }
         }
       `}</style>
+
     </>
   );
 };
