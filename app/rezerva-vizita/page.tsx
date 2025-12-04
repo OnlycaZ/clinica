@@ -8,8 +8,9 @@ import { siteConfig } from "@/lib/seo";
 
 const palette = {
   navy: "#0d2f3c",
+  night: "#051f23",
   teal: "#1fb67c",
-  sky: "#1ca8ff",
+  sand: "#f6fbf6",
   slate: "#5d6b75",
   border: "#d9efe3",
   light: "#ffffff",
