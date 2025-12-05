@@ -435,10 +435,26 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
 
   return (
     <>
+      <nav className="mobile-trident-nav" aria-label="Navigare mobilă">
+        <div className="mobile-trident-logo">
+          <Image src="/cropped-CFT-1.png" alt="DentNow" width={120} height={32} priority />
+        </div>
+        <div className="mobile-trident-actions">
+          <button type="button" aria-label="Schimbă limba în engleză" className="mobile-trident-icon">
+            🇬🇧
+          </button>
+          <a aria-label="Sună-ne" href={`tel:${siteConfig.contactPhone.replace(/ /g, "")}`} className="mobile-trident-icon">
+            📞
+          </a>
+          <button type="button" aria-label="Deschide meniul" className="mobile-trident-icon" onClick={() => setMobileOpen((prev) => !prev)}>
+            ☰
+          </button>
+        </div>
+      </nav>
       <header className="site-header" style={{ ...styles.header, ...(isPinned ? styles.headerPinned : {}) }}>
         <div style={styles.inner}>
         <div style={styles.headerHalo} aria-hidden="true" />
-        <div style={styles.utilityBar}>
+        <div style={styles.utilityBar} className="utility-bar">
           <div style={styles.utilityMeta}>
             <span style={styles.utilityBadge}>DentNow Concierge</span>
             <span>Program extins 08:00 - 21:00</span>
@@ -847,8 +863,83 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
             overflow-y: auto;
           }
 
-          .mobile-menu__links {
-            margin-top: 8px;
+        .mobile-menu__links {
+          margin-top: 8px;
+        }
+      }
+
+      .utility-bar {
+        display: flex;
+      }
+
+      @media (max-width: 768px) {
+        .utility-bar {
+          display: none !important;
+        }
+      }
+
+        .mobile-trident-nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          display: none;
+          align-items: center;
+          justify-content: space-between;
+          padding: 12px 20px;
+          z-index: 95;
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(18px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .mobile-trident-logo img {
+          height: 36px;
+          width: auto;
+          display: block;
+        }
+
+        .mobile-trident-actions {
+          display: flex;
+          gap: 16px;
+          align-items: center;
+        }
+
+        .mobile-trident-icon {
+          font-size: 22px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 4px;
+          line-height: 1;
+        }
+
+        .mobile-trident-icon:focus-visible {
+          outline: 2px solid rgba(31, 182, 124, 0.6);
+          outline-offset: 2px;
+        }
+
+        @media (min-width: 769px) {
+          .mobile-trident-nav {
+            display: none;
+          }
+          .site-header {
+            display: flex !important;
+          }
+          .hero-section {
+            margin-top: 30px !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .mobile-trident-nav {
+            display: flex;
+          }
+          .site-header {
+            display: none;
+          }
+          .hero-section {
+            margin-top: 70px !important;
           }
         }
       `}</style>

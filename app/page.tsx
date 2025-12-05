@@ -1283,6 +1283,8 @@ export default function Home() {
             flex-direction: column;
             gap: 20px;
             margin-bottom: 28px;
+            padding-top: 32px;
+            padding-bottom: 32px;
           }
           section img {
             width: 100%;
@@ -1292,7 +1294,7 @@ export default function Home() {
           section h2,
           section h3,
           section p {
-            font-size: clamp(14px, 4vw, 18px);
+            font-size: clamp(16px, 4vw, 20px);
           }
           button,
           .primaryButton,
@@ -1347,6 +1349,41 @@ export default function Home() {
             width: 100%;
             justify-content: center;
             text-align: center;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hero-section {
+            position: relative;
+            padding: 72px 20px 56px;
+          }
+          .hero-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 36px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.38)),
+              radial-gradient(circle at top, rgba(255, 255, 255, 0.7), transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+          }
+          .hero-section .hero-inner {
+            position: relative;
+            z-index: 1;
+          }
+          .hero-section h1 {
+            font-size: 42px !important;
+            font-weight: 700;
+            text-align: center;
+          }
+          .hero-section .hero-text {
+            text-align: center;
+          }
+          .hero-section .hero-stats {
+            justify-content: center;
+          }
+          .hero-section .heroCtas {
+            justify-content: center;
           }
         }
       `}</style>
