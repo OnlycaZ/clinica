@@ -77,9 +77,14 @@ export default function RootLayout({
   return (
     <html lang="ro" data-scroll-behavior="smooth">
       <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <div className="app-shell">
+          <div className="page-background" aria-hidden="true" />
         <div className="site-shell">
-          <PageTransition>{children}</PageTransition>
-          <CookieConsent />
+          <div className="layout-wrapper">
+            <PageTransition>{children}</PageTransition>
+            <CookieConsent />
+          </div>
+        </div>
         </div>
       </body>
     </html>

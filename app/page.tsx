@@ -218,7 +218,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: "30px auto 0",
     minHeight: "640px",
     backgroundImage:
-      "radial-gradient(circle at top right, rgba(31,182,124,0.25), transparent 55%), linear-gradient(135deg, rgba(255,255,255,0.98), rgba(233,247,238,0.92))",
+      "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(233, 247, 244, 0.92)), radial-gradient(circle at top right, rgba(31,182,124,0.25), transparent 55%), url('/dentist-cabinet-stomatology-room.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundBlendMode: "screen",
     color: palette.navy,
     padding: "96px 48px",
     borderRadius: "48px",
@@ -246,8 +249,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     inset: 0,
     borderRadius: "48px",
     background:
-      "linear-gradient(180deg, rgba(11,42,61,0.12), rgba(6,14,24,0.9)), radial-gradient(circle at 22% 24%, rgba(255,255,255,0.35), transparent 42%)",
-    opacity: 0,
+      "linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.6)), radial-gradient(circle at 22% 24%, rgba(255,255,255,0.9), transparent 38%)",
+    opacity: 1,
     pointerEvents: "none",
     transition: "opacity 0.35s ease",
     zIndex: 0,
@@ -264,7 +267,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   heroTitle: {
     fontSize: "48px",
     lineHeight: 1.1,
-    margin: "0 0 20px"
+    margin: "0 0 28px",
+    fontWeight: 700
   },
   heroText: {
     fontSize: "18px",
@@ -282,11 +286,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     background: `linear-gradient(120deg, ${palette.teal}, #8bf2c5)`,
     color: palette.night,
     border: `1px solid rgba(31,182,124,0.2)`,
-    padding: "12px 24px",
-    borderRadius: "999px",
+    padding: "14px 32px",
+    borderRadius: "28px",
     fontWeight: 600,
     cursor: "pointer",
-    transition: "transform 0.35s ease, opacity 0.35s ease"
+    transition: "transform 0.3s ease, box-shadow 0.35s ease"
   },
   secondaryButton: {
     backgroundColor: "rgba(255,255,255,0.5)",
@@ -321,7 +325,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   heroCard: {
     flex: "1 1 300px",
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(255,255,255,0.92)",
+    backgroundImage:
+      "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.65)), url('/dentist-cabinet-stomatology-room.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     color: palette.navy,
     borderRadius: "30px",
     padding: "32px",
@@ -383,8 +391,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   highlightsWrapper: {
     width: "100%",
-    padding: "0 24px",
-    marginTop: "24px",
+    marginTop: "36px",
     maxWidth: "1200px",
     marginLeft: "auto",
     marginRight: "auto"
@@ -392,15 +399,13 @@ const styles: { [key: string]: React.CSSProperties } = {
   highlightSection: {
     backgroundColor: "rgba(255,255,255,0.92)",
     borderRadius: "34px",
-    padding: "26px 34px",
+    padding: "42px 34px",
     maxWidth: "100%",
     margin: "0 auto",
-    display: "flex",
-    gap: "18px",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "24px",
     border: `1px solid ${palette.border}`,
-    minHeight: "220px",
     willChange: "transform",
     transform: "translateZ(0)"
   },
@@ -438,7 +443,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     lineHeight: 1.5
   },
   servicesSection: {
-    padding: "80px 24px",
+    padding: "96px 24px",
     maxWidth: "1200px",
     margin: "0 auto",
     width: "100%",
@@ -459,19 +464,19 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "12px"
   },
   sectionTitle: {
-    fontSize: "36px",
-    lineHeight: 1.2,
-    margin: "0 0 16px"
+    fontSize: "42px",
+    lineHeight: 1.35,
+    margin: "0 0 24px"
   },
   sectionCopy: {
     margin: 0,
     color: palette.slate,
-    lineHeight: 1.6
+    lineHeight: 1.7
   },
   cardsGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "24px",
+    gap: "28px",
     minHeight: "420px"
   },
   card: {
@@ -542,7 +547,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   gallerySection: {
     backgroundColor: "rgba(255,255,255,0.95)",
     borderRadius: "36px",
-    padding: "70px 32px",
+    padding: "80px 32px",
     margin: "40px auto 60px",
     minHeight: "600px",
     border: `1px solid ${palette.border}`,
@@ -556,7 +561,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   galleryGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "20px"
+    gap: "24px"
   },
   galleryInfoGrid: {
     marginTop: "32px",
@@ -634,7 +639,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: palette.navy,
     borderRadius: "36px",
     margin: "40px auto 80px",
-    padding: "40px",
+    padding: "56px 48px",
     display: "flex",
     flexWrap: "wrap",
     gap: "32px",
@@ -818,7 +823,7 @@ export default function Home() {
         <meta name="twitter:description" content={homeSeo.description} />
         <meta name="twitter:image" content={homeSeo.image} />
       </Head>
-      <main style={styles.page} className="home-page">
+      <main style={styles.page} className="home-page section-bg">
       <a
         href="#programare"
         style={{ ...styles.skipLink, ...(skipFocused ? styles.skipLinkVisible : {}) }}
@@ -830,7 +835,7 @@ export default function Home() {
 
       <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
-      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section">
+      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section section-bg">
         <div style={styles.heroGlow} className="hero-glow" aria-hidden="true" />
         <div style={styles.heroInner} className="hero-inner">
           <div style={styles.heroContent}>
@@ -846,9 +851,9 @@ export default function Home() {
             </p>
 
             <div style={styles.heroCtas}>
-              <button type="button" style={styles.primaryButton} className="btn-animate">
+              <a href="/rezerva-vizita" style={styles.primaryButton} className="hero-primary btn-animate">
                 Programeaza consultatia
-              </button>
+              </a>
               <a href="/portofoliu" style={styles.secondaryButton} className="btn-animate">
                 Vezi portofoliul
               </a>
@@ -895,7 +900,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ ...styles.highlightsWrapper, ...fadeIn(0.15) }} aria-label="Avantajele clinicii" className="highlight-wrapper">
+      <section style={{ ...styles.highlightsWrapper, ...fadeIn(0.15) }} aria-label="Avantajele clinicii" className="highlight-wrapper section-bg">
         <div style={styles.highlightSection} className="interactive-panel highlight-panel">
           {highlights.map((item) => (
             <article key={item.title} style={styles.highlightCard} className="highlight-card">
@@ -913,7 +918,7 @@ export default function Home() {
         id="servicii"
         style={{ ...styles.servicesSection, ...fadeIn(0.25) }}
         aria-labelledby="servicii-title"
-        className="services-section"
+        className="services-section section-bg"
       >
         <div style={styles.sectionHeader}>
           <p style={styles.sectionEyebrow}>Servicii complete</p>
@@ -956,7 +961,7 @@ export default function Home() {
         id="galerie"
         style={{ ...styles.gallerySection, ...fadeIn(0.35) }}
         aria-labelledby="galerie-title"
-        className="gallery-section"
+        className="gallery-section section-bg"
       >
         <div style={styles.galleryIntro}>
           <p style={styles.sectionEyebrow}>Galerie clinica</p>
@@ -1023,6 +1028,7 @@ export default function Home() {
     <section
       style={{ ...styles.clinicShowcaseSection, ...fadeIn(0.37) }}
       aria-labelledby="clinic-showcase-title"
+      className="section-bg"
     >
       <div style={styles.clinicShowcaseIntro}>
         <p style={styles.sectionEyebrow}>Cabinetul DentNow</p>
@@ -1058,7 +1064,7 @@ export default function Home() {
       id="programare"
       style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
         aria-labelledby="programare-title"
-        className="cta-section"
+        className="cta-section section-bg"
       >
         <div style={styles.ctaContent}>
           <p style={styles.sectionEyebrow}>Programari rapide</p>
@@ -1094,7 +1100,7 @@ export default function Home() {
         <SiteFooter palette={palette} />
       </React.Suspense>
 
-      <style>{`
+      <style jsx global>{`
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -1106,14 +1112,23 @@ export default function Home() {
           }
         }
 
+        .section-bg {
+          background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(233, 247, 238, 0.82));
+          border-radius: 36px;
+          border: 1px solid rgba(18, 60, 53, 0.06);
+          box-shadow: 0 20px 40px rgba(31, 182, 124, 0.08);
+        }
+
         .interactive-card,
         .interactive-panel {
-          transition: transform 0.5s ease, opacity 0.5s ease;
+          transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+          box-shadow: 0 20px 45px rgba(18, 60, 53, 0.08);
         }
 
         .interactive-card:hover,
         .interactive-panel:hover {
-          transform: translateY(-12px);
+          transform: translateY(-3px) scale(1.01);
+          box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
         }
 
         .gallery-section .interactive-card:hover img {
@@ -1121,9 +1136,6 @@ export default function Home() {
         }
 
         @media (max-width: 768px) {
-          body {
-            background: linear-gradient(180deg, #e7f3ec 0%, #ebf6f2 45%, #fefaf8 100%);
-          }
           .home-page {
             background: transparent;
             padding: 0 12px 60px !important;
@@ -1212,6 +1224,17 @@ export default function Home() {
           }
         }
 
+        .hero-section .hero-primary {
+          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 12px 28px rgba(31, 182, 124, 0.2);
+        }
+
+        .hero-section .hero-primary:hover {
+          transform: translateY(-2px) scale(1.01);
+          background: linear-gradient(120deg, #28c290, #9bf2d8);
+          box-shadow: 0 18px 36px rgba(31, 182, 124, 0.3);
+        }
+
         @media (max-width: 480px) {
           .home-page {
             padding: 0 10px 48px !important;
@@ -1285,6 +1308,45 @@ export default function Home() {
           .cardsGrid,
           .highlight-section {
             grid-template-columns: 1fr !important;
+          }
+        }
+
+        .hero-section .hero-text {
+          text-align: left;
+        }
+
+        .hero-section .hero-inner {
+          align-items: stretch;
+        }
+
+        .hero-section .hero-primary {
+          box-shadow: 0 15px 35px rgba(31, 182, 124, 0.25);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-section .hero-primary:hover {
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 22px 45px rgba(31, 182, 124, 0.35);
+        }
+
+        @media (max-width: 768px) {
+          .hero-section {
+            padding: 64px 24px;
+          }
+          .hero-section .hero-text {
+            text-align: center;
+          }
+          .hero-section .hero-text + .hero-stats {
+            justify-content: center;
+          }
+          .hero-section .hero-inner {
+            flex-direction: column;
+            align-items: center;
+          }
+          .hero-section .hero-primary {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
           }
         }
       `}</style>

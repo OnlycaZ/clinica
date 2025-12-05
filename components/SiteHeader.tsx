@@ -47,17 +47,19 @@ const createHeaderStyles = (palette: Palette) => {
       position: "sticky",
       top: 0,
       width: "100%",
-      zIndex: 70,
-      backdropFilter: "blur(18px)",
-      background: "linear-gradient(130deg, rgba(255,255,255,0.94), rgba(237,248,243,0.9))",
-      borderBottom: "1px solid rgba(31,182,124,0.2)",
+      zIndex: 90,
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      background: "rgba(255, 255, 255, 0.88)",
+      borderBottom: "1px solid rgba(31,182,124,0.25)",
       transition: "transform 0.35s ease, opacity 0.35s ease",
-      boxShadow: "0 10px 30px rgba(18,75,60,0.08)",
+      boxShadow: "0 15px 30px rgba(18,75,60,0.08)",
       isolation: "isolate"
     } as React.CSSProperties,
     headerPinned: {
-      boxShadow: "0 25px 70px rgba(18,75,60,0.18)",
-      borderBottom: "1px solid rgba(31,182,124,0.35)"
+      boxShadow: "0 30px 80px rgba(18,75,60,0.2)",
+      borderBottom: "1px solid rgba(31,182,124,0.4)",
+      background: "rgba(255,255,255,0.95)"
     } as React.CSSProperties,
     headerHalo: {
       position: "absolute",
@@ -155,7 +157,7 @@ const createHeaderStyles = (palette: Palette) => {
     } as React.CSSProperties,
     brandLogo: {
       height: "72px",
-      width: "auto",
+      width: "180px",
       maxWidth: "100%",
       display: "block"
     } as React.CSSProperties,
@@ -317,6 +319,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
   const [activeMenuState, setActiveMenuState] = React.useState<string | null>(null);
   const [isPinned, setIsPinned] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isDesktopWidth, setIsDesktopWidth] = React.useState(() =>
+    typeof window === "undefined" ? true : window.matchMedia("(min-width: 769px)").matches
+  );
   const styles = React.useMemo(() => createHeaderStyles(palette), [palette]);
   const [currentHash, setCurrentHash] = React.useState<string>("#hero");
   const [, startMenuTransition] = React.useTransition();
@@ -334,6 +339,23 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation, megaMenus 
     }
     return () => target.classList.remove("nav-open");
   }, [mobileOpen]);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const mq = window.matchMedia("(min-width: 769px)");
+    const updateDesktop = () => {
+      const matches = mq.matches;
+      setIsDesktopWidth(matches);
+      if (matches) {
+        setMobileOpen(false);
+      }
+    };
+    updateDesktop();
+    mq.addEventListener("change", updateDesktop);
+    return () => mq.removeEventListener("change", updateDesktop);
+  }, []);
 
   const updateActiveMenu = React.useCallback(
     (value: string | null | ((prev: string | null) => string | null)) => {
