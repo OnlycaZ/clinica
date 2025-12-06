@@ -2,7 +2,6 @@
 
 import React from "react";
 import Head from "next/head";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
@@ -125,26 +124,22 @@ const galleryImages = Object.freeze([
   {
     title: "Cabinet chirurgie",
     caption: "Spatiu dedicat interventiilor minim invazive cu monitorizare digitala.",
-    tone: "deep",
-    imageUrl: "https://images.pexels.com/photos/3055687/pexels-photo-3055687.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    tone: "deep"
   },
   {
     title: "Studio estetica",
     caption: "Laborator foto-video pentru designul digital al zambetului.",
-    tone: "light",
-    imageUrl: "https://images.pexels.com/photos/5570001/pexels-photo-5570001.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    tone: "light"
   },
   {
     title: "Sterilizare trasabila",
     caption: "Linie dedicata pentru pregatirea instrumentarului in flux inchis.",
-    tone: "sand",
-    imageUrl: "https://images.pexels.com/photos/4506110/pexels-photo-4506110.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    tone: "sand"
   },
   {
     title: "Radiologie 3D",
     caption: "Flux complet in-house pentru investigatii rapide si sigure.",
-    tone: "deep",
-    imageUrl: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    tone: "deep"
   }
 ]);
 
@@ -187,326 +182,309 @@ const styles: { [key: string]: React.CSSProperties } = {
   page: {
     fontFamily: "'Inter','Segoe UI',system-ui,sans-serif",
     margin: 0,
-    backgroundColor: "transparent",
-    color: palette.navy,
-    minHeight: "100vh",
     width: "100%",
-    padding: "0 16px 96px",
+    minHeight: "100vh",
+    backgroundColor: "#eaf6f0",
+    color: palette.navy,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    gap: "28px"
-  },
-  skipLink: {
-    position: "absolute",
-    left: "-999px",
-    top: "16px",
-    zIndex: 100,
-    backgroundColor: palette.teal,
-    color: "#fff",
-    padding: "10px 18px",
-    borderRadius: "999px",
-    textDecoration: "none",
-    fontWeight: 600
-  },
-  skipLinkVisible: {
-    left: "16px"
+    alignItems: "stretch",
+    gap: "0",
+    padding: "0",
   },
   hero: {
-    width: "100%",
-    maxWidth: "1200px",
-    margin: "30px auto 0",
-    minHeight: "640px",
-    backgroundImage:
-      "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(233, 247, 244, 0.92)), radial-gradient(circle at top right, rgba(31,182,124,0.25), transparent 55%), url('/dentist-cabinet-stomatology-room.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundBlendMode: "screen",
-    color: palette.navy,
-    padding: "96px 48px",
-    borderRadius: "48px",
-    border: `1px solid ${palette.border}`,
+    width: "100vw",
+    maxWidth: "none",
+    marginLeft: "calc(50% - 50vw)",
+    minHeight: "90vh",
+    padding: "120px 32px 96px",
+    background: "linear-gradient(135deg, #0fac7b, #0d9770 60%, #0a6645)",
     position: "relative",
     overflow: "hidden",
-    willChange: "transform",
-    transform: "translateZ(0)"
+    color: palette.light,
+    borderRadius: 0,
+    transform: "translateZ(0)",
   },
   heroInner: {
-    maxWidth: "100%",
+    width: "100%",
+    maxWidth: "1320px",
     margin: "0 auto",
     display: "flex",
-    flexWrap: "wrap",
-    gap: "48px",
-    alignItems: "stretch",
-    minHeight: "420px"
+    flexDirection: "column",
+    gap: "40px",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    zIndex: 2,
   },
   heroContent: {
-    flex: "2 1 420px",
-    minHeight: "320px"
+    textAlign: "center",
+    maxWidth: "960px",
+    margin: "0 auto",
   },
-  heroGlow: {
+  heroOverlay: {
     position: "absolute",
     inset: 0,
-    borderRadius: "48px",
     background:
-      "linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.6)), radial-gradient(circle at 22% 24%, rgba(255,255,255,0.9), transparent 38%)",
-    opacity: 1,
+      "linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(4, 120, 87, 0.25)), radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.45), transparent 45%)",
     pointerEvents: "none",
-    transition: "opacity 0.35s ease",
+    zIndex: 1
+  },
+  heroVideoWrapper: {
+    position: "absolute",
+    inset: 0,
+    overflow: "hidden",
     zIndex: 0,
-    display: "block"
+    borderRadius: 0
+  },
+  heroVideo: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    width: "140%",
+    height: "140%",
+    transform: "translate(-50%, -50%)",
+    objectFit: "cover",
+    filter: "brightness(0.65) saturate(1.2)"
   },
   heroEyebrow: {
     textTransform: "uppercase",
-    letterSpacing: "0.35em",
+    letterSpacing: "0.4em",
     fontSize: "12px",
+    color: "rgba(255,255,255,0.85)",
+    marginBottom: "18px",
     fontWeight: 600,
-    margin: "0 0 16px",
-    color: palette.teal
   },
   heroTitle: {
-    fontSize: "48px",
-    lineHeight: 1.1,
-    margin: "0 0 28px",
-    fontWeight: 700
+    fontSize: "clamp(40px, 6vw, 64px)",
+    lineHeight: 1.15,
+    margin: "0 0 24px",
+    fontWeight: 800,
+    textShadow: "0 30px 60px rgba(4, 120, 87, 0.45)",
   },
   heroText: {
-    fontSize: "18px",
-    lineHeight: 1.6,
+    fontSize: "clamp(16px, 2.2vw, 20px)",
+    lineHeight: 1.75,
+    color: "rgba(255,255,255,0.95)",
     margin: "0 0 32px",
-    color: palette.slate
+    textShadow: "0 15px 30px rgba(4, 120, 87, 0.35)",
   },
   heroCtas: {
     display: "flex",
     gap: "16px",
     flexWrap: "wrap",
-    marginBottom: "32px"
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "560px",
+    margin: "0 auto 12px",
   },
   primaryButton: {
-    background: `linear-gradient(120deg, ${palette.teal}, #8bf2c5)`,
+    background: `linear-gradient(120deg, ${palette.teal}, #9cf1d3)`,
     color: palette.night,
-    border: `1px solid rgba(31,182,124,0.2)`,
-    padding: "14px 32px",
-    borderRadius: "28px",
-    fontWeight: 600,
-    cursor: "pointer",
-    transition: "transform 0.3s ease, box-shadow 0.35s ease"
+    padding: "14px 36px",
+    borderRadius: "999px",
+    fontWeight: 700,
+    border: "none",
+    boxShadow: "0 18px 45px rgba(31,182,124,0.35)",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
   },
   secondaryButton: {
-    backgroundColor: "rgba(255,255,255,0.5)",
-    color: palette.navy,
-    border: `1px solid ${palette.border}`,
-    padding: "12px 24px",
     borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,0.5)",
+    color: "#fff",
+    padding: "14px 34px",
     fontWeight: 600,
-    cursor: "pointer",
-    transition: "transform 0.35s ease, opacity 0.35s ease"
+    background: "rgba(255,255,255,0.15)",
+    transition: "background 0.3s ease, transform 0.3s ease",
   },
   heroStats: {
+    width: "100%",
+    maxWidth: "960px",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(135px, 1fr))",
-    gap: "20px",
-    margin: 0
+    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+    gap: "24px",
   },
   heroStatBlock: {
-    borderLeft: "1px solid rgba(18,60,53,0.2)",
-    paddingLeft: "16px"
+    borderLeft: "1px solid rgba(255,255,255,0.5)",
+    paddingLeft: "16px",
+    textAlign: "center",
   },
   heroStatValue: {
-    fontSize: "32px",
+    fontSize: "36px",
     fontWeight: 700,
     margin: 0,
-    color: palette.navy
+    color: "#fff",
   },
   heroStatLabel: {
     margin: 0,
-    color: palette.slate,
-    fontSize: "14px"
+    color: "rgba(255,255,255,0.85)",
+    fontSize: "14px",
   },
   heroCard: {
-    flex: "1 1 300px",
     backgroundColor: "rgba(255,255,255,0.92)",
-    backgroundImage:
-      "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.65)), url('/dentist-cabinet-stomatology-room.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    borderRadius: "36px",
+    padding: "34px",
+    boxShadow: "0 32px 90px rgba(11,42,61,0.15)",
+    maxWidth: "560px",
+    margin: "32px auto 0",
+    position: "relative",
+    zIndex: 2,
     color: palette.navy,
-    borderRadius: "30px",
-    padding: "32px",
-    border: `1px solid ${palette.border}`,
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-    willChange: "transform",
-    transform: "translateZ(0)",
-    minHeight: "320px"
+    border: "none",
   },
   heroCardLabel: {
     fontSize: "20px",
-    fontWeight: 600,
-    margin: 0
+    fontWeight: 700,
+    margin: 0,
   },
   heroCardDetail: {
-    margin: "0 0 12px",
-    color: palette.slate
+    margin: "0 0 18px",
+    color: palette.slate,
+    fontSize: "15px",
   },
   heroContactLink: {
+    backgroundColor: "rgba(31,182,124,0.08)",
+    border: "1px solid rgba(31,182,124,0.25)",
+    borderRadius: "22px",
     display: "flex",
-    gap: "12px",
+    gap: "16px",
     alignItems: "center",
     justifyContent: "flex-start",
-    padding: "18px",
-    borderRadius: "22px",
-    backgroundColor: "rgba(31,182,124,0.08)",
-    border: "1px solid rgba(31,182,124,0.2)",
+    padding: "16px 20px",
     textDecoration: "none",
     color: palette.navy,
     fontWeight: 600,
-    transition: "transform 0.35s ease, opacity 0.35s ease",
-    flex: "1 1 240px",
     minWidth: "240px",
-    textAlign: "center"
+    transition: "transform 0.3s ease, opacity 0.3s ease",
   },
   heroContactText: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    lineHeight: 1.4
+    lineHeight: 1.4,
+    alignItems: "flex-start",
   },
   contactBadge: {
-    width: "44px",
-    height: "44px",
+    width: "42px",
+    height: "42px",
     borderRadius: "50%",
     backgroundColor: palette.teal,
     color: "#fff",
-    fontWeight: 700,
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
     letterSpacing: "0.08em",
-    fontSize: "12px",
-    textTransform: "uppercase"
+    fontSize: "11px",
+    fontWeight: 700,
   },
   highlightsWrapper: {
     width: "100%",
-    marginTop: "36px",
-    maxWidth: "1200px",
-    marginLeft: "auto",
-    marginRight: "auto"
+    padding: "70px 0",
+    background: "linear-gradient(180deg, rgba(255,255,255,0.9), rgba(233,247,238,0.82))",
   },
   highlightSection: {
-    backgroundColor: "rgba(255,255,255,0.92)",
-    borderRadius: "34px",
-    padding: "42px 34px",
-    maxWidth: "100%",
+    maxWidth: "1320px",
     margin: "0 auto",
+    padding: "42px 32px",
+    borderRadius: "36px",
+    backgroundColor: "rgba(255,255,255,0.96)",
+    boxShadow: "0 40px 90px rgba(18,60,53,0.05)",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
     gap: "24px",
-    border: `1px solid ${palette.border}`,
-    willChange: "transform",
-    transform: "translateZ(0)"
   },
   highlightCard: {
-    backgroundColor: "rgba(255,255,255,0.7)",
-    borderRadius: "24px",
-    padding: "20px",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderRadius: "32px",
+    padding: "28px",
     display: "flex",
     flexDirection: "column",
-    gap: "8px",
-    minHeight: "150px",
-    border: `1px solid rgba(18,75,60,0.08)`,
-    flex: "1 1 200px",
-    willChange: "transform",
-    transform: "translateZ(0)"
+    gap: "12px",
+    minHeight: "160px",
+    border: `1px solid rgba(31,182,124,0.15)`,
+    boxShadow: "0 25px 60px rgba(31,182,124,0.08)",
   },
   highlightIcon: {
-    width: "64px",
-    height: "64px",
+    width: "60px",
+    height: "60px",
     borderRadius: "18px",
-    backgroundColor: "rgba(31,182,124,0.1)",
+    backgroundColor: "rgba(31,182,124,0.16)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: palette.teal
+    color: palette.teal,
   },
   highlightTitle: {
-    margin: "8px 0 0",
-    fontSize: "18px",
-    fontWeight: 700
+    margin: "0",
+    fontSize: "20px",
+    fontWeight: 700,
   },
   highlightText: {
-    margin: "4px 0 0",
+    margin: "0",
     color: palette.slate,
-    lineHeight: 1.5
+    lineHeight: 1.6,
   },
   servicesSection: {
-    padding: "96px 24px",
-    maxWidth: "1200px",
-    margin: "0 auto",
     width: "100%",
-    minHeight: "560px",
-    willChange: "transform",
-    transform: "translateZ(0)"
+    padding: "96px 24px",
+    background: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(221,248,238,0.94))",
   },
   sectionHeader: {
-    textAlign: "left",
     maxWidth: "720px",
-    marginBottom: "32px"
+    marginBottom: "32px",
   },
   sectionEyebrow: {
     textTransform: "uppercase",
-    letterSpacing: "0.25em",
+    letterSpacing: "0.3em",
     color: palette.teal,
     fontSize: "12px",
-    marginBottom: "12px"
+    marginBottom: "12px",
   },
   sectionTitle: {
-    fontSize: "42px",
-    lineHeight: 1.35,
-    margin: "0 0 24px"
+    fontSize: "36px",
+    lineHeight: 1.4,
+    margin: "0 0 16px",
   },
   sectionCopy: {
     margin: 0,
     color: palette.slate,
-    lineHeight: 1.7
+    lineHeight: 1.7,
   },
   cardsGrid: {
+    width: "100%",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "28px",
-    minHeight: "420px"
+    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    gap: "24px",
   },
   card: {
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "#ffffff",
     borderRadius: "30px",
-    padding: "32px",
-    border: `1px solid ${palette.border}`,
+    padding: "28px",
+    border: `1px solid rgba(31,182,124,0.12)`,
     display: "flex",
     flexDirection: "column",
     gap: "12px",
-    minHeight: "320px"
+    minHeight: "320px",
+    boxShadow: "0 32px 80px rgba(18,60,53,0.06)",
   },
   serviceIcon: {
     width: "56px",
     height: "56px",
-    borderRadius: "16px",
+    borderRadius: "18px",
     backgroundColor: "rgba(31,182,124,0.08)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: palette.teal
+    color: palette.teal,
   },
   cardTitle: {
     margin: 0,
-    fontSize: "22px"
+    fontSize: "22px",
   },
   cardCopy: {
     margin: 0,
     color: palette.slate,
-    lineHeight: 1.6
+    lineHeight: 1.6,
   },
   cardList: {
     listStyle: "none",
@@ -515,24 +493,24 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     flexDirection: "column",
     gap: "6px",
-    color: palette.navy
+    color: palette.navy,
   },
   cardListItem: {
     display: "flex",
     gap: "10px",
     alignItems: "center",
-    fontSize: "14px"
+    fontSize: "14px",
   },
   cardBullet: {
-    display: "inline-flex",
     width: "26px",
     height: "26px",
     borderRadius: "8px",
-    backgroundColor: "rgba(31,182,124,0.12)",
+    backgroundColor: "rgba(31,182,124,0.15)",
     color: palette.teal,
+    display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    fontWeight: 700
+    fontWeight: 700,
   },
   linkButton: {
     marginTop: "8px",
@@ -540,163 +518,154 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "none",
     color: palette.teal,
     fontWeight: 600,
-    textAlign: "left",
+    cursor: "pointer",
     padding: 0,
-    cursor: "pointer"
   },
   gallerySection: {
     backgroundColor: "rgba(255,255,255,0.95)",
     borderRadius: "36px",
-    padding: "80px 32px",
-    margin: "40px auto 60px",
-    minHeight: "600px",
-    border: `1px solid ${palette.border}`,
+    padding: "80px 36px",
+    margin: "40px auto",
     maxWidth: "1200px",
-    width: "100%"
+    border: `1px solid ${palette.border}`,
+    boxShadow: "0 30px 70px rgba(18,60,53,0.08)",
   },
   galleryIntro: {
     maxWidth: "700px",
-    marginBottom: "32px"
+    marginBottom: "32px",
   },
   galleryGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "24px"
-  },
-  galleryInfoGrid: {
-    marginTop: "32px",
-    borderRadius: "36px",
-    padding: "32px",
-    backgroundColor: "rgba(255,255,255,0.95)",
-    border: `1px solid ${palette.border}`,
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-    gap: "18px"
-  },
-  galleryInfoTitle: {
-    margin: "0 0 6px",
-    fontWeight: 700
-  },
-  galleryInfoText: {
-    margin: 0,
-    color: palette.slate,
-    lineHeight: 1.6
+    gap: "24px",
   },
   galleryCard: {
-    borderRadius: "30px",
+    borderRadius: "32px",
     padding: "26px 22px",
     minHeight: "320px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    gap: "16px",
     backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(233,247,238,0.85))",
     border: "1px solid rgba(18,75,60,0.08)",
-    willChange: "transform",
-    transform: "translateZ(0)"
+    boxShadow: "0 20px 50px rgba(18,60,53,0.08)",
   },
   galleryFrame: {
-    borderRadius: "22px",
+    borderRadius: "24px",
     border: "1px solid rgba(18,75,60,0.15)",
-    aspectRatio: "3 / 4",
-    margin: "0 auto 18px",
     width: "100%",
-    maxWidth: "320px",
-    backgroundColor: "rgba(255,255,255,0.5)",
+    aspectRatio: "3 / 4",
     overflow: "hidden",
-    position: "relative",
-    boxShadow: "inset 0 0 15px rgba(18,75,60,0.08)"
+    boxShadow: "inset 0 0 15px rgba(18,75,60,0.08)",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  galleryImage: {
-    objectFit: "cover",
-    display: "block",
-    backgroundColor: "#dfe6ee",
-    transition: "transform 0.6s ease",
-    transform: "scale(1.02)"
+  galleryFramePlaceholder: {
+    width: "80%",
+    height: "80%",
+    borderRadius: "18px",
+    background: "linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.18))",
+    filter: "blur(0.5px)",
   },
   galleryTitle: {
     margin: 0,
     fontSize: "18px",
-    fontWeight: 600
+    fontWeight: 600,
   },
   galleryText: {
     margin: 0,
-    fontSize: "14px",
+    fontSize: "15px",
     lineHeight: 1.5,
-    opacity: 0.9
+    color: palette.slate,
   },
   galleryBadge: {
     alignSelf: "flex-start",
     padding: "6px 14px",
     borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,0.35)",
     fontSize: "12px",
     fontWeight: 600,
-    border: "1px solid rgba(255,255,255,0.35)",
-    color: palette.light,
-    backgroundColor: "rgba(255,255,255,0.15)"
+    color: palette.navy,
+    backgroundColor: "rgba(31,182,124,0.08)",
+  },
+  galleryInfoGrid: {
+    marginTop: "32px",
+    borderRadius: "32px",
+    padding: "32px",
+    backgroundColor: "rgba(255,255,255,0.97)",
+    border: `1px solid ${palette.border}`,
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: "18px",
+  },
+  galleryInfoTitle: {
+    marginBottom: "6px",
+    fontWeight: 700,
+  },
+  galleryInfoText: {
+    margin: 0,
+    color: palette.slate,
+    lineHeight: 1.6,
   },
   ctaSection: {
-    backgroundImage: "linear-gradient(120deg, rgba(255,255,255,0.95), rgba(219,245,232,0.92))",
-    color: palette.navy,
-    borderRadius: "36px",
+    width: "100%",
+    maxWidth: "1200px",
     margin: "40px auto 80px",
+    borderRadius: "36px",
     padding: "56px 48px",
+    backgroundImage: "linear-gradient(120deg, rgba(255,255,255,0.95), rgba(219,245,232,0.92))",
     display: "flex",
     flexWrap: "wrap",
     gap: "32px",
     alignItems: "center",
     border: `1px solid ${palette.border}`,
-    maxWidth: "1200px",
-    width: "100%",
-    minHeight: "420px",
-    willChange: "transform",
-    transform: "translateZ(0)"
+    boxShadow: "0 32px 80px rgba(18,60,53,0.08)",
   },
   footerPlaceholder: {
     width: "100%",
     maxWidth: "1200px",
     minHeight: "360px",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   ctaContent: {
-    flex: "2 1 360px"
+    flex: "2 1 380px",
   },
   ctaActions: {
     display: "flex",
     gap: "12px",
     flexWrap: "wrap",
-    marginTop: "24px"
+    marginTop: "24px",
   },
   phonePill: {
-    backgroundColor: "rgba(31,182,124,0.12)",
-    color: palette.navy,
     borderRadius: "999px",
     padding: "12px 20px",
-    textDecoration: "none",
-    fontWeight: 600,
     border: "1px solid rgba(31,182,124,0.3)",
-    transition: "transform 0.35s ease, opacity 0.35s ease"
+    backgroundColor: "rgba(31,182,124,0.12)",
+    color: palette.navy,
+    fontWeight: 600,
+    textDecoration: "none",
+    transition: "transform 0.3s ease, opacity 0.3s ease",
   },
   assuranceList: {
     flex: "1 1 260px",
     listStyle: "none",
-    padding: 0,
     margin: 0,
+    padding: 0,
     display: "flex",
     flexDirection: "column",
-    gap: "12px"
+    gap: "12px",
   },
   assuranceItem: {
     display: "flex",
     gap: "10px",
     alignItems: "center",
-    color: palette.slate
+    color: palette.slate,
   },
   assuranceBullet: {
-    display: "inline-flex",
-    width: "18px",
-    justifyContent: "center",
     color: palette.teal,
-    fontWeight: 700
+    fontWeight: 700,
   },
   clinicShowcaseSection: {
     width: "100%",
@@ -709,55 +678,58 @@ const styles: { [key: string]: React.CSSProperties } = {
     boxShadow: "0 30px 60px rgba(18,75,60,0.09)",
     display: "flex",
     flexDirection: "column",
-    gap: "20px"
+    gap: "24px",
   },
   clinicShowcaseIntro: {
     display: "flex",
     flexDirection: "column",
-    gap: "8px"
+    gap: "8px",
   },
   clinicShowcaseTitle: {
     margin: 0,
     fontSize: "32px",
-    color: palette.navy
+    color: palette.navy,
   },
   clinicShowcaseCopy: {
     margin: 0,
     color: palette.slate,
-    lineHeight: 1.6
+    lineHeight: 1.6,
   },
   clinicShowcaseGrid: {
-    width: "100%",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-    gap: "20px"
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: "20px",
   },
   clinicShowcaseCard: {
-    borderRadius: "28px",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderRadius: "32px",
+    padding: "24px",
     border: `1px solid rgba(18,75,60,0.12)`,
-    padding: "18px",
-    backgroundColor: "#fefefc",
+    boxShadow: "0 20px 60px rgba(18,60,53,0.08)",
+    minHeight: "320px",
     display: "flex",
     flexDirection: "column",
     gap: "12px",
-    minHeight: "260px"
   },
   clinicShowcaseImage: {
-    borderRadius: "22px",
-    overflow: "hidden",
-    position: "relative",
-    height: "160px",
+    width: "100%",
+    height: "180px",
+    borderRadius: "24px",
+    background: "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(242,249,247,0.5))",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     border: `1px solid rgba(18,75,60,0.15)`
   },
   clinicShowcaseCardTitle: {
     margin: 0,
-    fontSize: "20px"
+    fontSize: "20px",
   },
   clinicShowcaseCardCopy: {
     margin: 0,
     fontSize: "15px",
     color: palette.slate,
-    lineHeight: 1.6
+    lineHeight: 1.6,
   },
   clinicShowcaseTags: {
     margin: 0,
@@ -765,7 +737,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     listStyle: "none",
     display: "flex",
     flexWrap: "wrap",
-    gap: "8px"
+    gap: "8px",
   },
   clinicShowcaseTag: {
     fontSize: "12px",
@@ -774,10 +746,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: `1px solid rgba(31,182,124,0.3)`,
     color: palette.teal,
     textTransform: "uppercase",
-    letterSpacing: "0.06em"
-  }
+    letterSpacing: "0.06em",
+  },
 };
-
 const fadeIn = (delay = 0): React.CSSProperties => ({
   animation: "fadeInUp 0.9s ease forwards",
   animationDelay: `${delay}s`
@@ -798,8 +769,8 @@ const galleryToneStyles: Record<string, React.CSSProperties> = {
   }
 };
 
+
 export default function Home() {
-  const [skipFocused, setSkipFocused] = React.useState(false);
   const sanitizedPhone = siteConfig.contactPhone.replace(/\s+/g, "");
   const bookingEmail = siteConfig.contactEmail;
 
@@ -823,570 +794,320 @@ export default function Home() {
         <meta name="twitter:description" content={homeSeo.description} />
         <meta name="twitter:image" content={homeSeo.image} />
       </Head>
-      <main style={styles.page} className="home-page section-bg">
-      <a
-        href="#programare"
-        style={{ ...styles.skipLink, ...(skipFocused ? styles.skipLinkVisible : {}) }}
-        onFocus={() => setSkipFocused(true)}
-        onBlur={() => setSkipFocused(false)}
-      >
-        Sari direct la programari
-      </a>
+      <main style={styles.page} className="home-page w-screen overflow-x-hidden">
+        <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
-      <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
-
-      <section id="hero" style={{ ...styles.hero, ...fadeIn(0.05) }} aria-labelledby="hero-title" className="hero-section section-bg">
-        <div style={styles.heroGlow} className="hero-glow" aria-hidden="true" />
-        <div style={styles.heroInner} className="hero-inner">
-          <div style={styles.heroContent}>
-            <p style={styles.heroEyebrow} className="hero-eyebrow">
-              Clinica dentara integrata
-            </p>
-            <h1 id="hero-title" style={styles.heroTitle}>
-              DentNow este clinica familiei tale din Dristor
-            </h1>
-            <p style={styles.heroText} className="hero-text">
-              DentNow imbina expertiza medicala cu tehnologii digitale si finantare usor de accesat. Tratam adulti si copii cu
-              aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
-            </p>
-
-            <div style={styles.heroCtas}>
-              <a href="/rezerva-vizita" style={styles.primaryButton} className="hero-primary btn-animate">
-                Programeaza consultatia
-              </a>
-              <a href="/portofoliu" style={styles.secondaryButton} className="btn-animate">
-                Vezi portofoliul
-              </a>
-            </div>
-
-            <dl style={styles.heroStats} className="hero-stats">
-              {stats.map((stat) => (
-                <div key={stat.label} style={styles.heroStatBlock}>
-                  <dt style={styles.heroStatValue}>{stat.value}</dt>
-                  <dd style={styles.heroStatLabel}>{stat.label}</dd>
-                </div>
-              ))}
-            </dl>
+        <section
+          id="hero"
+          aria-labelledby="hero-title"
+          className="hero-section w-full px-0"
+          style={{ ...styles.hero, ...fadeIn(0.05) }}
+        >
+          <div style={styles.heroVideoWrapper} aria-hidden="true">
+            <video
+              src="/Dental_Clinic_Video_Presentation_Request.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={styles.heroVideo}
+            />
           </div>
-
-          <div style={styles.heroCard} role="complementary" aria-label="Informatii pentru programari" className="hero-info-card">
-            <p style={styles.heroCardLabel}>Programam pacienti din tara si din strainatate</p>
-            <p style={styles.heroCardDetail}>Program cabinet: Luni - Sambata, 08:00 - 21:00</p>
-
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
-              <a href={`tel:${sanitizedPhone}`} style={styles.heroContactLink} className="btn-animate">
-                <span aria-hidden="true" style={styles.contactBadge}>
-                  TEL
-                </span>
-                <span style={styles.heroContactText}>
-                  {siteConfig.contactPhone}
-                  <br />
-                  <small style={{ fontWeight: 400, color: palette.slate }}>Linie prioritara</small>
-                </span>
-              </a>
-
-              <a href={`mailto:${bookingEmail}`} style={styles.heroContactLink} className="btn-animate">
-                <span aria-hidden="true" style={styles.contactBadge}>
-                  MAIL
-                </span>
-                <span style={styles.heroContactText}>
-                  {bookingEmail}
-                  <br />
-                  <small style={{ fontWeight: 400, color: palette.slate }}>Raspuns in max. 2 ore</small>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ ...styles.highlightsWrapper, ...fadeIn(0.15) }} aria-label="Avantajele clinicii" className="highlight-wrapper section-bg">
-        <div style={styles.highlightSection} className="interactive-panel highlight-panel">
-          {highlights.map((item) => (
-            <article key={item.title} style={styles.highlightCard} className="highlight-card">
-              <span style={styles.highlightIcon} aria-hidden="true">
-                {iconMap[item.icon] || item.icon}
-              </span>
-              <h3 style={styles.highlightTitle}>{item.title}</h3>
-              <p style={styles.highlightText}>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="servicii"
-        style={{ ...styles.servicesSection, ...fadeIn(0.25) }}
-        aria-labelledby="servicii-title"
-        className="services-section section-bg"
-      >
-        <div style={styles.sectionHeader}>
-          <p style={styles.sectionEyebrow}>Servicii complete</p>
-          <h2 id="servicii-title" style={styles.sectionTitle}>
-            Solutii moderne pentru fiecare etapa a zambetului tau
-          </h2>
-          <p style={styles.sectionCopy}>
-            De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi
-            siguranta si confort.
-          </p>
-        </div>
-
-        <div style={styles.cardsGrid} className="services-grid">
-          {services.map((service) => (
-            <article key={service.title} style={styles.card} aria-label={service.title} className="interactive-card">
-              <span style={styles.serviceIcon} aria-hidden="true">
-                {iconMap[service.icon] || service.icon}
-              </span>
-              <h3 style={styles.cardTitle}>{service.title}</h3>
-              <p style={styles.cardCopy}>{service.description}</p>
-              <ul style={styles.cardList}>
-                {service.features.map((feature) => (
-                  <li key={feature} style={styles.cardListItem}>
-                    <span aria-hidden="true" style={styles.cardBullet}>
-                      +
-                    </span>
-                    <span>{feature}</span>
-                  </li>
+          <div style={styles.heroOverlay} aria-hidden="true" />
+          <div style={styles.heroInner} className="hero-inner">
+            <div style={styles.heroContent}>
+              <p style={styles.heroEyebrow}>Clinica dentara integrata</p>
+              <h1 id="hero-title" style={styles.heroTitle}>
+                DentNow este clinica familiei tale din Dristor
+              </h1>
+              <p style={styles.heroText}>
+                DentNow imbina expertiza medicala cu tehnologii digitale si finantare usor de accesat. Tratam adulti si
+                copii cu aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
+              </p>
+              <div style={styles.heroCtas}>
+                <a href="/rezerva-vizita" style={styles.primaryButton} className="hero-primary btn-animate">
+                  Programeaza consultatia
+                </a>
+                <a href="/portofoliu" style={styles.secondaryButton} className="btn-animate">
+                  Vezi portofoliul
+                </a>
+              </div>
+              <dl style={styles.heroStats} className="hero-stats">
+                {stats.map((stat) => (
+                  <div key={stat.label} style={styles.heroStatBlock}>
+                    <dt style={styles.heroStatValue}>{stat.value}</dt>
+                    <dd style={styles.heroStatLabel}>{stat.label}</dd>
+                  </div>
                 ))}
-              </ul>
-              <a href="/contact" style={styles.linkButton} className="link-animate">
-                Afla detalii
-              </a>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="galerie"
-        style={{ ...styles.gallerySection, ...fadeIn(0.35) }}
-        aria-labelledby="galerie-title"
-        className="gallery-section section-bg"
-      >
-        <div style={styles.galleryIntro}>
-          <p style={styles.sectionEyebrow}>Galerie clinica</p>
-          <h2 id="galerie-title" style={{ ...styles.sectionTitle, marginBottom: "12px" }}>
-            Spatii concepute pentru confort si precizie
-          </h2>
-          <p style={styles.sectionCopy}>
-            Rezervam zone distincte pentru chirurgie, estetica si consiliere, astfel incat fiecare interactiune sa fie fluida si
-            predictibila. Insertiile de lemn si lumina naturala pregatesc cadrul perfect pentru prezentarea rezultatelor.
-          </p>
-        </div>
-
-        <div style={styles.galleryGrid} className="gallery-grid">
-          {galleryImages.map((item) => {
-            const toneStyle = galleryToneStyles[item.tone] || {};
-            const badgeStyle =
-              item.tone === "deep"
-                ? styles.galleryBadge
-                : {
-                    ...styles.galleryBadge,
-                    border: `1px solid ${palette.border}`,
-                    color: palette.navy,
-                    backgroundColor: "rgba(31,182,124,0.08)"
-                  };
-
-            return (
-              <figure key={item.title} style={{ ...styles.galleryCard, ...toneStyle }} className="interactive-card">
-                <div
-                  style={{
-                    ...styles.galleryFrame,
-                    borderColor: item.tone === "deep" ? "rgba(255,255,255,0.45)" : "rgba(11,42,61,0.3)",
-                    backgroundColor: item.tone === "deep" ? "rgba(255,255,255,0.08)" : "rgba(11,42,61,0.05)"
-                  }}
-                  aria-hidden="true"
-                >
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 300px"
-                    style={styles.galleryImage}
-                  />
-                </div>
-                <div>
-                  <p style={badgeStyle}>Spatiu dedicat</p>
-                  <h3 style={styles.galleryTitle}>{item.title}</h3>
-                  <figcaption style={styles.galleryText}>{item.caption}</figcaption>
-                </div>
-              </figure>
-            );
-          })}
-        </div>
-
-      <div style={styles.galleryInfoGrid}>
-        {facilityFeatures.map((feature) => (
-          <div key={feature.title}>
-            <p style={styles.galleryInfoTitle}>{feature.title}</p>
-            <p style={styles.galleryInfoText}>{feature.detail}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section
-      style={{ ...styles.clinicShowcaseSection, ...fadeIn(0.37) }}
-      aria-labelledby="clinic-showcase-title"
-      className="section-bg"
-    >
-      <div style={styles.clinicShowcaseIntro}>
-        <p style={styles.sectionEyebrow}>Cabinetul DentNow</p>
-        <h2 id="clinic-showcase-title" style={styles.clinicShowcaseTitle}>
-          Suprafete, echipamente si cadre dedicate stomatologiei moderne
-        </h2>
-        <p style={styles.clinicShowcaseCopy}>
-          Fiecare spatiu este optimizat pentru siguranta si confort — de la blocul operator pana la zonele de consiliere,
-          pentru ca tu si familia ta sa simtiti ca intr-un cabinet premium.
-        </p>
-      </div>
-      <div style={styles.clinicShowcaseGrid}>
-        {showcaseElements.map((element) => (
-          <article key={element.imageUrl} style={styles.clinicShowcaseCard}>
-            <div style={styles.clinicShowcaseImage}>
-              <Image src={element.imageUrl} alt={element.title} fill sizes="(max-width: 768px) 100vw, 240px" style={{ objectFit: "cover" }} />
+              </dl>
             </div>
-            <h3 style={styles.clinicShowcaseCardTitle}>{element.title}</h3>
-            <p style={styles.clinicShowcaseCardCopy}>{element.description}</p>
-            <ul style={styles.clinicShowcaseTags}>
-              {element.tags.map((tag) => (
-                <li key={tag} style={styles.clinicShowcaseTag}>
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </section>
 
-    <section
-      id="programare"
-      style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
-        aria-labelledby="programare-title"
-        className="cta-section section-bg"
-      >
-        <div style={styles.ctaContent}>
-          <p style={styles.sectionEyebrow}>Programari rapide</p>
-          <h2 id="programare-title" style={{ margin: "0 0 12px", fontSize: "32px" }}>
-            Ramai conectat cu echipa ta medicala
-          </h2>
-          <p style={{ margin: 0, lineHeight: 1.6 }}>
-            Coordonatorii DentNow iti confirma vizita in cel mult 30 de minute. Trimite-ne istoricul tau medical in siguranta si
-            pregatim traseul optim inaintea sosirii.
-          </p>
-          <div style={styles.ctaActions}>
-            <a href={`tel:${sanitizedPhone}`} style={styles.phonePill} className="btn-animate">
-              Suna acum
-            </a>
-            <button type="button" style={{ ...styles.primaryButton, boxShadow: "none" }} className="btn-animate">
-              Trimite mesaj
-            </button>
+            <div style={styles.heroCard} role="complementary" aria-label="Informatii pentru programari">
+              <p style={styles.heroCardLabel}>Programam pacienti din tara si din strainatate</p>
+              <p style={styles.heroCardDetail}>Program cabinet: Luni - Sambata, 08:00 - 21:00</p>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                <a href={`tel:${sanitizedPhone}`} style={styles.heroContactLink} className="btn-animate">
+                  <span aria-hidden="true" style={styles.contactBadge}>
+                    TEL
+                  </span>
+                  <span style={styles.heroContactText}>
+                    {siteConfig.contactPhone}
+                    <br />
+                    <small style={{ fontWeight: 400, color: palette.slate }}>Linie prioritara</small>
+                  </span>
+                </a>
+                <a href={`mailto:${bookingEmail}`} style={styles.heroContactLink} className="btn-animate">
+                  <span aria-hidden="true" style={styles.contactBadge}>
+                    MAIL
+                  </span>
+                  <span style={styles.heroContactText}>
+                    {bookingEmail}
+                    <br />
+                    <small style={{ fontWeight: 400, color: palette.slate }}>Raspuns in max. 2 ore</small>
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-        <ul style={styles.assuranceList} className="assurance-list">
-          {assurances.map((item) => (
-            <li key={item} style={styles.assuranceItem}>
-              <span aria-hidden="true" style={styles.assuranceBullet}>
-                {">"}
-              </span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+        </section>
 
-      <React.Suspense fallback={<div style={styles.footerPlaceholder} aria-hidden="true" />}>
-        <SiteFooter palette={palette} />
-      </React.Suspense>
+        <section
+          style={{ ...styles.highlightsWrapper, ...fadeIn(0.15) }}
+          aria-label="Avantajele clinicii"
+          className="w-full px-4 lg:px-0"
+        >
+          <div style={styles.highlightSection} className="interactive-panel">
+            {highlights.map((item) => (
+              <article key={item.title} style={styles.highlightCard} className="highlight-card">
+                <span style={styles.highlightIcon} aria-hidden="true">
+                  {iconMap[item.icon] || item.icon}
+                </span>
+                <h3 style={styles.highlightTitle}>{item.title}</h3>
+                <p style={styles.highlightText}>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(24px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+        <section
+          id="servicii"
+          aria-labelledby="servicii-title"
+          className="services-section w-full px-4 lg:px-0"
+          style={{ ...styles.servicesSection, ...fadeIn(0.25) }}
+        >
+          <div style={styles.sectionHeader}>
+            <p style={styles.sectionEyebrow}>Servicii complete</p>
+            <h2 id="servicii-title" style={styles.sectionTitle}>
+              Solutii moderne pentru fiecare etapa a zambetului tau
+            </h2>
+            <p style={styles.sectionCopy}>
+              De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi
+              siguranta si confort.
+            </p>
+          </div>
+          <div style={styles.cardsGrid} className="services-grid">
+            {services.map((service) => (
+              <article key={service.title} style={styles.card} className="interactive-card" aria-label={service.title}>
+                <span style={styles.serviceIcon} aria-hidden="true">
+                  {iconMap[service.icon] || service.icon}
+                </span>
+                <h3 style={styles.cardTitle}>{service.title}</h3>
+                <p style={styles.cardCopy}>{service.description}</p>
+                <ul style={styles.cardList}>
+                  {service.features.map((feature) => (
+                    <li key={feature} style={styles.cardListItem}>
+                      <span aria-hidden="true" style={styles.cardBullet}>
+                        +
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href="/contact" style={styles.linkButton} className="link-animate">
+                  Afla detalii
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        .section-bg {
-          background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(233, 247, 238, 0.82));
-          border-radius: 36px;
-          border: 1px solid rgba(18, 60, 53, 0.06);
-          box-shadow: 0 20px 40px rgba(31, 182, 124, 0.08);
-        }
+        <section
+          id="galerie"
+          aria-labelledby="galerie-title"
+          className="gallery-section w-full px-4 lg:px-0"
+          style={{ ...styles.gallerySection, ...fadeIn(0.35) }}
+        >
+          <div style={styles.galleryIntro}>
+            <p style={styles.sectionEyebrow}>Galerie clinica</p>
+            <h2 id="galerie-title" style={{ ...styles.sectionTitle, marginBottom: "12px" }}>
+              Spatii concepute pentru confort si precizie
+            </h2>
+            <p style={styles.sectionCopy}>
+              Rezervam zone distincte pentru chirurgie, estetica si consiliere, astfel incat fiecare interactiune sa fie fluida si
+              predictibila. Insertiile de lemn si lumina naturala pregatesc cadrul perfect pentru prezentarea rezultatelor.
+            </p>
+          </div>
+          <div style={styles.galleryGrid} className="gallery-grid">
+            {galleryImages.map((item) => {
+              const toneStyle = galleryToneStyles[item.tone] || {};
+              const badgeStyle =
+                item.tone === "deep"
+                  ? styles.galleryBadge
+                  : {
+                      ...styles.galleryBadge,
+                      border: `1px solid ${palette.border}`,
+                      color: palette.navy,
+                      backgroundColor: "rgba(31,182,124,0.08)",
+                    };
+              return (
+                <figure key={item.title} style={{ ...styles.galleryCard, ...toneStyle }} className="interactive-card">
+                <div style={styles.galleryFrame} aria-hidden="true">
+                  <div style={styles.galleryFramePlaceholder} />
+                </div>
+                  <div>
+                    <p style={badgeStyle}>Spatiu dedicat</p>
+                    <h3 style={styles.galleryTitle}>{item.title}</h3>
+                    <figcaption style={styles.galleryText}>{item.caption}</figcaption>
+                  </div>
+                </figure>
+              );
+            })}
+          </div>
+          <div style={styles.galleryInfoGrid}>
+            {facilityFeatures.map((feature) => (
+              <div key={feature.title}>
+                <p style={styles.galleryInfoTitle}>{feature.title}</p>
+                <p style={styles.galleryInfoText}>{feature.detail}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        .interactive-card,
-        .interactive-panel {
-          transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-          box-shadow: 0 20px 45px rgba(18, 60, 53, 0.08);
-        }
+        <section
+          aria-labelledby="clinic-showcase-title"
+          className="section-bg w-full px-4 lg:px-0"
+          style={{ ...styles.clinicShowcaseSection, ...fadeIn(0.37) }}
+        >
+          <div style={styles.clinicShowcaseIntro}>
+            <p style={styles.sectionEyebrow}>Cabinetul DentNow</p>
+            <h2 id="clinic-showcase-title" style={styles.clinicShowcaseTitle}>
+              Suprafete, echipamente si cadre dedicate stomatologiei moderne
+            </h2>
+            <p style={styles.clinicShowcaseCopy}>
+              Fiecare spatiu este optimizat pentru siguranta si confort - de la blocul operator pana la zonele de consiliere,
+              pentru ca tu si familia ta sa simtiti ca intr-un cabinet premium.
+            </p>
+          </div>
+          <div style={styles.clinicShowcaseGrid}>
+            {showcaseElements.map((element) => (
+              <article key={element.imageUrl} style={styles.clinicShowcaseCard}>
+            <div style={styles.clinicShowcaseImage} aria-hidden="true">
+              <span style={{ fontSize: "12px", color: "rgba(18,60,53,0.5)", letterSpacing: "0.3em" }}>IMAGINE</span>
+            </div>
+                <h3 style={styles.clinicShowcaseCardTitle}>{element.title}</h3>
+                <p style={styles.clinicShowcaseCardCopy}>{element.description}</p>
+                <ul style={styles.clinicShowcaseTags}>
+                  {element.tags.map((tag) => (
+                    <li key={tag} style={styles.clinicShowcaseTag}>
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        .interactive-card:hover,
-        .interactive-panel:hover {
-          transform: translateY(-3px) scale(1.01);
-          box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
-        }
+        <section
+          id="programare"
+          aria-labelledby="programare-title"
+          className="cta-section w-full px-4 lg:px-0"
+          style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
+        >
+          <div style={styles.ctaContent}>
+            <p style={styles.sectionEyebrow}>Programari rapide</p>
+            <h2 id="programare-title" style={{ margin: "0 0 12px", fontSize: "32px" }}>
+              Ramai conectat cu echipa ta medicala
+            </h2>
+            <p style={{ margin: 0, lineHeight: 1.6 }}>
+              Coordonatorii DentNow iti confirma vizita in cel mult 30 de minute. Trimite-ne istoricul tau medical in siguranta si
+              pregatim traseul optim inaintea sosirii.
+            </p>
+            <div style={styles.ctaActions}>
+              <a href={`tel:${sanitizedPhone}`} style={styles.phonePill} className="btn-animate">
+                Suna acum
+              </a>
+              <button type="button" style={{ ...styles.primaryButton, boxShadow: "none" }} className="btn-animate">
+                Trimite mesaj
+              </button>
+            </div>
+          </div>
+          <ul style={styles.assuranceList} className="assurance-list">
+            {assurances.map((item) => (
+              <li key={item} style={styles.assuranceItem}>
+                <span aria-hidden="true" style={styles.assuranceBullet}>
+                  {">"}
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-        .gallery-section .interactive-card:hover img {
-          transform: scale(1.08);
-        }
+        <React.Suspense fallback={<div style={styles.footerPlaceholder} aria-hidden="true" />}>
+          <SiteFooter palette={palette} />
+        </React.Suspense>
 
-        @media (max-width: 768px) {
+        <style jsx global>{`
           .home-page {
             background: transparent;
-            padding: 0 12px 60px !important;
-            gap: 18px !important;
+            padding: 0;
           }
           .hero-section {
-            background: #fdfefc;
-            box-shadow: 0 10px 30px rgba(9, 64, 51, 0.1);
-            min-height: auto !important;
-            margin-top: 24px !important;
-            border-radius: 36px;
-            border: 1px solid rgba(18, 60, 53, 0.1);
+            background: none !important;
           }
-          .hero-inner {
-            flex-direction: column !important;
-            gap: 32px !important;
-            align-items: stretch !important;
+          .interactive-card,
+          .interactive-panel {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+            box-shadow: 0 20px 45px rgba(18, 60, 53, 0.08);
           }
-          #hero-title {
-            font-size: 34px !important;
+          .interactive-card:hover,
+          .interactive-panel:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
           }
-          .hero-section .hero-text {
-            line-height: 1.6 !important;
-            font-size: 18px !important;
+          .gallery-grid .interactive-card:hover img {
+            transform: scale(1.08);
           }
-          .hero-stats {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-            gap: 12px !important;
-            margin-top: 18px;
+          @media (max-width: 768px) {
+            .home-page {
+              padding: 0 12px 60px !important;
+            }
+            .hero-section {
+              padding: 80px 18px 60px !important;
+            }
+            .heroCtas,
+            .hero-stats,
+            .hero-info-card {
+              margin: 0 auto !important;
+            }
+            .hero-stats {
+              grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+            }
+            .services-section,
+            .gallery-section,
+            .cta-section,
+            .section-bg {
+              padding: 56px 16px !important;
+            }
+            .services-grid,
+            .gallery-grid,
+            .highlight-section {
+              grid-template-columns: 1fr !important;
+            }
           }
-          .hero-info-card {
-            padding: 24px !important;
-            border-radius: 24px !important;
-            border: 1px solid rgba(18, 60, 53, 0.12);
-            box-shadow: 0 12px 30px rgba(31, 182, 124, 0.1);
-          }
-          .hero-info-card p {
-            color: ${palette.navy} !important;
-          }
-          .hero-contact-link {
-            background: rgba(31, 182, 124, 0.08) !important;
-            color: ${palette.navy} !important;
-          }
-          .highlight-wrapper {
-            padding: 0 12px !important;
-          }
-          .highlight-panel {
-            padding: 20px !important;
-            flex-direction: column !important;
-            gap: 16px !important;
-          }
-          .highlight-card {
-            min-height: auto !important;
-          }
-          .services-section {
-            padding: 56px 16px !important;
-          }
-          .services-grid {
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
-            gap: 18px !important;
-          }
-          .gallery-section {
-            padding: 48px 20px !important;
-          }
-          .gallery-grid {
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
-          }
-          .cta-section {
-            padding: 32px 20px !important;
-            flex-direction: column !important;
-            gap: 20px !important;
-          }
-          .assurance-list {
-            gap: 8px !important;
-            width: 100% !important;
-          }
-          .btn-animate,
-          .phonePill {
-            width: 100% !important;
-            text-align: center !important;
-          }
-          .gallery-frame {
-            max-width: 100% !important;
-            aspect-ratio: 4 / 5 !important;
-          }
-        }
-
-        .hero-section .hero-primary {
-          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-          box-shadow: 0 12px 28px rgba(31, 182, 124, 0.2);
-        }
-
-        .hero-section .hero-primary:hover {
-          transform: translateY(-2px) scale(1.01);
-          background: linear-gradient(120deg, #28c290, #9bf2d8);
-          box-shadow: 0 18px 36px rgba(31, 182, 124, 0.3);
-        }
-
-        @media (max-width: 480px) {
-          .home-page {
-            padding: 0 10px 48px !important;
-          }
-          #hero-title {
-            font-size: 30px !important;
-            line-height: 1.15 !important;
-          }
-          .hero-section {
-            padding: 44px 18px !important;
-            gap: 20px !important;
-          }
-          .hero-stats {
-            grid-template-columns: 1fr !important;
-          }
-          .hero-stats dt {
-            font-size: 28px !important;
-          }
-          .services-section {
-            padding: 48px 12px !important;
-          }
-          .services-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .card,
-          .hero-info-card,
-          .cta-section {
-            min-height: auto !important;
-          }
-          .gallery-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .cta-section {
-            padding: 28px 16px !important;
-            text-align: left !important;
-          }
-          .cta-section .btn-animate,
-          .cta-section .phonePill {
-            max-width: 100% !important;
-          }
-        }
-
-        @media (max-width: 768px) {
-          section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 28px;
-            padding-top: 32px;
-            padding-bottom: 32px;
-          }
-          section img {
-            width: 100%;
-            height: auto;
-          }
-          section h1,
-          section h2,
-          section h3,
-          section p {
-            font-size: clamp(16px, 4vw, 20px);
-          }
-          button,
-          .primaryButton,
-          .secondaryButton,
-          .btn-animate,
-          .link-animate,
-          .phonePill {
-            padding: 12px;
-          }
-          .services-grid,
-          .gallery-grid,
-          .highlight-panel,
-          .cardsGrid,
-          .highlight-section {
-            grid-template-columns: 1fr !important;
-          }
-        }
-
-        .hero-section .hero-text {
-          text-align: left;
-        }
-
-        .hero-section .hero-inner {
-          align-items: stretch;
-        }
-
-        .hero-section .hero-primary {
-          box-shadow: 0 15px 35px rgba(31, 182, 124, 0.25);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .hero-section .hero-primary:hover {
-          transform: translateY(-2px) scale(1.02);
-          box-shadow: 0 22px 45px rgba(31, 182, 124, 0.35);
-        }
-
-        @media (max-width: 768px) {
-          .hero-section {
-            padding: 64px 24px;
-          }
-          .hero-section .hero-text {
-            text-align: center;
-          }
-          .hero-section .hero-text + .hero-stats {
-            justify-content: center;
-          }
-          .hero-section .hero-inner {
-            flex-direction: column;
-            align-items: center;
-          }
-          .hero-section .hero-primary {
-            width: 100%;
-            justify-content: center;
-            text-align: center;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .hero-section {
-            position: relative;
-            padding: 72px 20px 56px;
-          }
-          .hero-section::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 36px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.38)),
-              radial-gradient(circle at top, rgba(255, 255, 255, 0.7), transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-          }
-          .hero-section .hero-inner {
-            position: relative;
-            z-index: 1;
-          }
-          .hero-section h1 {
-            font-size: 42px !important;
-            font-weight: 700;
-            text-align: center;
-          }
-          .hero-section .hero-text {
-            text-align: center;
-          }
-          .hero-section .hero-stats {
-            justify-content: center;
-          }
-          .hero-section .heroCtas {
-            justify-content: center;
-          }
-        }
-      `}</style>
+        `}</style>
       </main>
     </>
   );

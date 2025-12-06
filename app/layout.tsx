@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, Montserrat } from "next/font/google";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import { siteConfig } from "@/lib/seo";
@@ -15,6 +15,19 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -76,15 +89,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ro" data-scroll-behavior="smooth">
-      <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${montserrat.variable} antialiased`}>
         <div className="app-shell">
           <div className="page-background" aria-hidden="true" />
-        <div className="site-shell">
-          <div className="layout-wrapper">
-            <PageTransition>{children}</PageTransition>
-            <CookieConsent />
+          <div className="site-shell">
+            <div className="layout-wrapper">
+              <PageTransition>{children}</PageTransition>
+              <CookieConsent />
+            </div>
           </div>
-        </div>
         </div>
       </body>
     </html>

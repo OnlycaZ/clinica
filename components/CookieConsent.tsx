@@ -158,7 +158,7 @@ export default function CookieConsent() {
               Folosim cookie-uri necesare pentru functionarea site-ului si, optional, cookie-uri analitice si de marketing ce imbunatatesc experienta ta.
             </p>
             <p id={legalId} style={legalNoteStyle}>
-              Respectam Regulamentul (UE) 2016/679 (GDPR). Poti retrage sau modifica oricand consimtamantul folosind butonul "Personalizeaza" sau din pagina{" "}
+              Respectam Regulamentul (UE) 2016/679 (GDPR). Poti retrage sau modifica oricand consimtamantul folosind butonul &quot;Personalizeaza&quot; sau din pagina{" "}
               <a href="/politica-cookie" style={{ color: "#0f7a57", fontWeight: 600 }}>
                 Politica cookie DentNow
               </a>
