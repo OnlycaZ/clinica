@@ -55,21 +55,33 @@ const services = Object.freeze([
     icon: "EST",
     title: "Estetica dentara integrata",
     description: "Design digital al zambetului, fatete minim invazive si albire ghidata clinic.",
-    features: ["Mock-up vizual", "Laborator dedicat", "Materiale biomimetice"]
+    features: ["Mock-up vizual", "Laborator dedicat", "Materiale biomimetice"],
+    image: "/dentnow-service-fatete.jpg"
   },
   {
     icon: "IMG",
     title: "Implantologie ghidata",
     description: "Interventii confortabile cu planificare 3D si protetica provizorie imediata.",
-    features: ["Ghizi chirurgicali", "Sedare constienta", "Echipa multidisciplinara"]
+    features: ["Ghizi chirurgicali", "Sedare constienta", "Echipa multidisciplinara"],
+    image: "/dentnow-service-implantologie.jpg"
   },
   {
     icon: "RX",
     title: "Reabilitare complexa",
     description: "Tratamente functionale pentru ATM, ortodontie invizibila si reabilitari totale.",
-    features: ["Scanare intraorala", "Monitorizare digitala", "Plan terapeutic integrat"]
+    features: ["Scanare intraorala", "Monitorizare digitala", "Plan terapeutic integrat"],
+    image: "/dentnow-service-albirea-dintilor.jpg"
   }
 ]);
+
+type ServiceCardVariant =
+  | "active"
+  | "incoming-next"
+  | "incoming-prev"
+  | "outgoing-next"
+  | "outgoing-prev";
+
+const SLIDE_TRANSITION_MS = 520;
 
 const iconMap: Record<string, React.ReactNode> = Object.freeze({
   "3D": (
@@ -429,6 +441,207 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "96px 24px",
     background: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(221,248,238,0.94))",
   },
+  servicesContent: {
+    width: "100%",
+    maxWidth: "1320px",
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: "28px",
+  },
+  sliderHeader: {
+    marginBottom: "24px",
+    textAlign: "center",
+    padding: "0 20px",
+  },
+  sliderHeaderLabel: {
+    textTransform: "uppercase",
+    letterSpacing: "0.35em",
+    fontSize: "12px",
+    color: palette.teal,
+    marginBottom: "12px",
+  },
+  sliderHeaderTitle: {
+    fontSize: "32px",
+    lineHeight: 1.2,
+    margin: "0 0 12px",
+    fontWeight: 700,
+    color: palette.navy,
+  },
+  sliderHeaderCopy: {
+    margin: 0,
+    color: palette.slate,
+    lineHeight: 1.6,
+  },
+  sliderWrapper: {
+    position: "relative",
+    borderRadius: "28px",
+    overflow: "hidden",
+    padding: "36px 32px",
+    background: "linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.18))",
+    width: "100%",
+    boxShadow: "0 40px 90px rgba(3, 55, 46, 0.35)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "24px",
+  },
+  carouselStage: {
+    display: "grid",
+    gridTemplateColumns: "auto 1fr auto",
+    alignItems: "center",
+    justifyItems: "center",
+    width: "100%",
+    gap: "16px",
+  },
+  carouselRow: {
+    display: "grid",
+    gridTemplateColumns: "minmax(200px, 1fr) 380px minmax(200px, 1fr)",
+    gap: "20px",
+    alignItems: "center",
+    justifyItems: "center",
+  },
+  sidePreview: {
+    width: "285px",
+    height: "315px",
+    borderRadius: "24px",
+    background: "rgba(255,255,255,0.08)",
+    boxShadow: "0 20px 50px rgba(2, 52, 40, 0.35)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "12px",
+    position: "relative",
+    overflow: "hidden",
+  },
+  sideOverlay: {
+    position: "absolute",
+    inset: 0,
+    background: "linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0))",
+    borderRadius: "inherit",
+  },
+  sidePreviewContent: {
+    position: "absolute",
+    inset: "20px",
+    color: "#fff",
+    fontSize: "14px",
+    zIndex: 1,
+  },
+  activeCardWrapper: {
+    minHeight: "320px",
+    borderRadius: "20px",
+    overflow: "hidden",
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "380px",
+    height: "420px",
+  },
+  sliderArrow: {
+    width: "56px",
+    height: "56px",
+    borderRadius: "50%",
+    border: "none",
+    backgroundColor: "rgba(0,0,0,0.45)",
+    color: "#fff",
+    fontSize: "34px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  },
+  sliderArrowSide: {
+    boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
+  },
+  sliderArrowDisabled: {
+    opacity: 0.4,
+    cursor: "not-allowed",
+  },
+  serviceTile: {
+    position: "relative",
+    width: "380px",
+    height: "420px",
+    borderRadius: "24px",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: "24px",
+    color: "#fff",
+    background: "rgba(255,255,255,0.08)",
+    backdropFilter: "blur(18px)",
+    boxShadow: "0 35px 90px rgba(2, 52, 40, 0.45), 0 0 40px rgba(255,255,255,0.25)",
+    border: "1px solid rgba(255,255,255,0.25)",
+    minHeight: "420px",
+  },
+  previewCard: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    borderRadius: "22px",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: "16px 18px",
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.25)",
+    boxShadow: "0 25px 65px rgba(2, 52, 40, 0.35)",
+    backdropFilter: "blur(12px)",
+  },
+  previewTile: {
+    width: "100%",
+    height: "100%",
+    padding: "18px",
+    borderRadius: "22px",
+    opacity: 0.76,
+    filter: "blur(4px) saturate(0.78)",
+    boxShadow: "inset 0 0 25px rgba(255,255,255,0.35), 0 20px 55px rgba(2,52,40,0.35)",
+  },
+  previewTileContent: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px",
+  },
+  previewTileDesc: {
+    margin: 0,
+    fontSize: "13px",
+    lineHeight: 1.4,
+    color: "rgba(255,255,255,0.8)",
+  },
+  tileGradient: {
+    position: "absolute",
+    inset: 0,
+    background: "linear-gradient(180deg, rgba(3, 29, 30, 0.25), rgba(3, 29, 30, 0.75))",
+  },
+  tileContent: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+  },
+  tileTitle: {
+    margin: 0,
+    fontSize: "22px",
+    fontWeight: 700,
+  },
+  tileDesc: {
+    margin: 0,
+    fontSize: "16px",
+    lineHeight: 1.6,
+    color: "rgba(255,255,255,0.9)",
+  },
+  tileLink: {
+    marginTop: "8px",
+    color: palette.teal,
+    textDecoration: "underline",
+    fontWeight: 600,
+  },
   sectionHeader: {
     maxWidth: "720px",
     marginBottom: "32px",
@@ -773,6 +986,98 @@ const galleryToneStyles: Record<string, React.CSSProperties> = {
 export default function Home() {
   const sanitizedPhone = siteConfig.contactPhone.replace(/\s+/g, "");
   const bookingEmail = siteConfig.contactEmail;
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [transitionDirection, setTransitionDirection] = React.useState<"idle" | "next" | "prev">("idle");
+  const [activeArrow, setActiveArrow] = React.useState<"none" | "prev" | "next">("none");
+  const [transitionTarget, setTransitionTarget] = React.useState<number | null>(null);
+  const [previewAnimationKey, setPreviewAnimationKey] = React.useState(0);
+  const prevIndex = (currentIndex - 1 + services.length) % services.length;
+  const nextIndex = (currentIndex + 1) % services.length;
+  const previewCenterIndex = transitionTarget ?? currentIndex;
+  const previewPrevIndex = (previewCenterIndex - 1 + services.length) % services.length;
+  const previewNextIndex = (previewCenterIndex + 1) % services.length;
+
+  const triggerArrow = (direction: "prev" | "next") => {
+    setActiveArrow(direction);
+    setTimeout(() => setActiveArrow("none"), 220);
+  };
+
+  const changeSlide = (direction: "prev" | "next") => {
+    if (transitionDirection !== "idle") {
+      return;
+    }
+    const target = direction === "next" ? nextIndex : prevIndex;
+    setTransitionDirection(direction);
+    setTransitionTarget(target);
+    setPreviewAnimationKey((value) => value + 1);
+    setTimeout(() => {
+      setCurrentIndex(target);
+      setTransitionDirection("idle");
+      setTransitionTarget(null);
+    }, SLIDE_TRANSITION_MS);
+  };
+
+  const goPrev = () => {
+    triggerArrow("prev");
+    changeSlide("prev");
+  };
+
+  const goNext = () => {
+    triggerArrow("next");
+    changeSlide("next");
+  };
+
+  const renderServiceCard = (serviceIndex: number, variant: ServiceCardVariant = "active") => {
+    const service = services[serviceIndex];
+    if (!service) return null;
+    const variantClass = `service-tile--${variant}`;
+    const isOutgoing = variant.startsWith("outgoing");
+    return (
+      <article
+        style={styles.serviceTile}
+        className={`service-tile ${variantClass}`}
+        data-variant={variant}
+        aria-hidden={isOutgoing}
+      >
+        <div style={styles.tileGradient} aria-hidden="true" />
+        <div style={styles.tileContent}>
+          <h3 style={styles.tileTitle}>{service.title}</h3>
+          <p style={styles.tileDesc}>{service.description}</p>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
+            {service.features.map((feature) => (
+              <li key={feature} style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)" }}>
+                · {feature}
+              </li>
+            ))}
+          </ul>
+          <a href="/contact" style={styles.tileLink} className="link-animate">
+            Vezi detalii
+          </a>
+        </div>
+      </article>
+    );
+  };
+
+  const renderServicePreview = (serviceIndex: number) => {
+    const service = services[serviceIndex];
+    if (!service) return null;
+    return (
+      <article className="preview-panel" style={{ ...styles.previewCard, ...styles.previewTile }} aria-hidden="true">
+        <div style={styles.tileGradient} aria-hidden="true" />
+        <div style={styles.previewTileContent}>
+          <h4 style={{ ...styles.tileTitle, fontSize: "18px" }}>{service.title}</h4>
+          <p style={styles.previewTileDesc}>{service.description}</p>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "4px" }}>
+            {service.features.slice(0, 2).map((feature) => (
+              <li key={feature} style={{ fontSize: "12px", color: "rgba(255,255,255,0.65)" }}>
+                · {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    );
+  };
 
   return (
     <>
@@ -896,39 +1201,74 @@ export default function Home() {
           className="services-section w-full px-4 lg:px-0"
           style={{ ...styles.servicesSection, ...fadeIn(0.25) }}
         >
-          <div style={styles.sectionHeader}>
-            <p style={styles.sectionEyebrow}>Servicii complete</p>
-            <h2 id="servicii-title" style={styles.sectionTitle}>
-              Solutii moderne pentru fiecare etapa a zambetului tau
-            </h2>
-            <p style={styles.sectionCopy}>
-              De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi
-              siguranta si confort.
-            </p>
-          </div>
-          <div style={styles.cardsGrid} className="services-grid">
-            {services.map((service) => (
-              <article key={service.title} style={styles.card} className="interactive-card" aria-label={service.title}>
-                <span style={styles.serviceIcon} aria-hidden="true">
-                  {iconMap[service.icon] || service.icon}
-                </span>
-                <h3 style={styles.cardTitle}>{service.title}</h3>
-                <p style={styles.cardCopy}>{service.description}</p>
-                <ul style={styles.cardList}>
-                  {service.features.map((feature) => (
-                    <li key={feature} style={styles.cardListItem}>
-                      <span aria-hidden="true" style={styles.cardBullet}>
-                        +
-                      </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a href="/contact" style={styles.linkButton} className="link-animate">
-                  Afla detalii
-                </a>
-              </article>
-            ))}
+          <div style={styles.servicesContent}>
+            <div style={styles.sliderHeader}>
+              <p style={styles.sliderHeaderLabel}>Servicii complete</p>
+              <h2 id="servicii-title" style={styles.sliderHeaderTitle}>
+                Tratamente fauritoare de bucurie
+              </h2>
+              <p style={styles.sliderHeaderCopy}>
+                De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi siguranta si confort.
+              </p>
+            </div>
+            <div style={styles.sliderWrapper}>
+              <div style={styles.carouselStage}>
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className={activeArrow === "prev" ? "sliderArrow button-press" : "sliderArrow"}
+                  style={{
+                    ...styles.sliderArrow,
+                    ...styles.sliderArrowSide,
+                    ...(services.length <= 1 ? styles.sliderArrowDisabled : {}),
+                  }}
+                  aria-label="Slide anterior"
+                >
+                  {"<"}
+                </button>
+                <div style={styles.carouselRow}>
+                  <div style={styles.sidePreview} key={`preview-prev-${previewAnimationKey}`}>
+                    {renderServicePreview(previewPrevIndex)}
+                  </div>
+                <div style={styles.activeCardWrapper}>
+                  {transitionDirection === "idle" || transitionTarget === null ? (
+                    renderServiceCard(currentIndex, "active")
+                  ) : (
+                    <>
+                      <div className="slider-card-layer outgoing" key="outgoing-card">
+                        {renderServiceCard(
+                          currentIndex,
+                          transitionDirection === "next" ? "outgoing-next" : "outgoing-prev"
+                        )}
+                      </div>
+                      <div className="slider-card-layer incoming" key="incoming-card">
+                        {renderServiceCard(
+                          transitionTarget!,
+                          transitionDirection === "next" ? "incoming-next" : "incoming-prev"
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+                  <div style={styles.sidePreview} key={`preview-next-${previewAnimationKey}`}>
+                    {renderServicePreview(previewNextIndex)}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className={activeArrow === "next" ? "sliderArrow button-press" : "sliderArrow"}
+                  style={{
+                    ...styles.sliderArrow,
+                    ...styles.sliderArrowSide,
+                    ...(services.length <= 1 ? styles.sliderArrowDisabled : {}),
+                  }}
+                  aria-label="Slide urmator"
+                >
+                  {">"}
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1077,8 +1417,108 @@ export default function Home() {
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
           }
+          .slider-card-layer {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            pointer-events: none;
+          }
+          .slider-card-layer.incoming {
+            z-index: 3;
+          }
+          .slider-card-layer.outgoing {
+            z-index: 2;
+          }
+          .service-tile {
+            transition: transform 0.85s ease-in-out, opacity 0.85s ease-in-out, filter 0.85s ease-in-out,
+              box-shadow 0.85s ease-in-out;
+            will-change: transform, opacity, filter;
+          }
+          .service-tile::after {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border-radius: 18px;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.4), transparent 55%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+          }
+          .service-tile:hover::after {
+            opacity: 0.45;
+          }
+          .service-tile--active {
+            transform: scale(1);
+            opacity: 1;
+            filter: blur(0px) saturate(1.1);
+            box-shadow: 0 40px 90px rgba(6, 78, 51, 0.45), 0 0 40px rgba(255, 255, 255, 0.35);
+          }
+          .service-tile--incoming-next,
+          .service-tile--incoming-prev {
+            animation: sliderIncomingFade 0.54s ease forwards;
+          }
+          .service-tile--outgoing-next,
+          .service-tile--outgoing-prev {
+            animation: sliderOutgoingFade 0.45s ease forwards;
+          }
           .gallery-grid .interactive-card:hover img {
             transform: scale(1.08);
+          }
+          @keyframes sliderIncomingFade {
+            0% {
+              transform: translate3d(0, 6px, 0);
+              opacity: 0;
+              filter: blur(4px);
+            }
+            50% {
+              opacity: 0.65;
+            }
+            100% {
+              transform: translate3d(0, 0, 0);
+              opacity: 1;
+              filter: blur(0px);
+            }
+          }
+          @keyframes sliderOutgoingFade {
+            0% {
+              opacity: 1;
+              filter: blur(0px);
+            }
+            100% {
+              transform: translate3d(0, -6px, 0);
+              opacity: 0;
+              filter: blur(3px);
+            }
+          }
+          .preview-panel {
+            animation: previewFade 0.65s ease forwards;
+            filter: blur(5px);
+            will-change: opacity, transform;
+          }
+          @keyframes previewFade {
+            0% {
+              opacity: 0;
+              transform: translate3d(0, 12px, 0);
+            }
+            50% {
+              opacity: 0.6;
+              transform: translate3d(0, 6px, 0);
+            }
+            100% {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
+          }
+          @keyframes sideGlow {
+            0%,
+            100% {
+              filter: blur(6px) brightness(0.7);
+            }
+            50% {
+              filter: blur(4px) brightness(0.85);
+            }
           }
           @media (max-width: 768px) {
             .home-page {
