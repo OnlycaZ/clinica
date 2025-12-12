@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="gradB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B3DDF0" />
+      <stop offset="100%" stop-color="#2A7AA1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="24" fill="url(#gradB)" />
+  <circle cx="400" cy="260" r="150" fill="rgba(255,255,255,0.3)" />
+  <text x="50%" y="45%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="68" fill="#062f45" font-weight="700">
+    Implantologie
+  </text>
+  <text x="50%" y="58%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="36" fill="#071c2a">
+    Ghidata 3D
+  </text>
+</svg>

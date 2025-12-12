@@ -27,21 +27,21 @@ export const services: ReadonlyArray<ServiceCardData> = Object.freeze([
     title: "Estetica dentara integrata",
     description: "Design digital al zambetului, fatete minim invazive si albire ghidata clinic.",
     features: ["Mock-up vizual", "Laborator dedicat", "Materiale biomimetice"],
-    image: "/dentnow-service-fatete.jpg"
+    image: "/service-images/estetica-modern.svg"
   },
   {
     icon: "IMG",
     title: "Implantologie ghidata",
     description: "Interventii confortabile cu planificare 3D si protetica provizorie imediata.",
     features: ["Ghizi chirurgicali", "Sedare constienta", "Echipa multidisciplinara"],
-    image: "/dentnow-service-implantologie.jpg"
+    image: "/service-images/implantologie-modern.svg"
   },
   {
     icon: "RX",
     title: "Reabilitare complexa",
     description: "Tratamente functionale pentru ATM, ortodontie invizibila si reabilitari totale.",
     features: ["Scanare intraorala", "Monitorizare digitala", "Plan terapeutic integrat"],
-    image: "/dentnow-service-albirea-dintilor.jpg"
+    image: "/service-images/reabilitare-modern.svg"
   }
 ]);
 

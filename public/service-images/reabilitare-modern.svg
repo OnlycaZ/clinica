@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="rehabGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8f3e8" />
+      <stop offset="70%" stop-color="#7aa487" />
+      <stop offset="100%" stop-color="#1c4236" />
+    </linearGradient>
+    <radialGradient id="archLight" cx="0.5" cy="0.3" r="0.7">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.9)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="520" rx="32" fill="url(#rehabGradient)" />
+  <path d="M160 420 Q400 200 640 420" stroke="rgba(255,255,255,0.4)" stroke-width="32" fill="none" stroke-linecap="round" />
+  <path d="M180 400 L400 240 L620 400" fill="url(#archLight)" />
+  <circle cx="400" cy="320" r="100" fill="rgba(255,255,255,0.2)" />
+  <text x="400" y="360" text-anchor="middle" font-family="Inter, Segoe UI" font-weight="700" font-size="56" fill="#fff">
+    Reabilitare
+  </text>
+  <text x="400" y="410" text-anchor="middle" font-family="Inter, Segoe UI" font-size="32" fill="rgba(255,255,255,0.85)">
+    Complexa & Digitala
+  </text>
+</svg>

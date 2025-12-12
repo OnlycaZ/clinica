@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="gradC" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F3E7B3" />
+      <stop offset="100%" stop-color="#4F7D6E" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="24" fill="url(#gradC)" />
+  <path d="M120 420 Q400 180 680 420 L680 500 L120 500 Z" fill="rgba(255,255,255,0.3)" />
+  <text x="50%" y="40%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="68" fill="#1a3b2f" font-weight="700">
+    Reabilitare
+  </text>
+  <text x="50%" y="55%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="36" fill="#102f2b">
+    Complexa
+  </text>
+</svg>

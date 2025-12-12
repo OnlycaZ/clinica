@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="implGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eaf4ff" />
+      <stop offset="60%" stop-color="#6aa2cc" />
+      <stop offset="100%" stop-color="#20465e" />
+    </linearGradient>
+    <linearGradient id="implantHalo" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.8)" />
+      <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="32" fill="url(#implGradient)" />
+  <circle cx="410" cy="260" r="130" fill="rgba(255,255,255,0.18)" />
+  <path d="M360 210 L360 330 L430 330 L430 210 Z" fill="white" opacity="0.6" />
+  <path d="M360 220 L390 190 L430 190 L430 220 Z" fill="rgba(255,255,255,0.6)" />
+  <rect x="380" y="330" width="80" height="120" rx="18" fill="rgba(255,255,255,0.1)" />
+  <ellipse cx="410" cy="210" rx="60" ry="30" fill="url(#implantHalo)" />
+  <text x="400" y="420" font-family="Inter, Segoe UI" font-size="48" text-anchor="middle" fill="white" font-weight="700">
+    Implantologie
+  </text>
+  <text x="400" y="460" font-family="Inter, Segoe UI" font-size="28" text-anchor="middle" fill="rgba(255,255,255,0.8)">
+    Ghidata & Confort
+  </text>
+</svg>

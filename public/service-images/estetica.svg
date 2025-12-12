@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="gradA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4F0E3" />
+      <stop offset="100%" stop-color="#61A784" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="24" fill="url(#gradA)" />
+  <text x="50%" y="45%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="72" fill="#0f3a2f" font-weight="700">
+    Estetica
+  </text>
+  <text x="50%" y="60%" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="36" fill="#0b2c1f">
+    Dentara Integrata
+  </text>
+</svg>

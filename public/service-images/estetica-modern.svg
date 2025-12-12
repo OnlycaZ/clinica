@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="estGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5fdf8" />
+      <stop offset="60%" stop-color="#4aa086" />
+      <stop offset="100%" stop-color="#163d31" />
+    </linearGradient>
+    <linearGradient id="halo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.6)" />
+      <stop offset="100%" stop-color="rgba(31,182,124,0.2)" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="32" fill="url(#estGradient)" />
+  <ellipse cx="600" cy="420" rx="180" ry="90" fill="rgba(255,255,255,0.18)" />
+  <rect x="80" y="120" width="640" height="260" rx="24" fill="rgba(255,255,255,0.16)" />
+  <rect x="120" y="140" width="560" height="220" rx="16" fill="rgba(255,255,255,0.05)" />
+  <text x="400" y="320" text-anchor="middle" font-family="Inter, Segoe UI" font-size="64" fill="white" letter-spacing="2">
+    Estetica
+  </text>
+  <text x="400" y="360" text-anchor="middle" font-family="Inter, Segoe UI" font-size="28" fill="rgba(255,255,255,0.85)">
+    Digital Smile Design
+  </text>
+  <path d="M120 400 L200 320 L360 420 L520 320 L700 400" stroke="url(#halo)" stroke-width="24" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

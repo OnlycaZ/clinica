@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
-import { services, highlights, showcaseElements } from "@/lib/content";
+import { services, showcaseElements } from "@/lib/content";
 
 const homeSeo = getSeoEntry("home");
 
@@ -38,55 +38,6 @@ type ServiceCardVariant =
 
 const SLIDE_TRANSITION_MS = 520;
 const AUTOPLAY_INTERVAL_MS = 6000;
-
-const iconMap: Record<string, React.ReactNode> = Object.freeze({
-  "3D": (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <circle cx="16" cy="16" r="11" />
-      <path d="M11 21l10-10M11 11l10 10" />
-    </svg>
-  ),
-  SAFE: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <rect x="7" y="9" width="18" height="14" rx="3" />
-      <path d="M16 13v6M13 16h6" />
-    </svg>
-  ),
-  CARE: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M16 22s8-4.5 8-9a4.5 4.5 0 00-8-2 4.5 4.5 0 00-8 2c0 4.5 8 9 8 9z" />
-    </svg>
-  ),
-  URG: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M16 6v10l5 5" />
-      <path d="M16 6l-5 9 5 11 5-9" />
-    </svg>
-  ),
-  ECO: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M10 18c2 1 5 .5 7-1s3-4 3-6c-2-1-5-.5-7 1s-3 4-3 6z" />
-      <path d="M10 18c0 4 3 7 6 7 3 0 6-3 6-7" />
-    </svg>
-  ),
-  EST: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M8 11c2-3 4-5 8-5s6 2 8 5c0 7-3 14-8 16-5-2-8-9-8-16z" />
-      <path d="M11 18c2 2 4 2 5 2s3 0 5-2" />
-    </svg>
-  ),
-  IMG: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <rect x="8" y="6" width="16" height="20" rx="4" />
-      <path d="M12 12h8M12 16h8M12 20h5" />
-    </svg>
-  ),
-  RX: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M10 8h8a4 4 0 010 8h-8zM18 16l6 8M18 24l6-8" />
-    </svg>
-  )
-});
 
 const galleryImages = Object.freeze([
   {
@@ -324,53 +275,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "11px",
     fontWeight: 700,
   },
-  highlightsWrapper: {
-    width: "100%",
-    padding: "70px 0",
-    background: "linear-gradient(180deg, rgba(255,255,255,0.9), rgba(233,247,238,0.82))",
-  },
-  highlightSection: {
-    maxWidth: "1320px",
-    margin: "0 auto",
-    padding: "42px 32px",
-    borderRadius: "36px",
-    backgroundColor: "rgba(255,255,255,0.96)",
-    boxShadow: "0 40px 90px rgba(18,60,53,0.05)",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "24px",
-  },
-  highlightCard: {
-    backgroundColor: "rgba(255,255,255,0.95)",
-    borderRadius: "32px",
-    padding: "28px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-    minHeight: "160px",
-    border: `1px solid rgba(31,182,124,0.15)`,
-    boxShadow: "0 25px 60px rgba(31,182,124,0.08)",
-  },
-  highlightIcon: {
-    width: "60px",
-    height: "60px",
-    borderRadius: "18px",
-    backgroundColor: "rgba(31,182,124,0.16)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: palette.teal,
-  },
-  highlightTitle: {
-    margin: "0",
-    fontSize: "20px",
-    fontWeight: 700,
-  },
-  highlightText: {
-    margin: "0",
-    color: palette.slate,
-    lineHeight: 1.6,
-  },
   servicesSection: {
     width: "100%",
     padding: "96px 24px",
@@ -572,30 +476,52 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     gap: "12px",
   },
-  serviceImage: {
-    position: "absolute",
-    inset: 0,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "saturate(0.85) brightness(0.85)",
-    zIndex: 0,
+  serviceImagePreview: {
+    width: "100%",
+    height: "380px",
+    borderRadius: "28px",
+    overflow: "hidden",
+    marginTop: "16px",
+    boxShadow: "0 40px 110px rgba(3,55,46,0.45)",
+    border: "1px solid rgba(255,255,255,0.25)",
+  },
+  serviceImagePreviewMini: {
+    width: "100%",
+    height: "160px",
+    borderRadius: "18px",
+    overflow: "hidden",
+    marginTop: "14px",
+    boxShadow: "0 25px 60px rgba(2,52,40,0.4)",
+    border: "1px solid rgba(255,255,255,0.3)",
+  },
+  previewTileGlass: {
+    background: "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+    border: "1px solid rgba(255,255,255,0.3)",
+    boxShadow: "0 20px 60px rgba(2,52,40,0.25)",
+  },
+  detailButton: {
+    marginTop: "12px",
+    color: palette.light,
+    fontSize: "14px",
+    lineHeight: 1.3,
+    fontWeight: 600,
+    letterSpacing: "0.05em",
+    padding: "4px 0",
+    textDecoration: "underline",
+    background: "none",
+    border: "none",
   },
   tileTitle: {
     margin: 0,
-    fontSize: "22px",
+    fontSize: "26px",
     fontWeight: 700,
   },
-  tileDesc: {
-    margin: 0,
-    fontSize: "16px",
-    lineHeight: 1.6,
-    color: "rgba(255,255,255,0.9)",
-  },
-  tileLink: {
-    marginTop: "8px",
-    color: palette.teal,
-    textDecoration: "underline",
-    fontWeight: 600,
+  tileDescription: {
+    margin: "6px 0 0",
+    fontSize: "14px",
+    lineHeight: 1.4,
+    color: "rgba(255,255,255,0.75)",
+    maxWidth: "360px",
   },
   sectionHeader: {
     maxWidth: "720px",
@@ -1087,30 +1013,23 @@ export default function Home() {
         data-variant={variant}
         aria-hidden={isOutgoing}
       >
+        <div style={styles.tileGradient} aria-hidden="true" />
+        <div style={styles.tileContent}>
+          <h3 style={styles.tileTitle}>{service.title}</h3>
+          <p style={styles.tileDescription}>{service.description}</p>
+        </div>
         {service.image && (
           <div
             style={{
-              ...styles.serviceImage,
-              backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.35)), url(${service.image})`
+              ...styles.serviceImagePreview,
+              backgroundImage: `url(${service.image})`
             }}
             aria-hidden="true"
           />
         )}
-        <div style={styles.tileGradient} aria-hidden="true" />
-        <div style={styles.tileContent}>
-          <h3 style={styles.tileTitle}>{service.title}</h3>
-          <p style={styles.tileDesc}>{service.description}</p>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
-            {service.features.map((feature) => (
-              <li key={feature} style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)" }}>
-                · {feature}
-              </li>
-            ))}
-          </ul>
-          <a href="/contact" style={styles.tileLink} className="link-animate">
-            Vezi detalii
-          </a>
-        </div>
+        <a href="/contact" style={styles.detailButton} className="btn-animate">
+          Vezi detalii
+        </a>
       </article>
     );
   };
@@ -1119,28 +1038,25 @@ export default function Home() {
     const service = services[serviceIndex];
     if (!service) return null;
     return (
-      <article className="preview-panel" style={{ ...styles.previewCard, ...styles.previewTile }} aria-hidden="true">
+      <article
+        className="preview-panel"
+        style={{ ...styles.previewCard, ...styles.previewTile, ...styles.previewTileGlass }}
+        aria-hidden="true"
+      >
+        <div style={styles.tileGradient} aria-hidden="true" />
+        <div style={styles.tileContent}>
+          <h4 style={{ ...styles.tileTitle, fontSize: "16px" }}>{service.title}</h4>
+          <p style={{ ...styles.tileDescription, margin: "6px 0 0", fontSize: "13px" }}>{service.description}</p>
+        </div>
         {service.image && (
           <div
             style={{
-              ...styles.previewBackground,
-              backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.2), rgba(0,0,0,0.45)), url(${service.image})`
+              ...styles.serviceImagePreviewMini,
+              backgroundImage: `linear-gradient(180deg, rgba(3,29,30,0), rgba(3,29,30,0.45)), url(${service.image})`
             }}
             aria-hidden="true"
           />
         )}
-        <div style={styles.tileGradient} aria-hidden="true" />
-        <div style={styles.previewTileContent}>
-          <h4 style={{ ...styles.tileTitle, fontSize: "18px" }}>{service.title}</h4>
-          <p style={styles.previewTileDesc}>{service.description}</p>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "4px" }}>
-            {service.features.slice(0, 2).map((feature) => (
-              <li key={feature} style={{ fontSize: "12px", color: "rgba(255,255,255,0.65)" }}>
-                · {feature}
-              </li>
-            ))}
-          </ul>
-        </div>
       </article>
     );
   };
@@ -1240,24 +1156,6 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section
-          style={{ ...styles.highlightsWrapper, ...fadeIn(0.15) }}
-          aria-label="Avantajele clinicii"
-          className="w-full px-4 lg:px-0"
-        >
-          <div style={styles.highlightSection} className="interactive-panel">
-            {highlights.map((item) => (
-              <article key={item.title} style={styles.highlightCard} className="highlight-card">
-                <span style={styles.highlightIcon} aria-hidden="true">
-                  {iconMap[item.icon] || item.icon}
-                </span>
-                <h3 style={styles.highlightTitle}>{item.title}</h3>
-                <p style={styles.highlightText}>{item.description}</p>
-              </article>
-            ))}
           </div>
         </section>
 
@@ -1691,11 +1589,10 @@ export default function Home() {
             .section-bg {
               padding: 56px 16px !important;
             }
-            .services-grid,
-            .gallery-grid,
-            .highlight-section {
-              grid-template-columns: 1fr !important;
-            }
+          .services-grid,
+          .gallery-grid {
+            grid-template-columns: 1fr !important;
+          }
           }
         `}</style>
       </main>
