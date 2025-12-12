@@ -3,9 +3,11 @@
 import React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
+import { services, highlights, showcaseElements } from "@/lib/content";
 
 const homeSeo = getSeoEntry("home");
 
@@ -27,53 +29,6 @@ const stats = Object.freeze([
   { value: "30", label: "Specialisti dedicati" }
 ]);
 
-const highlights = Object.freeze([
-  {
-    icon: "3D",
-    title: "Clinica de excelenta",
-    description: "Certificare internationala Dentsply Sirona CEE si fluxuri complet digitale."
-  },
-  {
-    icon: "SAFE",
-    title: "Sterilizare trasabila",
-    description: "Linie dedicata ce monitorizeaza fiecare instrument si ciclu de sterilizare."
-  },
-  {
-    icon: "CARE",
-    title: "Bloc operator",
-    description: "Sala chirurgicala la standarde de spital pentru interventii complexe."
-  },
-  {
-    icon: "URG",
-    title: "Urgente stomatologice",
-    description: "Program extins si echipe dedicate pentru interventii rapide."
-  },
-]);
-
-const services = Object.freeze([
-  {
-    icon: "EST",
-    title: "Estetica dentara integrata",
-    description: "Design digital al zambetului, fatete minim invazive si albire ghidata clinic.",
-    features: ["Mock-up vizual", "Laborator dedicat", "Materiale biomimetice"],
-    image: "/dentnow-service-fatete.jpg"
-  },
-  {
-    icon: "IMG",
-    title: "Implantologie ghidata",
-    description: "Interventii confortabile cu planificare 3D si protetica provizorie imediata.",
-    features: ["Ghizi chirurgicali", "Sedare constienta", "Echipa multidisciplinara"],
-    image: "/dentnow-service-implantologie.jpg"
-  },
-  {
-    icon: "RX",
-    title: "Reabilitare complexa",
-    description: "Tratamente functionale pentru ATM, ortodontie invizibila si reabilitari totale.",
-    features: ["Scanare intraorala", "Monitorizare digitala", "Plan terapeutic integrat"],
-    image: "/dentnow-service-albirea-dintilor.jpg"
-  }
-]);
-
 type ServiceCardVariant =
   | "active"
   | "incoming-next"
@@ -82,6 +37,7 @@ type ServiceCardVariant =
   | "outgoing-prev";
 
 const SLIDE_TRANSITION_MS = 520;
+const AUTOPLAY_INTERVAL_MS = 6000;
 
 const iconMap: Record<string, React.ReactNode> = Object.freeze({
   "3D": (
@@ -160,27 +116,6 @@ const facilityFeatures = Object.freeze([
   { title: "Radiologie 3D", detail: "CBCT, panorame si bitewing efectuate in clinica, cu rapoarte in 15 minute." },
   { title: "Laborator estetic", detail: "Studio foto-video, mock-up digital si fatete provizorii in aceeasi zi." },
   { title: "Lounge pacienti", detail: "Spatii dedicate familiilor si pacientilor internationali." }
-]);
-
-const showcaseElements = Object.freeze([
-  {
-    title: "Bloc operator & chirurgie ghidata",
-    imageUrl: "/dentnow-chair.jpg",
-    description: "Camere sterile cu iluminare circumferentiala, filtre HEPA si echipamente Dentsply Sirona pentru interventii minim invazive.",
-    tags: ["Bloc operator", "Flux digital", "Monitorizare integrate"]
-  },
-  {
-    title: "Laborator digital si protetica rapida",
-    imageUrl: "/dentnow-service-chirurgie-orala.jpg",
-    description: "Scanare intraorala, imprimante 3D si frezare CNC conectate direct la laboratorul clinicii.",
-    tags: ["Scanare 3D", "Frezare CNC", "Control calitate"]
-  },
-  {
-    title: "Consultatii & experienta pacientilor",
-    imageUrl: "/dentnow-service-ortodontie.jpg",
-    description: "Zone dedicate pentru consultatii video, lounge pentru pacienti si concierge care ordoneaza vizitele.",
-    tags: ["Concierge medical", "Tururi virtuale", "Acces familie"]
-  }
 ]);
 
 const assurances = Object.freeze([
@@ -599,10 +534,12 @@ const styles: { [key: string]: React.CSSProperties } = {
     opacity: 0.76,
     filter: "blur(4px) saturate(0.78)",
     boxShadow: "inset 0 0 25px rgba(255,255,255,0.35), 0 20px 55px rgba(2,52,40,0.35)",
+    position: "relative",
+    zIndex: 1,
   },
   previewTileContent: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 2,
     display: "flex",
     flexDirection: "column",
     gap: "6px",
@@ -613,17 +550,35 @@ const styles: { [key: string]: React.CSSProperties } = {
     lineHeight: 1.4,
     color: "rgba(255,255,255,0.8)",
   },
+  previewBackground: {
+    position: "absolute",
+    inset: 0,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "blur(12px) saturate(0.6)",
+    opacity: 0.75,
+    zIndex: 0,
+  },
   tileGradient: {
     position: "absolute",
     inset: 0,
     background: "linear-gradient(180deg, rgba(3, 29, 30, 0.25), rgba(3, 29, 30, 0.75))",
+    zIndex: 1,
   },
   tileContent: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 2,
     display: "flex",
     flexDirection: "column",
     gap: "12px",
+  },
+  serviceImage: {
+    position: "absolute",
+    inset: 0,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "saturate(0.85) brightness(0.85)",
+    zIndex: 0,
   },
   tileTitle: {
     margin: 0,
@@ -967,6 +922,57 @@ const fadeIn = (delay = 0): React.CSSProperties => ({
   animationDelay: `${delay}s`
 });
 
+type SlideMotionRole = "incoming" | "outgoing";
+
+const SERVICE_SLIDE_OFFSET = 120;
+const motionLayerStyle: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  display: "flex",
+  alignItems: "stretch",
+  justifyContent: "center",
+  width: "100%",
+  height: "100%",
+  zIndex: 1,
+};
+
+const getSlideMotionProps = (role: SlideMotionRole, direction: "next" | "prev") => {
+  const transitionSettings = { duration: 0.52, ease: "easeInOut" };
+  if (role === "incoming") {
+    return {
+      initial: {
+        x: direction === "next" ? SERVICE_SLIDE_OFFSET : -SERVICE_SLIDE_OFFSET,
+        opacity: 0,
+        filter: "blur(4px)"
+      },
+      animate: { x: 0, opacity: 1, filter: "blur(0px)" },
+      transition: transitionSettings
+    };
+  }
+  return {
+    initial: { x: 0, opacity: 1 },
+    animate: {
+      x: direction === "next" ? -SERVICE_SLIDE_OFFSET : SERVICE_SLIDE_OFFSET,
+      opacity: 0,
+      filter: "blur(3px)"
+    },
+    transition: transitionSettings
+  };
+};
+
+const PREVIEW_SLIDE_OFFSET = 70;
+
+const getPreviewMotionProps = (position: "prev" | "next") => {
+  const offset = position === "prev" ? -PREVIEW_SLIDE_OFFSET : PREVIEW_SLIDE_OFFSET;
+  const transition = { duration: 0.45, ease: "easeInOut" };
+  return {
+    initial: { x: offset, opacity: 0, filter: "blur(6px)" },
+    animate: { x: 0, opacity: 1, filter: "blur(0px)" },
+    exit: { x: offset, opacity: 0, filter: "blur(4px)" },
+    transition
+  };
+};
+
 const galleryToneStyles: Record<string, React.CSSProperties> = {
   deep: {
     backgroundColor: "#1f4b41",
@@ -996,26 +1002,38 @@ export default function Home() {
   const previewCenterIndex = transitionTarget ?? currentIndex;
   const previewPrevIndex = (previewCenterIndex - 1 + services.length) % services.length;
   const previewNextIndex = (previewCenterIndex + 1) % services.length;
+  const activeSlideLabel = services[currentIndex]?.title ?? "serviciu";
+  const liveRegionText = `Slide ${currentIndex + 1} din ${services.length}: ${activeSlideLabel}`;
+  const isTransitioning = transitionDirection !== "idle" && transitionTarget !== null;
+  const motionDirection: "next" | "prev" = transitionDirection === "next" ? "next" : "prev";
 
   const triggerArrow = (direction: "prev" | "next") => {
     setActiveArrow(direction);
     setTimeout(() => setActiveArrow("none"), 220);
   };
 
-  const changeSlide = (direction: "prev" | "next") => {
-    if (transitionDirection !== "idle") {
-      return;
-    }
-    const target = direction === "next" ? nextIndex : prevIndex;
-    setTransitionDirection(direction);
-    setTransitionTarget(target);
-    setPreviewAnimationKey((value) => value + 1);
-    setTimeout(() => {
-      setCurrentIndex(target);
-      setTransitionDirection("idle");
-      setTransitionTarget(null);
-    }, SLIDE_TRANSITION_MS);
-  };
+  const changeSlide = React.useCallback(
+    (direction: "prev" | "next") => {
+      if (transitionDirection !== "idle") {
+        return;
+      }
+      const target = direction === "next" ? nextIndex : prevIndex;
+      setTransitionDirection(direction);
+      setTransitionTarget(target);
+      setPreviewAnimationKey((value) => value + 1);
+      setTimeout(() => {
+        setCurrentIndex(target);
+        setTransitionDirection("idle");
+        setTransitionTarget(null);
+      }, SLIDE_TRANSITION_MS);
+    },
+    [nextIndex, prevIndex, transitionDirection]
+  );
+
+  const changeSlideRef = React.useRef(changeSlide);
+  React.useEffect(() => {
+    changeSlideRef.current = changeSlide;
+  }, [changeSlide]);
 
   const goPrev = () => {
     triggerArrow("prev");
@@ -1026,6 +1044,36 @@ export default function Home() {
     triggerArrow("next");
     changeSlide("next");
   };
+
+  React.useEffect(() => {
+    if (services.length <= 1) {
+      return undefined;
+    }
+    const autoplayTimer = setInterval(() => changeSlideRef.current("next"), AUTOPLAY_INTERVAL_MS);
+    return () => clearInterval(autoplayTimer);
+  }, [services.length]);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+    const targets = [currentIndex, nextIndex, prevIndex];
+    const loadedImages: HTMLImageElement[] = [];
+    targets.forEach((index) => {
+      const src = services[index]?.image;
+      if (src) {
+        const image = new Image();
+        image.src = src;
+        loadedImages.push(image);
+      }
+    });
+    return () => {
+      loadedImages.forEach((image) => {
+        image.onload = null;
+        image.onerror = null;
+      });
+    };
+  }, [currentIndex, nextIndex, prevIndex]);
 
   const renderServiceCard = (serviceIndex: number, variant: ServiceCardVariant = "active") => {
     const service = services[serviceIndex];
@@ -1039,6 +1087,15 @@ export default function Home() {
         data-variant={variant}
         aria-hidden={isOutgoing}
       >
+        {service.image && (
+          <div
+            style={{
+              ...styles.serviceImage,
+              backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.35)), url(${service.image})`
+            }}
+            aria-hidden="true"
+          />
+        )}
         <div style={styles.tileGradient} aria-hidden="true" />
         <div style={styles.tileContent}>
           <h3 style={styles.tileTitle}>{service.title}</h3>
@@ -1063,6 +1120,15 @@ export default function Home() {
     if (!service) return null;
     return (
       <article className="preview-panel" style={{ ...styles.previewCard, ...styles.previewTile }} aria-hidden="true">
+        {service.image && (
+          <div
+            style={{
+              ...styles.previewBackground,
+              backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.2), rgba(0,0,0,0.45)), url(${service.image})`
+            }}
+            aria-hidden="true"
+          />
+        )}
         <div style={styles.tileGradient} aria-hidden="true" />
         <div style={styles.previewTileContent}>
           <h4 style={{ ...styles.tileTitle, fontSize: "18px" }}>{service.title}</h4>
@@ -1211,11 +1277,19 @@ export default function Home() {
                 De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi siguranta si confort.
               </p>
             </div>
-            <div style={styles.sliderWrapper}>
-              <div style={styles.carouselStage}>
-                <button
-                  type="button"
-                  onClick={goPrev}
+        <div style={styles.sliderWrapper}>
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="sr-announcement"
+          >
+            {liveRegionText}
+          </div>
+          <div style={styles.carouselStage}>
+            <button
+              type="button"
+              onClick={goPrev}
                   className={activeArrow === "prev" ? "sliderArrow button-press" : "sliderArrow"}
                   style={{
                     ...styles.sliderArrow,
@@ -1227,31 +1301,51 @@ export default function Home() {
                   {"<"}
                 </button>
                 <div style={styles.carouselRow}>
-                  <div style={styles.sidePreview} key={`preview-prev-${previewAnimationKey}`}>
-                    {renderServicePreview(previewPrevIndex)}
+                  <div style={styles.sidePreview} className="side-preview-panel" key={`preview-prev-${previewAnimationKey}`}>
+                    <motion.div
+                      key={`preview-motion-prev-${previewAnimationKey}-${previewPrevIndex}`}
+                      {...getPreviewMotionProps("prev")}
+                      style={{ width: "100%", height: "100%", display: "flex" }}
+                    >
+                      {renderServicePreview(previewPrevIndex)}
+                    </motion.div>
                   </div>
                 <div style={styles.activeCardWrapper}>
-                  {transitionDirection === "idle" || transitionTarget === null ? (
-                    renderServiceCard(currentIndex, "active")
-                  ) : (
+                  {isTransitioning && transitionTarget !== null ? (
                     <>
-                      <div className="slider-card-layer outgoing" key="outgoing-card">
+                      <motion.div
+                        key={`outgoing-${currentIndex}`}
+                        {...getSlideMotionProps("outgoing", motionDirection)}
+                        style={motionLayerStyle}
+                      >
                         {renderServiceCard(
                           currentIndex,
                           transitionDirection === "next" ? "outgoing-next" : "outgoing-prev"
                         )}
-                      </div>
-                      <div className="slider-card-layer incoming" key="incoming-card">
+                      </motion.div>
+                      <motion.div
+                        key={`incoming-${transitionTarget}`}
+                        {...getSlideMotionProps("incoming", motionDirection)}
+                        style={motionLayerStyle}
+                      >
                         {renderServiceCard(
-                          transitionTarget!,
+                          transitionTarget,
                           transitionDirection === "next" ? "incoming-next" : "incoming-prev"
                         )}
-                      </div>
+                      </motion.div>
                     </>
+                  ) : (
+                    <div style={motionLayerStyle}>{renderServiceCard(currentIndex, "active")}</div>
                   )}
                 </div>
-                  <div style={styles.sidePreview} key={`preview-next-${previewAnimationKey}`}>
-                    {renderServicePreview(previewNextIndex)}
+                  <div style={styles.sidePreview} className="side-preview-panel" key={`preview-next-${previewAnimationKey}`}>
+                    <motion.div
+                      key={`preview-motion-next-${previewAnimationKey}-${previewNextIndex}`}
+                      {...getPreviewMotionProps("next")}
+                      style={{ width: "100%", height: "100%", display: "flex" }}
+                    >
+                      {renderServicePreview(previewNextIndex)}
+                    </motion.div>
                   </div>
                 </div>
                 <button
@@ -1417,6 +1511,27 @@ export default function Home() {
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
           }
+          .sr-announcement {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            clip-path: inset(50%);
+            border: 0;
+          }
+          @keyframes fadeInUp {
+            0% {
+              opacity: 0;
+              transform: translate3d(0, 18px, 0);
+            }
+            100% {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
+          }
           .slider-card-layer {
             position: absolute;
             inset: 0;
@@ -1466,6 +1581,13 @@ export default function Home() {
           .gallery-grid .interactive-card:hover img {
             transform: scale(1.08);
           }
+          .side-preview-panel {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+          }
+          .side-preview-panel:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 30px 75px rgba(18, 60, 53, 0.25);
+          }
           @keyframes sliderIncomingFade {
             0% {
               transform: translate3d(0, 6px, 0);
@@ -1497,6 +1619,24 @@ export default function Home() {
             filter: blur(5px);
             will-change: opacity, transform;
           }
+          .sliderArrow:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+          }
+          .active-card-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: 28px;
+            background: radial-gradient(circle at 50% 25%, rgba(31, 182, 124, 0.35), rgba(31, 182, 124, 0));
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            animation: activeGlow 7s ease-in-out infinite;
+          }
+          .active-card-wrapper > * {
+            z-index: 1;
+          }
           @keyframes previewFade {
             0% {
               opacity: 0;
@@ -1509,6 +1649,16 @@ export default function Home() {
             100% {
               opacity: 1;
               transform: translate3d(0, 0, 0);
+            }
+          }
+          @keyframes activeGlow {
+            0%, 100% {
+              transform: scale(1);
+              opacity: 0.45;
+            }
+            50% {
+              transform: scale(1.08);
+              opacity: 0.65;
             }
           }
           @keyframes sideGlow {
