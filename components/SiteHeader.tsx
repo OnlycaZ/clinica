@@ -24,21 +24,9 @@ interface SiteHeaderProps {
 
 const createHeaderStyles = (palette: Palette) => ({
   header: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
+    width: "100%",
     zIndex: 105,
-    background: "transparent",
-    borderBottom: "none",
-    transition: "background 0.4s ease, box-shadow 0.4s ease",
-    padding: "8px 0",
-    boxShadow: "none"
-  } as React.CSSProperties,
-  headerPinned: {
-    background: "rgba(255,255,255,0.8)",
-    boxShadow: "0 25px 60px rgba(18,60,53,0.18)",
-    borderBottom: "1px solid rgba(18,60,53,0.12)"
+    background: "transparent"
   } as React.CSSProperties,
   inner: {
     width: "100%",
@@ -75,6 +63,9 @@ const createHeaderStyles = (palette: Palette) => ({
     transition: "color 0.2s ease, transform 0.2s ease",
     fontFamily: "var(--font-montserrat), var(--font-space-grotesk), var(--font-geist-sans), system-ui, sans-serif",
     letterSpacing: "0.18em"
+  } as React.CSSProperties,
+  navLinkPinned: {
+    color: palette.navy
   } as React.CSSProperties,
   navLinkActive: {
     color: "#f0f9ff"
@@ -140,18 +131,31 @@ const createHeaderStyles = (palette: Palette) => ({
 
 const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
   const pathname = usePathname();
-  const [isPinned, setIsPinned] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const styles = React.useMemo(() => createHeaderStyles(palette), [palette]);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
-    const handleScroll = () => {
-      setIsPinned(window.scrollY > 24);
+    const THRESHOLD = 24;
+    let rafId: number | null = null;
+    const evaluate = () => {
+      rafId = null;
+      const next = window.scrollY > THRESHOLD;
+      setIsScrolled((prev) => (prev === next ? prev : next));
     };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handler = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(evaluate);
+    };
+    handler();
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handler);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   const computeActive = (href: string) => {
@@ -165,23 +169,27 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
 
   return (
     <>
-      <header aria-label="Navigare principala">
-        <nav
-          style={{ ...styles.header, ...(isPinned ? styles.headerPinned : {}) }}
-          className="fixed top-0 left-0 w-full z-50 site-nav"
-        >
-          <div style={styles.inner}>
+      <header
+        aria-label="Navigare principala"
+        style={styles.header}
+        className={`site-header${isScrolled ? " scrolled" : ""}`}
+      >
+        <div style={styles.inner} className="site-header-inner">
             <Link href="/" style={styles.brandLink} aria-label="DentNow">
               <Image src="/cropped-CFT-1.png" alt="DentNow" width={140} height={40} priority />
             </Link>
-            <nav style={styles.nav} aria-label="Navigare" className="site-nav">
+            <nav style={styles.nav} aria-label="Navigare" className="site-navigation">
               {navigation.map((item) => {
                 const isActive = computeActive(item.href);
                 return (
                   <Link
                     key={item.label}
                     href={item.href}
-                    style={{ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) }}
+                    style={{
+                      ...styles.navLink,
+                      ...(isScrolled ? styles.navLinkPinned : {}),
+                      ...(isActive ? styles.navLinkActive : {})
+                    }}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {item.label}
@@ -205,7 +213,6 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
               </button>
             </div>
           </div>
-        </nav>
         <div
           style={{ ...styles.mobileMenu, ...(mobileOpen ? styles.mobileMenuVisible : {}) }}
           className="mobile-menu-panel"
@@ -238,11 +245,57 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         </div>
       </header>
         <style jsx>{`
-          .site-nav a:hover {
+          .site-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 105;
+            background: transparent;
+            border-bottom: none;
+            box-shadow: none;
+            padding: 18px 0;
+            transition:
+              background 0.3s ease,
+              box-shadow 0.3s ease,
+              padding 0.3s ease,
+              backdrop-filter 0.3s ease;
+          }
+          .site-header.scrolled {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(18, 60, 53, 0.12);
+            box-shadow: 0 20px 50px rgba(18, 60, 53, 0.15);
+            backdrop-filter: blur(14px);
+            padding: 10px 0;
+          }
+          .site-header-inner {
+            padding: 10px 32px;
+            transition: padding 0.3s ease, gap 0.3s ease, transform 0.4s ease;
+          }
+          .site-header.scrolled .site-header-inner {
+            gap: 12px;
+            transform: translateY(-1px);
+          }
+          .site-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 18px;
+            flex: 1 1 auto;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-left: auto;
+          }
+          .site-navigation a:hover {
             color: ${palette.teal};
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.6);
           }
           @media (max-width: 768px) {
-            nav.site-nav {
+            .site-navigation {
               display: none;
             }
             .mobile-toggle {
@@ -257,10 +310,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
             transform: translateY(-3px);
             box-shadow: 0 30px 70px rgba(31, 182, 124, 0.55);
           }
-          .site-nav a:hover {
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.6);
-          }
-          `}</style>
+        `}</style>
     </>
   );
 };

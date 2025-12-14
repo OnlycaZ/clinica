@@ -6,6 +6,7 @@ export type ServiceCardData = {
   description: string;
   features: string[];
   image: string;
+  href?: string;
 };
 
 export type HighlightData = {
@@ -27,21 +28,24 @@ export const services: ReadonlyArray<ServiceCardData> = Object.freeze([
     title: "Estetica dentara integrata",
     description: "Design digital al zambetului, fatete minim invazive si albire ghidata clinic.",
     features: ["Mock-up vizual", "Laborator dedicat", "Materiale biomimetice"],
-    image: "/service-images/estetica-modern.svg"
+    image: "/service-images/estetica-modern.svg",
+    href: "/servicii/estetica-dentara"
   },
   {
     icon: "IMG",
     title: "Implantologie ghidata",
     description: "Interventii confortabile cu planificare 3D si protetica provizorie imediata.",
     features: ["Ghizi chirurgicali", "Sedare constienta", "Echipa multidisciplinara"],
-    image: "/service-images/implantologie-modern.svg"
+    image: "/service-images/implantologie-modern.svg",
+    href: "/servicii/implantologie-ghidata"
   },
   {
     icon: "RX",
     title: "Reabilitare complexa",
     description: "Tratamente functionale pentru ATM, ortodontie invizibila si reabilitari totale.",
     features: ["Scanare intraorala", "Monitorizare digitala", "Plan terapeutic integrat"],
-    image: "/service-images/reabilitare-modern.svg"
+    image: "/service-images/reabilitare-modern.svg",
+    href: "/servicii/reabilitare-complexa"
   }
 ]);
 

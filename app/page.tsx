@@ -1,13 +1,16 @@
 'use client';
 
 import React from "react";
+import Link from "next/link";
+import NextImage from "next/image";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
-import { services, showcaseElements } from "@/lib/content";
+import { services } from "@/lib/content";
+import GallerySection from "@/components/GallerySection";
 
 const homeSeo = getSeoEntry("home");
 
@@ -38,36 +41,6 @@ type ServiceCardVariant =
 
 const SLIDE_TRANSITION_MS = 520;
 const AUTOPLAY_INTERVAL_MS = 6000;
-
-const galleryImages = Object.freeze([
-  {
-    title: "Cabinet chirurgie",
-    caption: "Spatiu dedicat interventiilor minim invazive cu monitorizare digitala.",
-    tone: "deep"
-  },
-  {
-    title: "Studio estetica",
-    caption: "Laborator foto-video pentru designul digital al zambetului.",
-    tone: "light"
-  },
-  {
-    title: "Sterilizare trasabila",
-    caption: "Linie dedicata pentru pregatirea instrumentarului in flux inchis.",
-    tone: "sand"
-  },
-  {
-    title: "Radiologie 3D",
-    caption: "Flux complet in-house pentru investigatii rapide si sigure.",
-    tone: "deep"
-  }
-]);
-
-const facilityFeatures = Object.freeze([
-  { title: "Sterilizare trasabila", detail: "Circuit inchis cu etichetare QR pentru fiecare instrument." },
-  { title: "Radiologie 3D", detail: "CBCT, panorame si bitewing efectuate in clinica, cu rapoarte in 15 minute." },
-  { title: "Laborator estetic", detail: "Studio foto-video, mock-up digital si fatete provizorii in aceeasi zi." },
-  { title: "Lounge pacienti", detail: "Spatii dedicate familiilor si pacientilor internationali." }
-]);
 
 const assurances = Object.freeze([
   "Consultatii interdisciplinare in aceeasi vizita",
@@ -615,94 +588,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
     padding: 0,
   },
-  gallerySection: {
-    backgroundColor: "rgba(255,255,255,0.95)",
-    borderRadius: "36px",
-    padding: "80px 36px",
-    margin: "40px auto",
-    maxWidth: "1200px",
-    border: `1px solid ${palette.border}`,
-    boxShadow: "0 30px 70px rgba(18,60,53,0.08)",
-  },
-  galleryIntro: {
-    maxWidth: "700px",
-    marginBottom: "32px",
-  },
-  galleryGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "24px",
-  },
-  galleryCard: {
-    borderRadius: "32px",
-    padding: "26px 22px",
-    minHeight: "320px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-    backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(233,247,238,0.85))",
-    border: "1px solid rgba(18,75,60,0.08)",
-    boxShadow: "0 20px 50px rgba(18,60,53,0.08)",
-  },
-  galleryFrame: {
-    borderRadius: "24px",
-    border: "1px solid rgba(18,75,60,0.15)",
-    width: "100%",
-    aspectRatio: "3 / 4",
-    overflow: "hidden",
-    boxShadow: "inset 0 0 15px rgba(18,75,60,0.08)",
-    backgroundColor: "rgba(255,255,255,0.1)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  galleryFramePlaceholder: {
-    width: "80%",
-    height: "80%",
-    borderRadius: "18px",
-    background: "linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.18))",
-    filter: "blur(0.5px)",
-  },
-  galleryTitle: {
-    margin: 0,
-    fontSize: "18px",
-    fontWeight: 600,
-  },
-  galleryText: {
-    margin: 0,
-    fontSize: "15px",
-    lineHeight: 1.5,
-    color: palette.slate,
-  },
-  galleryBadge: {
-    alignSelf: "flex-start",
-    padding: "6px 14px",
-    borderRadius: "999px",
-    border: "1px solid rgba(255,255,255,0.35)",
-    fontSize: "12px",
-    fontWeight: 600,
-    color: palette.navy,
-    backgroundColor: "rgba(31,182,124,0.08)",
-  },
-  galleryInfoGrid: {
-    marginTop: "32px",
-    borderRadius: "32px",
-    padding: "32px",
-    backgroundColor: "rgba(255,255,255,0.97)",
-    border: `1px solid ${palette.border}`,
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "18px",
-  },
-  galleryInfoTitle: {
-    marginBottom: "6px",
-    fontWeight: 700,
-  },
-  galleryInfoText: {
-    margin: 0,
-    color: palette.slate,
-    lineHeight: 1.6,
-  },
   ctaSection: {
     width: "100%",
     maxWidth: "1200px",
@@ -761,88 +646,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: palette.teal,
     fontWeight: 700,
   },
-  clinicShowcaseSection: {
-    width: "100%",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "40px",
-    borderRadius: "36px",
-    border: `1px solid ${palette.border}`,
-    backgroundColor: "rgba(255,255,255,0.96)",
-    boxShadow: "0 30px 60px rgba(18,75,60,0.09)",
-    display: "flex",
-    flexDirection: "column",
-    gap: "24px",
-  },
-  clinicShowcaseIntro: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-  },
-  clinicShowcaseTitle: {
-    margin: 0,
-    fontSize: "32px",
-    color: palette.navy,
-  },
-  clinicShowcaseCopy: {
-    margin: 0,
-    color: palette.slate,
-    lineHeight: 1.6,
-  },
-  clinicShowcaseGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "20px",
-  },
-  clinicShowcaseCard: {
-    backgroundColor: "rgba(255,255,255,0.95)",
-    borderRadius: "32px",
-    padding: "24px",
-    border: `1px solid rgba(18,75,60,0.12)`,
-    boxShadow: "0 20px 60px rgba(18,60,53,0.08)",
-    minHeight: "320px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  clinicShowcaseImage: {
-    width: "100%",
-    height: "180px",
-    borderRadius: "24px",
-    background: "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(242,249,247,0.5))",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: `1px solid rgba(18,75,60,0.15)`
-  },
-  clinicShowcaseCardTitle: {
-    margin: 0,
-    fontSize: "20px",
-  },
-  clinicShowcaseCardCopy: {
-    margin: 0,
-    fontSize: "15px",
-    color: palette.slate,
-    lineHeight: 1.6,
-  },
-  clinicShowcaseTags: {
-    margin: 0,
-    padding: 0,
-    listStyle: "none",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "8px",
-  },
-  clinicShowcaseTag: {
-    fontSize: "12px",
-    padding: "4px 10px",
-    borderRadius: "999px",
-    border: `1px solid rgba(31,182,124,0.3)`,
-    color: palette.teal,
-    textTransform: "uppercase",
-    letterSpacing: "0.06em",
-  },
-};
+  };
 const fadeIn = (delay = 0): React.CSSProperties => ({
   animation: "fadeInUp 0.9s ease forwards",
   animationDelay: `${delay}s`
@@ -897,21 +701,6 @@ const getPreviewMotionProps = (position: "prev" | "next") => {
     exit: { x: offset, opacity: 0, filter: "blur(4px)" },
     transition
   };
-};
-
-const galleryToneStyles: Record<string, React.CSSProperties> = {
-  deep: {
-    backgroundColor: "#1f4b41",
-    color: palette.light
-  },
-  light: {
-    backgroundColor: "rgba(255,255,255,0.9)",
-    color: palette.navy
-  },
-  sand: {
-    backgroundColor: palette.sand,
-    color: palette.navy
-  }
 };
 
 
@@ -988,7 +777,8 @@ export default function Home() {
     targets.forEach((index) => {
       const src = services[index]?.image;
       if (src) {
-        const image = new Image();
+        if (typeof window === "undefined") return;
+        const image = new window.Image();
         image.src = src;
         loadedImages.push(image);
       }
@@ -1027,9 +817,14 @@ export default function Home() {
             aria-hidden="true"
           />
         )}
-        <a href="/contact" style={styles.detailButton} className="btn-animate">
+        <Link
+          href={service.href ?? "/servicii"}
+          style={styles.detailButton}
+          className="btn-animate"
+          aria-label={`Vezi detalii pentru ${service.title}`}
+        >
           Vezi detalii
-        </a>
+        </Link>
       </article>
     );
   };
@@ -1264,92 +1059,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          id="galerie"
-          aria-labelledby="galerie-title"
-          className="gallery-section w-full px-4 lg:px-0"
-          style={{ ...styles.gallerySection, ...fadeIn(0.35) }}
-        >
-          <div style={styles.galleryIntro}>
-            <p style={styles.sectionEyebrow}>Galerie clinica</p>
-            <h2 id="galerie-title" style={{ ...styles.sectionTitle, marginBottom: "12px" }}>
-              Spatii concepute pentru confort si precizie
-            </h2>
-            <p style={styles.sectionCopy}>
-              Rezervam zone distincte pentru chirurgie, estetica si consiliere, astfel incat fiecare interactiune sa fie fluida si
-              predictibila. Insertiile de lemn si lumina naturala pregatesc cadrul perfect pentru prezentarea rezultatelor.
-            </p>
-          </div>
-          <div style={styles.galleryGrid} className="gallery-grid">
-            {galleryImages.map((item) => {
-              const toneStyle = galleryToneStyles[item.tone] || {};
-              const badgeStyle =
-                item.tone === "deep"
-                  ? styles.galleryBadge
-                  : {
-                      ...styles.galleryBadge,
-                      border: `1px solid ${palette.border}`,
-                      color: palette.navy,
-                      backgroundColor: "rgba(31,182,124,0.08)",
-                    };
-              return (
-                <figure key={item.title} style={{ ...styles.galleryCard, ...toneStyle }} className="interactive-card">
-                <div style={styles.galleryFrame} aria-hidden="true">
-                  <div style={styles.galleryFramePlaceholder} />
-                </div>
-                  <div>
-                    <p style={badgeStyle}>Spatiu dedicat</p>
-                    <h3 style={styles.galleryTitle}>{item.title}</h3>
-                    <figcaption style={styles.galleryText}>{item.caption}</figcaption>
-                  </div>
-                </figure>
-              );
-            })}
-          </div>
-          <div style={styles.galleryInfoGrid}>
-            {facilityFeatures.map((feature) => (
-              <div key={feature.title}>
-                <p style={styles.galleryInfoTitle}>{feature.title}</p>
-                <p style={styles.galleryInfoText}>{feature.detail}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="clinic-showcase-title"
-          className="section-bg w-full px-4 lg:px-0"
-          style={{ ...styles.clinicShowcaseSection, ...fadeIn(0.37) }}
-        >
-          <div style={styles.clinicShowcaseIntro}>
-            <p style={styles.sectionEyebrow}>Cabinetul DentNow</p>
-            <h2 id="clinic-showcase-title" style={styles.clinicShowcaseTitle}>
-              Suprafete, echipamente si cadre dedicate stomatologiei moderne
-            </h2>
-            <p style={styles.clinicShowcaseCopy}>
-              Fiecare spatiu este optimizat pentru siguranta si confort - de la blocul operator pana la zonele de consiliere,
-              pentru ca tu si familia ta sa simtiti ca intr-un cabinet premium.
-            </p>
-          </div>
-          <div style={styles.clinicShowcaseGrid}>
-            {showcaseElements.map((element) => (
-              <article key={element.imageUrl} style={styles.clinicShowcaseCard}>
-            <div style={styles.clinicShowcaseImage} aria-hidden="true">
-              <span style={{ fontSize: "12px", color: "rgba(18,60,53,0.5)", letterSpacing: "0.3em" }}>IMAGINE</span>
-            </div>
-                <h3 style={styles.clinicShowcaseCardTitle}>{element.title}</h3>
-                <p style={styles.clinicShowcaseCardCopy}>{element.description}</p>
-                <ul style={styles.clinicShowcaseTags}>
-                  {element.tags.map((tag) => (
-                    <li key={tag} style={styles.clinicShowcaseTag}>
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
+        <GallerySection />
 
         <section
           id="programare"
@@ -1476,8 +1186,17 @@ export default function Home() {
           .service-tile--outgoing-prev {
             animation: sliderOutgoingFade 0.45s ease forwards;
           }
-          .gallery-grid .interactive-card:hover img {
-            transform: scale(1.08);
+          .gallery-split-wrapper {
+            position: relative;
+          }
+          .gallery-visual-panel {
+            transition: transform 0.5s ease;
+          }
+          .gallery-visual-panel img {
+            transition: transform 0.5s ease;
+          }
+          .gallery-visual-panel:hover img {
+            transform: translateX(4%) scale(1.02);
           }
           .side-preview-panel {
             transition: transform 0.35s ease, box-shadow 0.35s ease;
@@ -1580,20 +1299,26 @@ export default function Home() {
             .hero-info-card {
               margin: 0 auto !important;
             }
-            .hero-stats {
-              grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-            }
-            .services-section,
-            .gallery-section,
-            .cta-section,
-            .section-bg {
-              padding: 56px 16px !important;
-            }
-          .services-grid,
-          .gallery-grid {
+          .hero-stats {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+          }
+          .services-section,
+          .gallery-section,
+          .cta-section,
+          .section-bg {
+            padding: 56px 16px !important;
+          }
+          .services-grid {
             grid-template-columns: 1fr !important;
           }
+          .gallery-split-wrapper {
+            flex-direction: column !important;
           }
+          .gallery-copy-panel,
+          .gallery-visual-panel {
+            clip-path: none !important;
+          }
+        }
         `}</style>
       </main>
     </>
