@@ -954,6 +954,8 @@ export default function Home() {
           </div>
         </section>
 
+        <GallerySection />
+
         <section
           id="servicii"
           aria-labelledby="servicii-title"
@@ -1058,8 +1060,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <GallerySection />
 
         <section
           id="programare"
