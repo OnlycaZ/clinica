@@ -11,10 +11,19 @@ import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
 import { services } from "@/lib/content";
 import GallerySection from "@/components/GallerySection";
+import ReviewsSection from "@/components/ReviewsSection";
 
 const homeSeo = getSeoEntry("home");
 
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), { ssr: false, loading: () => <div style={styles.footerPlaceholder} aria-hidden="true" /> });
+const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+  ssr: false,
+  loading: () => <div style={styles.footerPlaceholder} aria-hidden="true" />,
+});
+
+const ClinicMap = dynamic(() => import("@/components/ClinicMap"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-[#cfeee0]" />,
+});
 
 const palette = {
   navy: "#123c35",
@@ -262,21 +271,29 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: "28px",
   },
   sliderHeader: {
-    marginBottom: "24px",
+    marginBottom: "32px",
     textAlign: "center",
     padding: "0 20px",
   },
   sliderHeaderLabel: {
     textTransform: "uppercase",
     letterSpacing: "0.35em",
-    fontSize: "12px",
+    fontSize: "11px",
     color: palette.teal,
-    marginBottom: "12px",
+    marginBottom: "18px",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "6px 20px",
+    borderRadius: "999px",
+    border: "1px solid rgba(31,182,124,0.18)",
+    background: "rgba(255,255,255,0.85)",
+    boxShadow: "0 12px 30px rgba(15,81,50,0.08)",
   },
   sliderHeaderTitle: {
-    fontSize: "32px",
-    lineHeight: 1.2,
-    margin: "0 0 12px",
+    fontSize: "36px",
+    lineHeight: 1.15,
+    margin: "0 0 16px",
     fontWeight: 700,
     color: palette.navy,
   },
@@ -714,6 +731,10 @@ export default function Home() {
   const [previewAnimationKey, setPreviewAnimationKey] = React.useState(0);
   const prevIndex = (currentIndex - 1 + services.length) % services.length;
   const nextIndex = (currentIndex + 1) % services.length;
+  const leftService = services[prevIndex];
+  const centerService = services[currentIndex];
+  const rightService = services[nextIndex];
+  const [carouselIndex, setCarouselIndex] = React.useState(0);
   const previewCenterIndex = transitionTarget ?? currentIndex;
   const previewPrevIndex = (previewCenterIndex - 1 + services.length) % services.length;
   const previewNextIndex = (previewCenterIndex + 1) % services.length;
@@ -750,14 +771,28 @@ export default function Home() {
     changeSlideRef.current = changeSlide;
   }, [changeSlide]);
 
+  const rotateCarousel = (direction: "prev" | "next") => {
+    setCarouselIndex((value) => {
+      const total = 3;
+      if (direction === "next") {
+        // La sageata din dreapta aducem cardul din dreapta in centru
+        return (value + total - 1) % total;
+      }
+      // La sageata din stanga aducem cardul din stanga in centru
+      return (value + 1) % total;
+    });
+  };
+
   const goPrev = () => {
     triggerArrow("prev");
     changeSlide("prev");
+    rotateCarousel("prev");
   };
 
   const goNext = () => {
     triggerArrow("next");
     changeSlide("next");
+    rotateCarousel("next");
   };
 
   React.useEffect(() => {
@@ -959,142 +994,316 @@ export default function Home() {
         <section
           id="servicii"
           aria-labelledby="servicii-title"
-          className="services-section w-full px-4 lg:px-0"
-          style={{ ...styles.servicesSection, ...fadeIn(0.25) }}
+          className="relative w-full px-4 lg:px-0 py-20 bg-[#f0fdfa] overflow-hidden"
         >
-          <div style={styles.servicesContent}>
-            <div style={styles.sliderHeader}>
-              <p style={styles.sliderHeaderLabel}>Servicii complete</p>
-              <h2 id="servicii-title" style={styles.sliderHeaderTitle}>
-                Tratamente fauritoare de bucurie
+          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#0f5132]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <span className="inline-block py-1.5 px-4 rounded-full bg-white text-[#0f5132] text-xs font-bold tracking-[0.2em] uppercase mb-5 border border-emerald-900/10 shadow-sm">
+                Servicii complete
+              </span>
+              <h2
+                id="servicii-title"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight"
+              >
+                Tratamente care îți redau{" "}
+                <span className="text-[#0f5132] relative inline-block">
+                  zâmbetul
+                  <svg
+                    className="absolute w-full h-2.5 -bottom-1 left-0 text-teal-500/30 -z-10"
+                    preserveAspectRatio="none"
+                    viewBox="0 0 100 10"
+                  >
+                    <path d="M0 5 Q 50 10 100 5" fill="none" stroke="currentColor" strokeWidth="4" />
+                  </svg>
+                </span>
               </h2>
-              <p style={styles.sliderHeaderCopy}>
-                De la estetica dentara pana la reabilitari complexe, coordonam fiecare specializare in acelasi loc pentru a-ti oferi siguranta si confort.
+              <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+                De la estetica dentară până la reabilitări complexe, coordonăm fiecare specializare într-un
+                singur loc pentru siguranța și confortul tău.
               </p>
             </div>
-        <div style={styles.sliderWrapper}>
-          <div
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            className="sr-announcement"
-          >
-            {liveRegionText}
-          </div>
-          <div style={styles.carouselStage}>
-            <button
-              type="button"
-              onClick={goPrev}
-                  className={activeArrow === "prev" ? "sliderArrow button-press" : "sliderArrow"}
-                  style={{
-                    ...styles.sliderArrow,
-                    ...styles.sliderArrowSide,
-                    ...(services.length <= 1 ? styles.sliderArrowDisabled : {}),
-                  }}
-                  aria-label="Slide anterior"
+
+            <div className="perspective-container relative h-[620px] md:h-[580px] w-full max-w-6xl mx-auto flex items-center justify-center">
+              <button
+                type="button"
+                onClick={goPrev}
+                disabled={isTransitioning}
+                aria-label="Vezi tratamentul anterior"
+                className="absolute left-2 md:left-8 z-40 w-14 h-14 flex items-center justify-center rounded-full bg-white shadow-lg text-slate-400 hover:text-[#0f5132] hover:scale-105 transition-all border border-slate-100 disabled:opacity-60 disabled:cursor-not-allowed group"
+              >
+                <svg
+                  className="w-7 h-7 transform group-hover:-translate-x-1 transition-transform"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  {"<"}
-                </button>
-                <div style={styles.carouselRow}>
-                  <div style={styles.sidePreview} className="side-preview-panel" key={`preview-prev-${previewAnimationKey}`}>
-                    <motion.div
-                      key={`preview-motion-prev-${previewAnimationKey}-${previewPrevIndex}`}
-                      {...getPreviewMotionProps("prev")}
-                      style={{ width: "100%", height: "100%", display: "flex" }}
-                    >
-                      {renderServicePreview(previewPrevIndex)}
-                    </motion.div>
-                  </div>
-                <div style={styles.activeCardWrapper}>
-                  {isTransitioning && transitionTarget !== null ? (
-                    <>
-                      <motion.div
-                        key={`outgoing-${currentIndex}`}
-                        {...getSlideMotionProps("outgoing", motionDirection)}
-                        style={motionLayerStyle}
-                      >
-                        {renderServiceCard(
-                          currentIndex,
-                          transitionDirection === "next" ? "outgoing-next" : "outgoing-prev"
-                        )}
-                      </motion.div>
-                      <motion.div
-                        key={`incoming-${transitionTarget}`}
-                        {...getSlideMotionProps("incoming", motionDirection)}
-                        style={motionLayerStyle}
-                      >
-                        {renderServiceCard(
-                          transitionTarget,
-                          transitionDirection === "next" ? "incoming-next" : "incoming-prev"
-                        )}
-                      </motion.div>
-                    </>
-                  ) : (
-                    <div style={motionLayerStyle}>{renderServiceCard(currentIndex, "active")}</div>
-                  )}
-                </div>
-                  <div style={styles.sidePreview} className="side-preview-panel" key={`preview-next-${previewAnimationKey}`}>
-                    <motion.div
-                      key={`preview-motion-next-${previewAnimationKey}-${previewNextIndex}`}
-                      {...getPreviewMotionProps("next")}
-                      style={{ width: "100%", height: "100%", display: "flex" }}
-                    >
-                      {renderServicePreview(previewNextIndex)}
-                    </motion.div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className={activeArrow === "next" ? "sliderArrow button-press" : "sliderArrow"}
-                  style={{
-                    ...styles.sliderArrow,
-                    ...styles.sliderArrowSide,
-                    ...(services.length <= 1 ? styles.sliderArrowDisabled : {}),
-                  }}
-                  aria-label="Slide urmator"
+                  <path
+                    d="M14 6L8 12L14 18"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <line
+                    x1="8"
+                    y1="12"
+                    x2="19"
+                    y2="12"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                disabled={isTransitioning}
+                aria-label="Vezi urmatorul tratament"
+                className="absolute right-2 md:right-8 z-40 w-14 h-14 flex items-center justify-center rounded-full bg-white shadow-lg text-slate-400 hover:text-[#0f5132] hover:scale-105 transition-all border border-slate-100 disabled:opacity-60 disabled:cursor-not-allowed group"
+              >
+                <svg
+                  className="w-7 h-7 transform group-hover:translate-x-1 transition-transform"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  {">"}
-                </button>
+                  <path
+                    d="M10 6L16 12L10 18"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <line
+                    x1="5"
+                    y1="12"
+                    x2="16"
+                    y2="12"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+
+              {/* Left card */}
+              <div
+                className={`card-3d absolute w-[340px] md:w-[380px] h-[480px] bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xl group cursor-pointer ${
+                  carouselIndex === 0
+                    ? "card-center"
+                    : carouselIndex === 1
+                    ? "card-right"
+                    : "card-left"
+                }`}
+              >
+                <div className="h-[220px] relative overflow-hidden bg-slate-100">
+                  <div className="absolute inset-0 bg-emerald-900/60 mix-blend-multiply z-10" />
+                  <div className="absolute inset-0 bg-[url('/cropped-CFT-1.png')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
+                </div>
+                <div className="p-8 flex flex-col h-[260px] relative">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-emerald-700 transition-colors">
+                    Implantologie globală
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                    Intervenții confortabile cu planificare 3D și precizie maximă pentru rezultate imediate.
+                    Tehnologie avansată pentru un zâmbet perfect.
+                  </p>
+                  <div className="mt-auto pt-6 border-t border-slate-100">
+                    <span className="inline-flex items-center text-sm font-semibold text-emerald-700 hover:text-teal-500 transition-colors">
+                      Află mai multe
+                      <span className="ml-1 text-base">↗</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Center card */}
+              <div
+                className={`card-3d absolute w-[360px] md:w-[440px] h-[540px] bg-gradient-to-br from-[#0f5132] to-[#052e16] rounded-3xl overflow-hidden text-white border-2 border-white/20 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.35)] ${
+                  carouselIndex === 1
+                    ? "card-center"
+                    : carouselIndex === 2
+                    ? "card-right"
+                    : "card-left"
+                }`}
+              >
+                <div className="relative h-full flex flex-col">
+                  <div className="absolute inset-0 overflow-hidden opacity-70 mix-blend-overlay">
+                    <NextImage
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7FHQ3_E5Is8Uuv5ZNme4FojBHeFSWR3uPLxUULYAkZo6w9yXei2lCsrXzfbZwu-WCsNEYA3yximQwWjt11eJ4XmWVP9hjwSfWZWSW3WVKfNfGWNW2KjuIwZS2_j_UJF1lv2ly2LclT_SRPOtIIMaYAY2BusiSbBo3Tm6L5ghQ-aCeV7i9W_Z1XgQi1uky0X0cxEpk6I4AQkHw7USliwPpv6c-tJAWSuYtLnpZLywS3n75ZMerS8NEKhMrzj5DE-Wf18pc65yXH3M7"
+                      alt={centerService?.title ?? "Reabilitare complexa"}
+                      fill
+                      className="object-cover object-top"
+                      sizes="(min-width: 1024px) 440px, 100vw"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f5132] via-[#0f5132]/80 to-transparent z-0" />
+                  <div className="relative z-10 flex flex-col h-full p-10">
+                    <div className="flex justify-between items-start mb-auto">
+                      <span className="bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 shadow-sm">
+                        Recomandat
+                      </span>
+                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/10">
+                        <span>★</span>
+                      </div>
+                    </div>
+                    <div className="mt-8">
+                      <h3 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                        Reabilitare complexă
+                      </h3>
+                      <p className="text-white/90 text-base leading-relaxed mb-8 font-light border-l-2 border-teal-400 pl-4">
+                        Tratamente funcționale pentru ATM, ortodonție invizibilă și reabilitări totale pentru o
+                        sănătate perfectă.
+                      </p>
+                      <div className="flex items-center gap-4">
+                        <button className="flex-1 bg-white text-[#0f5132] font-bold py-4 px-6 rounded-2xl hover:bg-teal-500 hover:text-white transition-all shadow-lg flex items-center justify-center gap-2">
+                          Vezi detalii
+                          <span className="text-lg">↗</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right card */}
+              <div
+                className={`card-3d absolute w-[340px] md:w-[380px] h-[480px] bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xl group cursor-pointer ${
+                  carouselIndex === 2
+                    ? "card-center"
+                    : carouselIndex === 0
+                    ? "card-right"
+                    : "card-left"
+                }`}
+              >
+                <div className="h-[220px] relative overflow-hidden bg-slate-100">
+                  <div className="absolute inset-0 bg-teal-500/10 mix-blend-multiply transition-opacity group-hover:opacity-0 z-10" />
+                  <NextImage
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Q5-THPuBWbklEEwWD-D8LQ8l31e6qK5GHPbkbRNB1scbrqJx6apb-1kasI3dnyHSHZTiCemkNrOLziSeqMgYNOtKUELRfbcu9d4wbJPDEg5VipiOwdozCniYiaaELZ67Zlysm6yQfQPTyF0oDZgjOXzrZdDAaGe2uaaMhsMku8er82PgnmFHGDmiBbEzC6R48THm1B7aWxFE38oe9w6kjyb8JLlmjpxjfhDbc5aSzCA1YaRQQhT0Rfn6Bqblc0-EeTjuMZtLqPuR"
+                    alt="Estetica dentara"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    sizes="(min-width: 1024px) 380px, 100vw"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-teal-600 uppercase tracking-wide">
+                    Estetică
+                  </div>
+                </div>
+                <div className="p-8 flex flex-col h-[260px] relative">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-teal-600 transition-colors">
+                    Estetică dentară integrată
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                    Design digital al zâmbetului, fațete dentare și albire ghidată clinic pentru o estetică
+                    impecabilă.
+                  </p>
+                  <div className="mt-auto pt-6 border-t border-slate-100">
+                    <span className="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-[#0f5132] transition-colors">
+                      Află mai multe
+                      <span className="ml-1 text-base">↗</span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        <ReviewsSection />
+
         <section
           id="programare"
           aria-labelledby="programare-title"
-          className="cta-section w-full px-4 lg:px-0"
-          style={{ ...styles.ctaSection, ...fadeIn(0.45) }}
+          className="relative w-full min-h-[520px] md:min-h-[620px] flex items-center justify-center lg:justify-start overflow-hidden"
         >
-          <div style={styles.ctaContent}>
-            <p style={styles.sectionEyebrow}>Programari rapide</p>
-            <h2 id="programare-title" style={{ margin: "0 0 12px", fontSize: "32px" }}>
-              Ramai conectat cu echipa ta medicala
-            </h2>
-            <p style={{ margin: 0, lineHeight: 1.6 }}>
-              Coordonatorii DentNow iti confirma vizita in cel mult 30 de minute. Trimite-ne istoricul tau medical in siguranta si
-              pregatim traseul optim inaintea sosirii.
-            </p>
-            <div style={styles.ctaActions}>
-              <a href={`tel:${sanitizedPhone}`} style={styles.phonePill} className="btn-animate">
-                Suna acum
+          {/* Map background */}
+          <div className="absolute inset-0 z-0">
+            <div className="w-full h-full opacity-95">
+              <ClinicMap />
+            </div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/75" />
+          </div>
+
+          {/* Card */}
+          <div className="container mx-auto px-4 relative z-10 pointer-events-none h-full flex items-center">
+            <div className="pointer-events-auto bg-white rounded-2xl shadow-2xl max-w-xl w-full p-8 md:p-10 border-t-4 border-[#149ddd]">
+              <h2
+                id="programare-title"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#172b4d] mb-5 leading-tight"
+              >
+                Făuritorii de bucurie din clinica DentNow
+              </h2>
+              <p className="text-sm md:text-base text-[#4a5568] mb-8 leading-relaxed">
+                Făuritorii de bucurie te așteaptă la DentNow, în București. Bucură-te de servicii stomatologice
+                la aceleași standarde, într-o locație ușor de ajuns pentru tine și familia ta.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center text-[#149ddd]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                    >
+                      <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.25 1.01l-2.2 2.22z" />
+                    </svg>
+                  </span>
+                  <a
+                    href={`tel:${sanitizedPhone}`}
+                    className="text-[#149ddd] font-semibold text-sm md:text-base hover:underline"
+                  >
+                    {siteConfig.contactPhone}
+                  </a>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 inline-flex items-center justify-center text-[#149ddd]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                    >
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119 9a2.5 2.5 0 013 2.5z" />
+                    </svg>
+                  </span>
+                  <span className="text-sm md:text-base text-[#1a202c]">
+                    Str. Louis Pasteur, nr. 1A, Bucure?ti
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 inline-flex items-center justify-center text-[#149ddd]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                    >
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119 9a2.5 2.5 0 013 2.5z" />
+                    </svg>
+                  </span>
+                  <span className="text-sm md:text-base text-[#1a202c]">
+                    Str. Ghe?arilor, nr. 15, Bucure?ti
+                  </span>
+                </div>
+              </div>
+
+              <a
+                href={`tel:${sanitizedPhone}`}
+                className="inline-flex items-center justify-center bg-[#149ddd] hover:bg-[#0e7bb0] text-white font-semibold py-3 px-8 rounded-md text-sm md:text-base transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                Vreau o programare
+                <span className="ml-2 text-xs">➜</span>
               </a>
-              <button type="button" style={{ ...styles.primaryButton, boxShadow: "none" }} className="btn-animate">
-                Trimite mesaj
-              </button>
             </div>
           </div>
-          <ul style={styles.assuranceList} className="assurance-list">
-            {assurances.map((item) => (
-              <li key={item} style={styles.assuranceItem}>
-                <span aria-hidden="true" style={styles.assuranceBullet}>
-                  {">"}
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </section>
 
         <React.Suspense fallback={<div style={styles.footerPlaceholder} aria-hidden="true" />}>
@@ -1324,3 +1533,5 @@ export default function Home() {
     </>
   );
 }
+
+

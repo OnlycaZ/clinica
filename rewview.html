@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DentNow - Real Stories</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec5b",
+              "background-light": "#f6f8f6",
+              "background-dark": "#102216",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1a2e22", 
+            },
+            fontFamily: {
+              "display": ["Lexend", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        /* Hide scrollbar for cleaner look in specific containers if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white min-h-screen flex flex-col overflow-x-hidden transition-colors duration-200">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-[#f0f4f2] dark:border-white/10 px-4 md:px-10 py-3">
+<div class="max-w-7xl mx-auto flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-3 text-[#111813] dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">dentistry</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">DentNow</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-[#111813] dark:text-gray-200 text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-[#111813] dark:text-gray-200 text-sm font-medium hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-[#111813] dark:text-gray-200 text-sm font-medium hover:text-primary transition-colors" href="#">Facilities</a>
+<a class="text-[#111813] dark:text-gray-200 text-sm font-medium hover:text-primary transition-colors" href="#">Reviews</a>
+<a class="text-[#111813] dark:text-gray-200 text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-[#111813] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+<span class="truncate">Book Appointment</span>
+</button>
+</div>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden text-[#111813] dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Summary & Sticky Header -->
+<div class="lg:col-span-4 space-y-8">
+<div class="sticky top-24 space-y-8">
+<!-- Section Header -->
+<div>
+<span class="text-primary font-bold tracking-wider text-sm uppercase mb-2 block">Testimonials</span>
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight text-[#111813] dark:text-white mb-4">
+                            Real Stories from <br class="hidden xl:block"/>Real Smiles
+                        </h1>
+<p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+                            We take pride in providing the best dental care. See what our community has to say about their experience at DentNow.
+                        </p>
+</div>
+<!-- Aggregate Rating Card -->
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-white/5">
+<div class="flex items-end gap-3 mb-2">
+<span class="text-6xl font-black text-[#111813] dark:text-white leading-none">4.9</span>
+<span class="text-gray-400 dark:text-gray-500 text-xl font-medium mb-1">/ 5.0</span>
+</div>
+<div class="flex items-center gap-1 text-primary mb-4">
+<span class="material-symbols-outlined text-3xl">star</span>
+<span class="material-symbols-outlined text-3xl">star</span>
+<span class="material-symbols-outlined text-3xl">star</span>
+<span class="material-symbols-outlined text-3xl">star</span>
+<span class="material-symbols-outlined text-3xl">star</span>
+</div>
+<p class="text-[#111813] dark:text-gray-200 font-medium mb-6">Based on 350+ Google Reviews</p>
+<!-- Rating Bars -->
+<div class="space-y-3 mb-8">
+<div class="flex items-center gap-3 text-sm">
+<span class="w-3 font-medium">5</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[85%]"></div>
+</div>
+<span class="w-8 text-right text-gray-500 dark:text-gray-400">85%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="w-3 font-medium">4</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[10%]"></div>
+</div>
+<span class="w-8 text-right text-gray-500 dark:text-gray-400">10%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="w-3 font-medium">3</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[3%]"></div>
+</div>
+<span class="w-8 text-right text-gray-500 dark:text-gray-400">3%</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-400">
+<span class="w-3 font-medium">2</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-gray-300 dark:bg-gray-600 rounded-full w-[1%]"></div>
+</div>
+<span class="w-8 text-right">1%</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-400">
+<span class="w-3 font-medium">1</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-gray-300 dark:bg-gray-600 rounded-full w-[1%]"></div>
+</div>
+<span class="w-8 text-right">1%</span>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full flex items-center justify-center gap-3 rounded-xl h-14 bg-[#111813] dark:bg-white text-white dark:text-[#111813] font-bold text-base hover:opacity-90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 group">
+<!-- Simple Google G icon representation since SVG not provided but required material symbols -->
+<span class="bg-white rounded-full p-0.5" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">
+<svg height="16px" viewbox="0 0 48 48" width="16px" xmlns="http://www.w3.org/2000/svg"><path d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" fill="#EA4335"></path><path d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" fill="#4285F4"></path><path d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" fill="#FBBC05"></path><path d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" fill="#34A853"></path><path d="M0 0h48v48H0z" fill="none"></path></svg>
+</span>
+<span>Review us on Google</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-xl">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Masonry Reviews Grid -->
+<div class="lg:col-span-8">
+<!-- Tailwind's CSS Columns for Masonry Effect -->
+<div class="columns-1 md:columns-2 gap-6 space-y-6">
+<!-- Review Card 1 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-100 bg-cover bg-center ring-2 ring-primary/20" data-alt="Portrait of Sarah smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHEbxCNPMCaESc3itmDsglnCmNS48_OdtFN9bCgz0tGKRd05N5mB3S-6ltY08_la439v_6qhROck7OL_EwQ-W9T8TBqvfKMuy3tPd3oGpw8iLhnw4ebc7_YglIqfu_FNQwWmKtCwOd3rffKhapCHHPibgZnagxccLNyTiNbWkZ2lznqdf7sscmy6-tgHK36du2B-dJr0UMOQN5wtJCP6KpaINBwfbEVn9jGAqVXar2C9jW-bgU5wPmvyEtDGC04GPCk22-WXoDnlTy');"></div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Sarah L.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">2 days ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            Dr. Smith was amazing! I usually hate the dentist but this was a breeze. Highly recommend DentNow for anyone with anxiety. The environment is so calming and the staff genuinely cares.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (12)
+                            </button>
+</div>
+</div>
+<!-- Review Card 2 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-100 bg-cover bg-center ring-2 ring-primary/20" data-alt="Portrait of Mike looking confident" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjk14LAdVyfX9iujRcPezqJtFx8s6lKFLW9TWuvB3HrVrGEEhi5iXgZb7MFUWifdPJkC6ZfUEfhsFEsApD-Rg5hfMMGmNe2rgbnIIwbXMKrfdIQI56iP4OUVMckbM5KFe9h_t2agbow0WzsWK9u4P-TSzkmlAbiyxu9KkLxxsWkYyj8OCHLZGWFgaIQpqMelb--KpKcw4nV57O6BABHo9YaDVph9HpBkT1RCY2zIjzct0gUhxJmEhqTvQQriUWzMy8m8AQTZZiunxe');"></div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Mike T.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">1 week ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            Best dental experience I've had. The office is so modern and the staff are incredibly friendly.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (8)
+                            </button>
+</div>
+</div>
+<!-- Review Card 3 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg ring-2 ring-primary/20">JR</div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Jessica R.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">2 weeks ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            Clean office and friendly staff. They really took the time to explain my treatment plan clearly without using confusing jargon. I felt respected and heard.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (5)
+                            </button>
+</div>
+</div>
+<!-- Review Card 4 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-100 bg-cover bg-center ring-2 ring-primary/20" data-alt="Portrait of Tom smiling lightly" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBokMRou9zVkuU454d4mqpsujsHQFgerYS2UaekbjoKSx6JGM1t8ySZJZZBKMP_gEcAJujpalRKsgnB5rSszF1-3YamBL5GyG-In2ASaa4op_3fLklawmSwtIAy2_YhGFHLoPxXyb46LRsvwPFsloSnqTxK3_LfkICwJoIfn94kjpK1gIjd8bzZlSPSVtvGMzOe9IMPG7S3bYFONv0lv9ZQjfbl2_2Bx9tmluAY34UYzgDK8QKxkbUzoY4tm6cVDTGtPGs3Ic1dJY0K');"></div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Tom H.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">3 weeks ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            I've been coming here for years. Consistent, high-quality care every single time. It's rare to find a place that maintains such high standards over a long period.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (3)
+                            </button>
+</div>
+</div>
+<!-- Review Card 5 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-lg ring-2 ring-primary/20">LG</div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Linda G.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">1 month ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            The whitening service was fantastic. My smile looks brand new!
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (2)
+                            </button>
+</div>
+</div>
+<!-- Review Card 6 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-100 bg-cover bg-center ring-2 ring-primary/20" data-alt="Portrait of a young woman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCM6TwoRiDoj4juBPq9uxnee86hxr_zZWHKInImycCutlnhKpK8RhvSVCJI3whdCt9x_s3q1EX-kMGD4s4JZdZCHKXNMRFGoAw2f-ISawf4zUYDbh4-MFNOIcH3uzBcpi6VeTrPDMtYTJ15vkHbSpa822j0eimZ1IQQpgizD6B15L9DfaPr__Pg3nSvGuCQI5x32OQ9nylF3aUcPkaLd2qLmCKHhkG-XpMHMwOS2UAJtaBQtdGrcDG1dzdcQCxHlcMYki4wM2luvxPP');"></div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">Emma Watson</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">1 month ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            Exceptional service! From the moment I walked in, I was greeted with warmth. The procedure was quick and painless.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (7)
+                            </button>
+</div>
+</div>
+<!-- Review Card 7 -->
+<div class="break-inside-avoid bg-white dark:bg-surface-dark rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-100 bg-cover bg-center ring-2 ring-primary/20" data-alt="Portrait of David looking professional" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJeVFSh4Hk-CyNBnpWLBiGAuVNSmVfvEwP-n6_S4nRYUa4I6wYmKi-60Un2jIKwei6O2y7_h_a7UaQ-o6fKujDBALnnJFEsVkQvYkhftVWHzWuI4tM6AEzu4hTPaQUArdUcDg04mE1lB2aXDVAvBxuodbqUUv_SSsYXSTLb6NkaBTvSzRvfw1lu-AYzJRQhveSL2zZoOj8Q-3HZxpQXQjnPnGAGrB9JcJ-4nhBGpkcspXCZGvPhRfWxOo7OnV-xXh0BXhWR-ye3A75');"></div>
+<div>
+<h3 class="font-bold text-[#111813] dark:text-white leading-tight">David K.</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">1 month ago</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-full p-1.5 text-primary">
+<span class="material-symbols-outlined text-xl">format_quote</span>
+</div>
+</div>
+<div class="flex text-primary mb-3">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            Very professional team. Appointment started right on time which I really appreciate.
+                        </p>
+<div class="pt-4 border-t border-gray-100 dark:border-white/5 flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">thumb_up</span> Helpful (1)
+                            </button>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        Load More Reviews <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="border-t border-[#f0f4f2] dark:border-white/10 py-10 bg-white dark:bg-background-dark">
+<div class="max-w-7xl mx-auto px-4 text-center">
+<p class="text-sm text-gray-500 dark:text-gray-400">© 2024 DentNow. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

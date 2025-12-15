@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinic Locations and Contact</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#149ddd", // Blue from the button
+                        "primary-hover": "#0e7bb0",
+                        "secondary": "#2c3e50", // Dark text color
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#1a202c",
+                        "card-light": "#ffffff",
+                        "card-dark": "#2d3748",
+                        "text-light": "#333333",
+                        "text-dark": "#e2e8f0",
+                        "icon-color": "#149ddd", // Matching primary for icons
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>.map-background {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB1g4xhWs2zYw9bwWM7gHjep7qYjUn_pbyoamt0VPZrcboKA6xKYKemIAhjLdbCRtfnr37ksFmAzfPOAId1jHE4yvMS8Ayt2k-wRF_czgQny4weNjjwRRisD2s6Kuq8FYBKc8H4-VIkR0k6qttEMT3KLv1p6WbtpmyDO1uUnuRvoAZAEAdx4sxbxOf9bUxEwIKEPTmtVm-4IzZhPWnGIcd4X5ugUb_2yZyrbqpHAEwSphtl7M0qqkn-RHiOvAafUXrl5BiLdLo3vyWB);background-size: cover;
+    background-position: center
+    }</style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased transition-colors duration-200">
+<section class="relative w-full h-screen min-h-[600px] flex items-center justify-center lg:justify-start overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Map of Bucharest showing clinic locations" class="w-full h-full object-cover opacity-80 dark:opacity-40 filter dark:invert dark:hue-rotate-180" onerror="this.src='https://placehold.co/1920x1080/e5e7eb/a3a3a3?text=Map+View'; this.classList.add('opacity-50');" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVKi90EDDQVcBpnQJh_tSxk1HU4oumaZRQAulddLSdhktUAqVyPrT281hENdvR0viQp99X5bUZx_uiNWugskAZV0i78gw5YL20-Tm8pzwUyGSlgKFpmwq0mgFJLqkbPLgKmSamC8pTwG2-ka532gCLdrTU1OVkvCHEBycqU-aRZHLXZ9IcL8oWeJ0Fa3ZwcudIMFOKjw1g_MXGywv6mZDURBYYoBSAV3AUn4j-xny8wecYgPLOpi88Vk-7QbP42R0PVRVLQOkEvmDO"/>
+<div class="absolute top-[35%] left-[52%] transform -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-lg hidden lg:block">
+<span class="material-icons text-5xl">location_on</span>
+</div>
+<div class="absolute top-[60%] left-[48%] transform -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-lg hidden lg:block">
+<span class="material-icons text-5xl">location_on</span>
+</div>
+</div>
+<div class="container mx-auto px-4 z-10 relative pointer-events-none h-full flex items-center">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl p-8 lg:p-12 max-w-lg w-full pointer-events-auto transform transition-all hover:scale-[1.01] border-t-4 border-primary">
+<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                    Făuritorii de bucurie din clinicile Trident
+                </h2>
+<p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                    Făuritorii de bucurie te așteaptă acum în două locații din București. Bucură-te de servicii stomatologice la aceleași standarde, acum mai aproape de tine!
+                </p>
+<div class="space-y-4 mb-10">
+<div class="flex items-start group cursor-pointer">
+<span class="material-icons text-primary mr-3 text-xl group-hover:scale-110 transition-transform">phone_in_talk</span>
+<a class="text-primary font-semibold text-lg hover:underline decoration-2 underline-offset-4" href="tel:0310050942">
+                            0310.050.942
+                        </a>
+</div>
+<div class="flex items-start group">
+<span class="material-icons text-primary mr-3 text-xl mt-1 group-hover:scale-110 transition-transform">location_on</span>
+<span class="text-gray-700 dark:text-gray-200 text-lg">
+                            Str. Louis Pasteur, nr. 1A, București
+                        </span>
+</div>
+<div class="flex items-start group">
+<span class="material-icons text-primary mr-3 text-xl mt-1 group-hover:scale-110 transition-transform">location_on</span>
+<span class="text-gray-700 dark:text-gray-200 text-lg">
+                            Str. Ghețarilor, nr. 15, București
+                        </span>
+</div>
+</div>
+<a class="inline-flex items-center justify-center bg-primary hover:bg-primary-hover text-white font-semibold py-3 px-8 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1" href="#">
+                    Vreau o programare
+                    <span class="material-icons ml-2 text-sm">arrow_forward_ios</span>
+</a>
+</div>
+</div>
+</section>
+
+</body></html>
