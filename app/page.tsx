@@ -5,7 +5,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import { megaMenus, navigation } from "@/lib/navigation";
 import { getSeoEntry, siteConfig } from "@/lib/seo";
@@ -683,17 +683,21 @@ const motionLayerStyle: React.CSSProperties = {
   zIndex: 1,
 };
 
+const slideTransitionSettings: Transition = {
+  duration: 0.52,
+  ease: [0.42, 0, 0.58, 1] as const,
+};
+
 const getSlideMotionProps = (role: SlideMotionRole, direction: "next" | "prev") => {
-  const transitionSettings = { duration: 0.52, ease: "easeInOut" };
   if (role === "incoming") {
     return {
       initial: {
         x: direction === "next" ? SERVICE_SLIDE_OFFSET : -SERVICE_SLIDE_OFFSET,
         opacity: 0,
-        filter: "blur(4px)"
+        filter: "blur(4px)",
       },
       animate: { x: 0, opacity: 1, filter: "blur(0px)" },
-      transition: transitionSettings
+      transition: slideTransitionSettings,
     };
   }
   return {
@@ -701,22 +705,26 @@ const getSlideMotionProps = (role: SlideMotionRole, direction: "next" | "prev") 
     animate: {
       x: direction === "next" ? -SERVICE_SLIDE_OFFSET : SERVICE_SLIDE_OFFSET,
       opacity: 0,
-      filter: "blur(3px)"
+      filter: "blur(3px)",
     },
-    transition: transitionSettings
+    transition: slideTransitionSettings,
   };
 };
 
 const PREVIEW_SLIDE_OFFSET = 70;
 
+const previewTransition: Transition = {
+  duration: 0.45,
+  ease: [0.42, 0, 0.58, 1] as const,
+};
+
 const getPreviewMotionProps = (position: "prev" | "next") => {
   const offset = position === "prev" ? -PREVIEW_SLIDE_OFFSET : PREVIEW_SLIDE_OFFSET;
-  const transition = { duration: 0.45, ease: "easeInOut" };
   return {
     initial: { x: offset, opacity: 0, filter: "blur(6px)" },
     animate: { x: 0, opacity: 1, filter: "blur(0px)" },
     exit: { x: offset, opacity: 0, filter: "blur(4px)" },
-    transition
+    transition: previewTransition,
   };
 };
 
@@ -1230,21 +1238,22 @@ export default function Home() {
 
           {/* Card */}
           <div className="container mx-auto px-4 relative z-10 pointer-events-none h-full flex items-center">
-            <div className="pointer-events-auto bg-white rounded-2xl shadow-2xl max-w-xl w-full p-8 md:p-10 border-t-4 border-[#149ddd]">
+            <div className="pointer-events-auto bg-white rounded-2xl shadow-2xl max-w-xl w-full p-8 md:p-10 border-t-4"
+              style={{ borderTopColor: palette.teal }}>
               <h2
                 id="programare-title"
-                className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#172b4d] mb-5 leading-tight"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#123c35] mb-5 leading-tight"
               >
                 Făuritorii de bucurie din clinica DentNow
               </h2>
-              <p className="text-sm md:text-base text-[#4a5568] mb-8 leading-relaxed">
+              <p className="text-sm md:text-base text-[#6a7f74] mb-8 leading-relaxed">
                 Făuritorii de bucurie te așteaptă la DentNow, în București. Bucură-te de servicii stomatologice
                 la aceleași standarde, într-o locație ușor de ajuns pentru tine și familia ta.
               </p>
 
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center text-[#149ddd]">
+                  <span className="inline-flex items-center justify-center text-[#1fb67c]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -1256,14 +1265,14 @@ export default function Home() {
                   </span>
                   <a
                     href={`tel:${sanitizedPhone}`}
-                    className="text-[#149ddd] font-semibold text-sm md:text-base hover:underline"
+                    className="text-[#1fb67c] font-semibold text-sm md:text-base hover:underline"
                   >
                     {siteConfig.contactPhone}
                   </a>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex items-center justify-center text-[#149ddd]">
+                  <span className="mt-1 inline-flex items-center justify-center text-[#1fb67c]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -1273,13 +1282,13 @@ export default function Home() {
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119 9a2.5 2.5 0 013 2.5z" />
                     </svg>
                   </span>
-                  <span className="text-sm md:text-base text-[#1a202c]">
-                    Str. Louis Pasteur, nr. 1A, Bucure?ti
+                  <span className="text-sm md:text-base text-[#0f1f1b]">
+                    Str. Louis Pasteur, nr. 1A, București
                   </span>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex items-center justify-center text-[#149ddd]">
+                  <span className="mt-1 inline-flex items-center justify-center text-[#1fb67c]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -1289,15 +1298,15 @@ export default function Home() {
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119 9a2.5 2.5 0 013 2.5z" />
                     </svg>
                   </span>
-                  <span className="text-sm md:text-base text-[#1a202c]">
-                    Str. Ghe?arilor, nr. 15, Bucure?ti
+                  <span className="text-sm md:text-base text-[#0f1f1b]">
+                    Str. Ghețarilor, nr. 15, București
                   </span>
                 </div>
               </div>
 
               <a
                 href={`tel:${sanitizedPhone}`}
-                className="inline-flex items-center justify-center bg-[#149ddd] hover:bg-[#0e7bb0] text-white font-semibold py-3 px-8 rounded-md text-sm md:text-base transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center bg-[#1fb67c] hover:bg-[#159764] text-[#0f1f1b] font-semibold py-3 px-8 rounded-md text-sm md:text-base transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Vreau o programare
                 <span className="ml-2 text-xs">➜</span>
@@ -1533,5 +1542,3 @@ export default function Home() {
     </>
   );
 }
-
-

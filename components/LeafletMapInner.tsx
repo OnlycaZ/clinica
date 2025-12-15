@@ -27,13 +27,13 @@ export default function LeafletMapInner() {
 
     L.circleMarker(center, {
       radius: 9,
-      color: "#149ddd",
-      fillColor: "#149ddd",
+      color: "#1fb67c",
+      fillColor: "#1fb67c",
       fillOpacity: 0.95,
       weight: 3,
     })
       .addTo(map)
-      .bindPopup("DentNow – Str. Louis Pasteur, nr. 1A, București");
+      .bindPopup("DentNow - Str. Louis Pasteur, nr. 1A, București");
 
     return () => {
       map.remove();
@@ -42,3 +42,4 @@ export default function LeafletMapInner() {
 
   return <div ref={mapRef} className="w-full h-full" style={{ minHeight: "520px" }} />;
 }
+
