@@ -24,6 +24,9 @@ interface SiteHeaderProps {
 
 const createHeaderStyles = (palette: Palette) => ({
   header: {
+    position: "fixed",
+    top: 0,
+    left: 0,
     width: "100%",
     zIndex: 105,
     background: "transparent"
@@ -246,9 +249,6 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
       </header>
         <style jsx>{`
           .site-header {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             z-index: 105;
             background: transparent;
@@ -259,12 +259,10 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
               background 0.3s ease,
               box-shadow 0.3s ease,
               padding 0.3s ease,
-              backdrop-filter 0.3s ease;
+              backdrop-filter 0.3s ease,
+              transform 0.3s ease;
           }
           .site-header.scrolled {
-            position: fixed;
-            top: 0;
-            left: 0;
             background: rgba(255, 255, 255, 0.92);
             border-bottom: 1px solid rgba(18, 60, 53, 0.12);
             box-shadow: 0 20px 50px rgba(18, 60, 53, 0.15);
