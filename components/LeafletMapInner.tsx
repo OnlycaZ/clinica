@@ -17,8 +17,16 @@ export default function LeafletMapInner() {
       center,
       zoom: 17,
       zoomControl: false,
-      scrollWheelZoom: true,
+      scrollWheelZoom: false,
     });
+
+    let scrollEnabled = false;
+
+    const enableScrollZoom = () => {
+      if (scrollEnabled) return;
+      map.scrollWheelZoom.enable();
+      scrollEnabled = true;
+    };
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -35,7 +43,10 @@ export default function LeafletMapInner() {
       .addTo(map)
       .bindPopup("DentNow - Str. Louis Pasteur, nr. 1A, București");
 
+    map.on("click", enableScrollZoom);
+
     return () => {
+      map.off("click", enableScrollZoom);
       map.remove();
     };
   }, []);

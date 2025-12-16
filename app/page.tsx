@@ -64,7 +64,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: 0,
     width: "100%",
     minHeight: "100vh",
-    backgroundColor: "#eaf6f0",
+    background: "transparent",
     color: palette.navy,
     display: "flex",
     flexDirection: "column",
@@ -1002,7 +1002,7 @@ export default function Home() {
         <section
           id="servicii"
           aria-labelledby="servicii-title"
-          className="relative w-full px-4 lg:px-0 py-20 bg-[#f0fdfa] overflow-hidden"
+          className="relative w-full px-4 lg:px-0 py-20 overflow-hidden"
         >
           <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#0f5132]/5 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />

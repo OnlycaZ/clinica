@@ -1,5 +1,5 @@
 .gallerySection {
-  background: #ffffff;
+  background: transparent;
   width: 100vw;
   min-height: 100vh;
   padding: 0;
@@ -20,7 +20,13 @@
 .galleryText {
   padding: clamp(3rem, 4vw, 5rem) clamp(3.5rem, 5vw, 4.75rem) clamp(3rem, 3vw, 4rem)
     clamp(5.5rem, 9vw, 7rem);
-  background: #ffffff;
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff 55%,
+    rgba(240, 253, 250, 0.95) 80%,
+    rgba(240, 253, 250, 0) 100%
+  );
   box-shadow: 0 25px 60px rgba(3, 55, 46, 0.12);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
   display: flex;

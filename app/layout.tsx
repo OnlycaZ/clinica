@@ -91,7 +91,6 @@ export default function RootLayout({
     <html lang="ro" data-scroll-behavior="smooth">
         <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${montserrat.variable} antialiased`}>
         <div className="app-shell">
-          <div className="page-background" aria-hidden="true" />
           <div className="site-shell">
             <div className="layout-wrapper">
               <PageTransition>{children}</PageTransition>

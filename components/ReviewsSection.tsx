@@ -2,9 +2,103 @@ import React, { useState } from "react";
 
 const stars = Array.from({ length: 5 });
 
+type Review = {
+  name: string;
+  initials: string;
+  time: string;
+  text: string;
+};
+
+const allReviews: Review[] = [
+  {
+    name: "Estera Tila",
+    initials: "E",
+    time: "acum o lună",
+    text: "Experiențele mele au fost foarte bune la această clinică și totul se datorează doamnei doctor Ema Petrescu.",
+  },
+  {
+    name: "Mirela Marica",
+    initials: "M",
+    time: "acum 3 săptămâni",
+    text: "Recomand cu încredere acest cabinet și pe doamna doctor Ruxandra Iarca.",
+  },
+  {
+    name: "Iulia Popa",
+    initials: "I",
+    time: "modificat acum 2 săptămâni",
+    text: "Dr. Ruxandra și dr. Ema sunt medicii care m-au tratat și și-au făcut treaba cu mult profesionalism.",
+  },
+  {
+    name: "Radu Ionita",
+    initials: "RI",
+    time: "acum 2 luni",
+    text: "O recomand din toată inima pe doamna doctor Emma Petrescu.",
+  },
+  {
+    name: "Marian-Doru Valu",
+    initials: "M",
+    time: "acum 3 săptămâni",
+    text: "Recomand cu încredere această clinică, am fost tratat de doamna doctor Ruxandra Iarca și voi rămâne pacient DentNow.",
+  },
+  {
+    name: "Mirobolantul Mirobolantu1",
+    initials: "M",
+    time: "acum o lună",
+    text: "Medici tineri, sinceri și onești. Nu te menajează, îți spun direct ce probleme ai.",
+  },
+  {
+    name: "Denisa Ciocan",
+    initials: "D",
+    time: "acum 3 luni",
+    text: "O clinică excelentă, profesionalism, dedicare și empatie pentru cei mici. Recomand pentru întreaga familie.",
+  },
+  {
+    name: "Stefania Gheorghe",
+    initials: "S",
+    time: "acum 5 luni",
+    text: "Dl doctor Răzvan este un profesionist adevărat. Sunt foarte mulțumită și recomand cu drag.",
+  },
+  {
+    name: "Teodor Ceapa",
+    initials: "T",
+    time: "acum 5 luni",
+    text: "Foarte plăcută experiența, servicii foarte bune cu prețuri accesibile. Recomand 100%.",
+  },
+  {
+    name: "Stefan Leca",
+    initials: "SL",
+    time: "acum 3 ani",
+    text: "Întreg personalul este foarte bine pregătit, ambient liniștit și plăcut, tehnică nouă și modernă.",
+  },
+  {
+    name: "Georgiana Vergelea",
+    initials: "G",
+    time: "acum 6 luni",
+    text: "Recomand. Mulțumesc dnei Dr. Emma Petrescu!",
+  },
+  {
+    name: "Emine Uzun",
+    initials: "E",
+    time: "acum 9 luni",
+    text: "O experiență excepțională, personal amabil și profesionist, explicații clare și atenție la detalii.",
+  },
+  {
+    name: "Patricia Painschi",
+    initials: "P",
+    time: "acum 6 luni",
+    text: "Atmosferă plăcută, personal amabil și prietenos. Recomand cu încredere și căldură.",
+  },
+];
+
+const REVIEWS_PER_PAGE = 4;
+
 export default function ReviewsSection() {
-  // one like per review, toggled on/off
-  const [liked, setLiked] = useState<boolean[]>([false, false, false, false]);
+  const [liked, setLiked] = useState<boolean[]>(() => allReviews.map(() => false));
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.ceil(allReviews.length / REVIEWS_PER_PAGE);
+  const startIndex = page * REVIEWS_PER_PAGE;
+  const visibleReviews = allReviews.slice(startIndex, startIndex + REVIEWS_PER_PAGE);
 
   const toggleLike = (index: number) => {
     setLiked((prev) => {
@@ -14,9 +108,17 @@ export default function ReviewsSection() {
     });
   };
 
+  const goPrev = () => {
+    setPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  const goNext = () => {
+    setPage((prev) => (prev + 1) % totalPages);
+  };
+
   return (
     <section id="recenzii" className="w-full px-4 lg:px-0 py-20 bg-[#f6f8f6]">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left column: header + rating summary card */}
         <div className="lg:col-span-4 space-y-8">
           <div className="space-y-6">
@@ -27,8 +129,8 @@ export default function ReviewsSection() {
               Povesti reale de la pacienti reali
             </h2>
             <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-              Recenzii reale din Google Maps, de la pacienti care au ales DentNow pentru tratamente complexe
-              si vizite de rutina.
+              Recenzii reale din Google Maps, de la pacienti care au ales DentNow pentru tratamente
+              complexe si vizite de rutina.
             </p>
           </div>
 
@@ -118,213 +220,91 @@ export default function ReviewsSection() {
                 </svg>
               </span>
               <span>Vezi recenziile pe Google</span>
-              <span className="text-lg group-hover:translate-x-1 transition-transform">
-                &gt;
-              </span>
+              <span className="text-lg group-hover:translate-x-1 transition-transform">&gt;</span>
             </a>
           </div>
         </div>
 
-        {/* Right column: review cards */}
+        {/* Right column: review cards slider */}
         <div className="lg:col-span-8">
-          <div className="columns-1 md:columns-2 gap-5 space-y-5">
-            {/* Estera Tila */}
-            <article className="break-inside-avoid bg-white rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-[#1fb67c]/20">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center text-[#123c35] font-semibold ring-2 ring-[#1fb67c]/20">
-                    E
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-[#123c35] leading-tight">Estera Tila</h3>
-                    <p className="text-[11px] text-slate-500">acum o luna</p>
-                  </div>
-                </div>
-                <div className="rounded-full p-1.5 bg-[#1fb67c]/10 text-[#1fb67c]">
-                  <span className="text-lg">"</span>
-                </div>
-              </div>
-              <div className="flex text-[#1fb67c] mb-2 gap-1">
-                {stars.map((_, index) => (
-                  <span key={index} className="w-4 h-4 md:w-5 md:h-5 inline-flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      className="w-full h-full"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M12 2.5 9.4 8.08 3.3 8.8l4.4 4.02L6.5 19.5 12 16.4l5.5 3.1-1.2-6.68 4.4-4.02-6.1-.72Z"
-                      />
-                    </svg>
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                Experientele mele au fost foarte bune la aceasta clinica si totul se datoreaza doamnei doctor
-                Ema Petrescu.
-              </p>
-              <div className="pt-3 border-t border-slate-100 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => toggleLike(0)}
-                  className={`text-[11px] font-medium inline-flex items-center gap-1.5 transition-colors ${
-                    liked[0] ? "text-[#1fb67c]" : "text-slate-500 hover:text-[#1fb67c]"
-                  }`}
-                >
-                  <span>🔥</span>
-                  <span>Apreciaza{liked[0] ? " (1)" : ""}</span>
-                </button>
-              </div>
-            </article>
+          <div className="flex justify-end items-center gap-4 mb-4">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Recenziile anterioare"
+              className="px-2 py-1 text-2xl leading-none text-slate-500 hover:text-[#123c35] transition-transform duration-200 hover:-translate-x-0.5 active:scale-95"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Recenziile următoare"
+              className="px-2 py-1 text-2xl leading-none text-slate-500 hover:text-[#123c35] transition-transform duration-200 hover:translate-x-0.5 active:scale-95"
+            >
+              ›
+            </button>
+          </div>
 
-            {/* Iulia Popa */}
-            <article className="break-inside-avoid bg-white rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-[#1fb67c]/20">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center text-[#123c35] font-semibold ring-2 ring-[#1fb67c]/20">
-                    I
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-[#123c35] leading-tight">Iulia Popa</h3>
-                    <p className="text-[11px] text-slate-500">modificat acum 2 saptamani</p>
-                  </div>
-                </div>
-                <div className="rounded-full p-1.5 bg-[#1fb67c]/10 text-[#1fb67c]">
-                  <span className="text-lg">"</span>
-                </div>
-              </div>
-              <div className="flex text-[#1fb67c] mb-2 gap-1">
-                {stars.map((_, index) => (
-                  <span key={index} className="w-4 h-4 md:w-5 md:h-5 inline-flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      className="w-full h-full"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M12 2.5 9.4 8.08 3.3 8.8l4.4 4.02L6.5 19.5 12 16.4l5.5 3.1-1.2-6.68 4.4-4.02-6.1-.72Z"
-                      />
-                    </svg>
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                Dr. Ruxandra si dr. Ema sunt medicii care m-au tratat si si-au facut treaba cu mult
-                profesionalism.
-              </p>
-              <div className="pt-3 border-t border-slate-100 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => toggleLike(1)}
-                  className={`text-[11px] font-medium inline-flex items-center gap-1.5 transition-colors ${
-                    liked[1] ? "text-[#1fb67c]" : "text-slate-500 hover:text-[#1fb67c]"
-                  }`}
-                >
-                  <span>🔥</span>
-                  <span>Apreciaza{liked[1] ? " (1)" : ""}</span>
-                </button>
-              </div>
-            </article>
+          <div key={page} className="grid grid-cols-1 md:grid-cols-2 gap-5 reviews-fade">
+            {visibleReviews.map((review, offset) => {
+              const index = startIndex + offset;
+              const isLiked = liked[index];
 
-            {/* Mirela Marica */}
-            <article className="break-inside-avoid bg-white rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-[#1fb67c]/20">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="size-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700 font-semibold text-lg ring-2 ring-[#1fb67c]/20">
-                    M
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-[#123c35] leading-tight">Mirela Marica</h3>
-                    <p className="text-[11px] text-slate-500">acum 3 saptamani</p>
-                  </div>
-                </div>
-                <div className="rounded-full p-1.5 bg-[#1fb67c]/10 text-[#1fb67c]">
-                  <span className="text-lg">"</span>
-                </div>
-              </div>
-              <div className="flex text-[#1fb67c] mb-2 gap-1">
-                {stars.map((_, index) => (
-                  <span key={index} className="w-4 h-4 md:w-5 md:h-5 inline-flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      className="w-full h-full"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M12 2.5 9.4 8.08 3.3 8.8l4.4 4.02L6.5 19.5 12 16.4l5.5 3.1-1.2-6.68 4.4-4.02-6.1-.72Z"
-                      />
-                    </svg>
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                Recomand cu incredere acest cabinet si pe doamna doctor Ruxandra Iarca.
-              </p>
-              <div className="pt-3 border-t border-slate-100 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => toggleLike(2)}
-                  className={`text-[11px] font-medium inline-flex items-center gap-1.5 transition-colors ${
-                    liked[2] ? "text-[#1fb67c]" : "text-slate-500 hover:text-[#1fb67c]"
-                  }`}
+              return (
+                <article
+                  key={`${review.name}-${index}`}
+                  className="bg-white rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-[#1fb67c]/20"
                 >
-                  <span>🔥</span>
-                  <span>Apreciaza{liked[2] ? " (1)" : ""}</span>
-                </button>
-              </div>
-            </article>
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="size-12 rounded-full bg-emerald-50 flex items-center justify-center text-[#123c35] font-semibold text-lg ring-2 ring-[#1fb67c]/20">
+                        {review.initials}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-[#123c35] leading-tight">{review.name}</h3>
+                        <p className="text-[11px] text-slate-500">{review.time}</p>
+                      </div>
+                    </div>
+                    <div className="rounded-full p-1.5 bg-[#1fb67c]/10 text-[#1fb67c]">
+                      <span className="text-lg">"</span>
+                    </div>
+                  </div>
 
-            {/* Radu Ionita */}
-            <article className="break-inside-avoid bg-white rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow duration-300 border border-transparent hover:border-[#1fb67c]/20">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="size-12 rounded-full bg-[#123c35] flex items中心 justify-center text-white font-semibold text-lg ring-2 ring-[#1fb67c]/20">
-                    RI
+                  <div className="flex text-[#1fb67c] mb-2 gap-1">
+                    {stars.map((_, starIndex) => (
+                      <span key={starIndex} className="w-4 h-4 md:w-5 md:h-5 inline-flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          className="w-full h-full"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M12 2.5 9.4 8.08 3.3 8.8l4.4 4.02L6.5 19.5 12 16.4l5.5 3.1-1.2-6.68 4.4-4.02-6.1-.72Z"
+                          />
+                        </svg>
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-[#123c35] leading-tight">Radu Ionita</h3>
-                    <p className="text-[11px] text-slate-500">acum 2 luni</p>
-                  </div>
-                </div>
-                <div className="rounded-full p-1.5 bg-[#1fb67c]/10 text-[#1fb67c]">
-                  <span className="text-lg">"</span>
-                </div>
-              </div>
-              <div className="flex text-[#1fb67c] mb-2 gap-1">
-                {stars.map((_, index) => (
-                  <span key={index} className="w-4 h-4 md:w-5 md:h-5 inline-flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      className="w-full h-full"
+
+                  <p className="text-sm text-slate-700 leading-relaxed mb-4">{review.text}</p>
+
+                  <div className="pt-3 border-t border-slate-100 flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleLike(index)}
+                      className={`text-[11px] font-medium inline-flex items-center gap-1.5 transition-colors ${
+                        isLiked ? "text-[#1fb67c]" : "text-slate-500 hover:text-[#1fb67c]"
+                      }`}
                     >
-                      <path
-                        fill="currentColor"
-                        d="M12 2.5 9.4 8.08 3.3 8.8l4.4 4.02L6.5 19.5 12 16.4l5.5 3.1-1.2-6.68 4.4-4.02-6.1-.72Z"
-                      />
-                    </svg>
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                O recomand din toata inima pe doamna doctor Emma Petrescu.
-              </p>
-              <div className="pt-3 border-t border-slate-100 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => toggleLike(3)}
-                  className={`text-[11px] font-medium inline-flex items-center gap-1.5 transition-colors ${
-                    liked[3] ? "text-[#1fb67c]" : "text-slate-500 hover:text-[#1fb67c]"
-                  }`}
-                >
-                  <span>🔥</span>
-                  <span>Apreciaza{liked[3] ? " (1)" : ""}</span>
-                </button>
-              </div>
-            </article>
+                      <span>🔥</span>
+                      <span>Apreciaza{isLiked ? " (1)" : ""}</span>
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
