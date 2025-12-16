@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { getSeoEntry, siteConfig } from "@/lib/seo";
-import { megaMenus, navigation } from "@/lib/navigation";
+import SiteHeader from "@/components/ui/SiteHeader";
+import SiteFooter from "@/components/ui/SiteFooter";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
+import { megaMenus, navigation } from "@/data/navigation";
 
 const privacySeo = getSeoEntry("privacy");
 

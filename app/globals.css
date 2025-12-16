@@ -191,6 +191,23 @@ a {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #e5f4ee 0%, #f6fbf6 50%, #e5f4ee 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html,
   body {

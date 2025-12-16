@@ -3,26 +3,25 @@
 import React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import SiteHeader from "@/components/SiteHeader";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getSeoEntry, siteConfig } from "@/lib/seo";
+import SiteHeader from "@/components/ui/SiteHeader";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
+import { contactPalette } from "@/lib/utils/theme";
 
 const contactSeo = getSeoEntry("contact");
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), { ssr: false });
-const InteractiveMap = dynamic(() => import("@/components/InteractiveMap"), {
+const SiteFooter = dynamic(() => import("@/components/ui/SiteFooter"), { ssr: false });
+const InteractiveMap = dynamic(() => import("@/components/sections/InteractiveMap"), {
   ssr: false,
-  loading: () => <div style={{ width: "100%", minHeight: "320px", borderRadius: "32px", backgroundColor: "rgba(255,255,255,0.6)" }} aria-hidden="true" />
+  loading: () => (
+    <div
+      style={{ width: "100%", minHeight: "320px", borderRadius: "32px" }}
+      className="skeleton"
+      aria-hidden="true"
+    />
+  )
 });
 
-const palette = {
-  navy: "#123c35",
-  night: "#0f1f1b",
-  teal: "#1fb67c",
-  sand: "#f6fbf6",
-  slate: "#6a7f74",
-  border: "#d9efe3",
-  light: "#ffffff"
-};
+const palette = contactPalette;
 
 const contactCards = Object.freeze([
   { title: "Telefon receptie", value: siteConfig.contactPhone, description: "Linie prioritara DentNow", icon: "TEL" },
@@ -351,7 +350,8 @@ export default function Contact() {
     phone: "",
     message: "",
     consentCommunication: false,
-    consentMarketing: false
+    consentMarketing: false,
+    honeypot: ""
   });
 
   React.useEffect(() => {
@@ -529,7 +529,8 @@ export default function Contact() {
                 phone: formValues.phone.trim(),
                 message: formValues.message.trim(),
                 consentCommunication: formValues.consentCommunication,
-                consentMarketing: formValues.consentMarketing
+                consentMarketing: formValues.consentMarketing,
+                honeypot: formValues.honeypot.trim()
               };
               try {
                 const response = await fetch("/api/contact", {
@@ -551,7 +552,8 @@ export default function Contact() {
                   phone: "",
                   message: "",
                   consentCommunication: false,
-                  consentMarketing: false
+                  consentMarketing: false,
+                  honeypot: ""
                 });
               } catch (error) {
                 setFormState({
@@ -563,6 +565,16 @@ export default function Contact() {
               }
             }}
           >
+            {/* Honeypot anti-spam: ascuns pentru utilizatori reali */}
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}
+              value={formValues.honeypot}
+              onChange={(event) => setFormValues((prev) => ({ ...prev, honeypot: event.target.value }))}
+            />
             <input
               type="text"
               required
@@ -672,13 +684,6 @@ export default function Contact() {
     </>
   );
 }
-
-
-
-
-
-
-
 
 
 

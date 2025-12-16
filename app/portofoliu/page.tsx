@@ -3,12 +3,12 @@
 import React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import SiteHeader from "@/components/SiteHeader";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getSeoEntry, siteConfig } from "@/lib/seo";
+import SiteHeader from "@/components/ui/SiteHeader";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
 
 const portfolioSeo = getSeoEntry("portofoliu");
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+const SiteFooter = dynamic(() => import("@/components/ui/SiteFooter"), {
   ssr: false,
   loading: () => <div style={{ width: "100%", maxWidth: "1200px", minHeight: "360px", margin: "0 auto" }} aria-hidden="true" />
 });

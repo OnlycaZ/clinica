@@ -2,11 +2,11 @@ import React from "react";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getServiceContent, getServicePreview, serviceSlugs } from "@/lib/data/services";
-import { siteConfig } from "@/lib/seo";
+import SiteHeader from "@/components/ui/SiteHeader";
+import SiteFooter from "@/components/ui/SiteFooter";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getServiceContent, getServicePreview, serviceSlugs } from "@/data/data/services";
+import { clampDescription, clampTitle, siteConfig } from "@/lib/utils/seo";
 
 const palette = {
   navy: "#123c35",
@@ -418,8 +418,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const preview = getServicePreview(slug);
-  const title = preview ? `${preview.title} | ${siteConfig.name}` : `Servicii stomatologice | ${siteConfig.name}`;
-  const description = preview?.description ?? siteConfig.description;
+  const rawTitle = preview ? `${preview.title} | ${siteConfig.name}` : `Servicii stomatologice | ${siteConfig.name}`;
+  const rawDescription = preview?.description ?? siteConfig.description;
+  const title = clampTitle(rawTitle);
+  const description = clampDescription(rawDescription);
   const canonical = `${siteConfig.url}/servicii/${slug}`;
 
   return {

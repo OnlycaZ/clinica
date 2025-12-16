@@ -5,35 +5,37 @@ import Link from "next/link";
 import NextImage from "next/image";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { motion, type Transition } from "framer-motion";
-import SiteHeader from "@/components/SiteHeader";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getSeoEntry, siteConfig } from "@/lib/seo";
-import { services } from "@/lib/content";
-import GallerySection from "@/components/GallerySection";
-import ReviewsSection from "@/components/ReviewsSection";
+import SiteHeader from "@/components/ui/SiteHeader";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
+import { services } from "@/data/content";
+import GallerySection from "@/components/sections/GallerySection";
+import ReviewsSection from "@/components/sections/ReviewsSection";
+import { homePalette } from "@/lib/utils/theme";
 
 const homeSeo = getSeoEntry("home");
 
-const SiteFooter = dynamic(() => import("@/components/SiteFooter"), {
+const SiteFooter = dynamic(() => import("@/components/ui/SiteFooter"), {
   ssr: false,
-  loading: () => <div style={styles.footerPlaceholder} aria-hidden="true" />,
+  loading: () => (
+    <div
+      style={{
+        ...styles.footerPlaceholder,
+        borderRadius: "28px",
+        overflow: "hidden"
+      }}
+      className="skeleton"
+      aria-hidden="true"
+    />
+  ),
 });
 
-const ClinicMap = dynamic(() => import("@/components/ClinicMap"), {
+const ClinicMap = dynamic(() => import("@/components/sections/ClinicMap"), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-[#cfeee0]" />,
+  loading: () => <div className="w-full h-full rounded-2xl skeleton" aria-hidden="true" />,
 });
 
-const palette = {
-  navy: "#123c35",
-  night: "#0f1f1b",
-  teal: "#1fb67c",
-  sand: "#f6fbf6",
-  slate: "#6a7f74",
-  border: "#d9efe3",
-  light: "#ffffff"
-};
+const palette = homePalette;
 
 const stats = Object.freeze([
   { value: "25+", label: "Ani de excelenta" },
@@ -683,7 +685,7 @@ const motionLayerStyle: React.CSSProperties = {
   zIndex: 1,
 };
 
-const slideTransitionSettings: Transition = {
+const slideTransitionSettings = {
   duration: 0.52,
   ease: [0.42, 0, 0.58, 1] as const,
 };
@@ -713,7 +715,7 @@ const getSlideMotionProps = (role: SlideMotionRole, direction: "next" | "prev") 
 
 const PREVIEW_SLIDE_OFFSET = 70;
 
-const previewTransition: Transition = {
+const previewTransition = {
   duration: 0.45,
   ease: [0.42, 0, 0.58, 1] as const,
 };
@@ -935,6 +937,7 @@ export default function Home() {
               loop
               muted
               playsInline
+              preload="metadata"
               style={styles.heroVideo}
             />
           </div>
@@ -959,7 +962,7 @@ export default function Home() {
               </div>
               <dl style={styles.heroStats} className="hero-stats">
                 {stats.map((stat) => (
-                  <div key={stat.label} style={styles.heroStatBlock}>
+                  <div key={stat.label} style={styles.heroStatBlock} className="hero-stat-reveal">
                     <dt style={styles.heroStatValue}>{stat.value}</dt>
                     <dd style={styles.heroStatLabel}>{stat.label}</dd>
                   </div>
@@ -1110,7 +1113,7 @@ export default function Home() {
               >
                 <div className="h-[220px] relative overflow-hidden bg-slate-100">
                   <div className="absolute inset-0 bg-emerald-900/60 mix-blend-multiply z-10" />
-                  <div className="absolute inset-0 bg-[url('/cropped-CFT-1.png')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-[url('/cropped-CFT-1.webp')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
                 </div>
                 <div className="p-8 flex flex-col h-[260px] relative">
                   <h3 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-emerald-700 transition-colors">
@@ -1327,6 +1330,16 @@ export default function Home() {
           .hero-section {
             background: none !important;
           }
+          .hero-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.2), transparent 55%),
+              radial-gradient(circle at 100% 100%, rgba(15, 81, 50, 0.35), transparent 60%);
+            opacity: 0;
+            pointer-events: none;
+            animation: heroGlow 14s ease-in-out infinite;
+          }
           .interactive-card,
           .interactive-panel {
             transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
@@ -1454,6 +1467,17 @@ export default function Home() {
             filter: blur(5px);
             will-change: opacity, transform;
           }
+          .hero-stat-reveal {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: statReveal 0.85s ease forwards;
+          }
+          .hero-stat-reveal:nth-child(2) {
+            animation-delay: 0.06s;
+          }
+          .hero-stat-reveal:nth-child(3) {
+            animation-delay: 0.12s;
+          }
           .sliderArrow:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
@@ -1486,6 +1510,16 @@ export default function Home() {
               transform: translate3d(0, 0, 0);
             }
           }
+          @keyframes statReveal {
+            0% {
+              opacity: 0;
+              transform: translate3d(0, 12px, 0);
+            }
+            100% {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+            }
+          }
           @keyframes activeGlow {
             0%, 100% {
               transform: scale(1);
@@ -1503,6 +1537,21 @@ export default function Home() {
             }
             50% {
               filter: blur(4px) brightness(0.85);
+            }
+          }
+          @keyframes heroGlow {
+            0%,
+            100% {
+              opacity: 0;
+              transform: scale(1);
+            }
+            30% {
+              opacity: 0.9;
+              transform: scale(1.02);
+            }
+            60% {
+              opacity: 0.4;
+              transform: scale(1.05);
             }
           }
           @media (max-width: 768px) {

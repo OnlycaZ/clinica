@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk, Montserrat } from "next/font/google";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
-import { siteConfig } from "@/lib/seo";
-import PageTransition from "@/components/PageTransition";
-import CookieConsent from "@/components/CookieConsent";
+import { siteConfig } from "@/lib/utils/seo";
+import PageTransition from "@/components/ui/PageTransition";
+import CookieConsent from "@/components/ui/CookieConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

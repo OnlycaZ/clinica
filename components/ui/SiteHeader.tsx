@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import type { NavigationItem } from "@/lib/navigation";
+import type { NavigationItem } from "@/data/navigation";
 
 type Palette = {
   navy: string;
@@ -179,7 +179,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
       >
         <div style={styles.inner} className="site-header-inner">
             <Link href="/" style={styles.brandLink} aria-label="DentNow">
-              <Image src="/cropped-CFT-1.png" alt="DentNow" width={140} height={40} priority />
+              <Image src="/cropped-CFT-1.webp" alt="DentNow" width={140} height={40} priority />
             </Link>
             <nav style={styles.nav} aria-label="Navigare" className="site-navigation">
               {navigation.map((item) => {
@@ -291,6 +291,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
           .site-navigation a:hover {
             color: ${palette.teal};
             box-shadow: 0 10px 30px rgba(255, 255, 255, 0.6);
+          }
+          .mobile-toggle {
+            display: none;
           }
           @media (max-width: 768px) {
             .site-navigation {

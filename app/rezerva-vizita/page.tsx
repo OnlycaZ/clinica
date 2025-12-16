@@ -1,10 +1,13 @@
 'use client';
 
 import React from "react";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { navigation, megaMenus } from "@/lib/navigation";
-import { siteConfig } from "@/lib/seo";
+import Head from "next/head";
+import SiteHeader from "@/components/ui/SiteHeader";
+import SiteFooter from "@/components/ui/SiteFooter";
+import { navigation, megaMenus } from "@/data/navigation";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
+
+const bookingSeo = getSeoEntry("booking");
 
 const palette = {
   navy: "#0d2f3c",
@@ -261,7 +264,26 @@ export default function RezervaVizita() {
   };
 
   return (
-    <main style={styles.page}>
+    <>
+      <Head>
+        <title>{bookingSeo.title}</title>
+        <meta name="description" content={bookingSeo.description} />
+        <meta name="keywords" content={bookingSeo.keywords.join(", ")} />
+        <link rel="canonical" href={bookingSeo.canonical} />
+        <meta property="og:title" content={bookingSeo.title} />
+        <meta property="og:description" content={bookingSeo.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={siteConfig.locale} />
+        <meta property="og:url" content={bookingSeo.canonical} />
+        <meta property="og:site_name" content={siteConfig.name} />
+        <meta property="og:image" content={bookingSeo.image} />
+        <meta property="og:image:alt" content={bookingSeo.title} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={bookingSeo.title} />
+        <meta name="twitter:description" content={bookingSeo.description} />
+        <meta name="twitter:image" content={bookingSeo.image} />
+      </Head>
+      <main style={styles.page}>
         <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
         <div style={styles.main}>
           <section style={styles.hero}>
@@ -345,5 +367,6 @@ export default function RezervaVizita() {
         </div>
         <SiteFooter palette={palette} />
       </main>
+    </>
   );
 }

@@ -1,5 +1,3 @@
-import React from "react";
-
 export type ServiceCardData = {
   icon: string;
   title: string;

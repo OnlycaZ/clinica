@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { getPriceSectionsForSlug } from "@/lib/data/price-list";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getPriceContent, getPricePreview, priceSlugs } from "@/lib/data/pricing";
-import { siteConfig } from "@/lib/seo";
+import SiteHeader from "@/components/ui/SiteHeader";
+import SiteFooter from "@/components/ui/SiteFooter";
+import { getPriceSectionsForSlug } from "@/data/data/price-list";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getPriceContent, getPricePreview, priceSlugs } from "@/data/data/pricing";
+import { clampDescription, clampTitle, siteConfig } from "@/lib/utils/seo";
 
 const palette = {
   navy: "#123c35",
@@ -208,8 +208,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const preview = getPricePreview(slug);
-  const title = preview ? `${preview.title} | ${siteConfig.name}` : `Preturi stomatologice | ${siteConfig.name}`;
-  const description = preview?.description ?? siteConfig.description;
+  const rawTitle = preview ? `${preview.title} | ${siteConfig.name}` : `Preturi stomatologice | ${siteConfig.name}`;
+  const rawDescription = preview?.description ?? siteConfig.description;
+  const title = clampTitle(rawTitle);
+  const description = clampDescription(rawDescription);
   const canonical = `${siteConfig.url}/preturi/${slug}`;
 
   return {
@@ -384,7 +386,5 @@ export default async function PricePage({ params }: { params: Promise<{ slug: st
 export function generateStaticParams() {
   return priceSlugs.map((slug) => ({ slug }));
 }
-
-
 
 

@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/seo";
+import { siteConfig } from "@/lib/utils/seo";
 
 export const metadata = {
   title: "Rezervă vizita | DentNow",

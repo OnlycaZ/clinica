@@ -2,11 +2,11 @@
 
 import React from "react";
 import Head from "next/head";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
-import { priceListSections } from "@/lib/data/price-list";
-import { megaMenus, navigation } from "@/lib/navigation";
-import { getSeoEntry, siteConfig } from "@/lib/seo";
+import SiteFooter from "@/components/ui/SiteFooter";
+import SiteHeader from "@/components/ui/SiteHeader";
+import { priceListSections } from "@/data/data/price-list";
+import { megaMenus, navigation } from "@/data/navigation";
+import { getSeoEntry, siteConfig } from "@/lib/utils/seo";
 
 const pricingSeo = getSeoEntry("preturi");
 
@@ -661,6 +661,3 @@ export default function Preturi() {
     </>
   );
 }
-
-
-

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { seoPages, siteConfig } from "@/lib/seo";
-import { serviceSlugs } from "@/lib/data/services";
-import { priceSlugs } from "@/lib/data/pricing";
+import { seoPages, siteConfig } from "@/lib/utils/seo";
+import { serviceSlugs } from "@/data/data/services";
+import { priceSlugs } from "@/data/data/pricing";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
