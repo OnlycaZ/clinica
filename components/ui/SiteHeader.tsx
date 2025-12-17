@@ -346,7 +346,19 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
           display: none;
         }
         @media (max-width: 768px) {
+          .site-header-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+          }
           .site-navigation {
+            display: none;
+          }
+          .cta-pill {
             display: none;
           }
           .mobile-toggle {
@@ -407,4 +419,3 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
 };
 
 export default SiteHeader;
-

@@ -943,7 +943,7 @@ export default function Home() {
           </div>
           <div style={styles.heroOverlay} aria-hidden="true" />
           <div style={styles.heroInner} className="hero-inner">
-            <div style={styles.heroContent}>
+            <div style={styles.heroContent} className="hero-content">
               <p style={styles.heroEyebrow}>Clinica dentara integrata</p>
               <h1 id="hero-title" style={styles.heroTitle}>
                 DentNow este clinica familiei tale din Dristor
@@ -1572,31 +1572,50 @@ export default function Home() {
             .hero-section {
               padding: 80px 18px 60px !important;
             }
-            .heroCtas,
-            .hero-stats,
+            .hero-content {
+              max-width: 40rem;
+              margin: 0 auto;
+              text-align: center;
+            }
+            .heroCtas {
+              flex-direction: column;
+              align-items: stretch;
+              max-width: 20rem;
+              margin: 0 auto 16px;
+              gap: 0.75rem;
+            }
+            .hero-primary {
+              width: 100%;
+            }
+            .hero-stats {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+              justify-items: center;
+              margin: 0 auto;
+            }
+            .hero-stats .hero-stat-reveal {
+              text-align: center;
+            }
             .hero-info-card {
               margin: 0 auto !important;
             }
-          .hero-stats {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+            .services-section,
+            .gallery-section,
+            .cta-section,
+            .section-bg {
+              padding: 56px 16px !important;
+            }
+            .services-grid {
+              grid-template-columns: 1fr !important;
+            }
+            .gallery-split-wrapper {
+              flex-direction: column !important;
+            }
+            .gallery-copy-panel,
+            .gallery-visual-panel {
+              clip-path: none !important;
+            }
           }
-          .services-section,
-          .gallery-section,
-          .cta-section,
-          .section-bg {
-            padding: 56px 16px !important;
-          }
-          .services-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .gallery-split-wrapper {
-            flex-direction: column !important;
-          }
-          .gallery-copy-panel,
-          .gallery-visual-panel {
-            clip-path: none !important;
-          }
-        }
         `}</style>
       </main>
     </>

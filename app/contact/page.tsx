@@ -710,12 +710,18 @@ export default function Contact() {
           }
           @media (max-width: 768px) {
             .contact-hero {
+              margin-top: 4.5rem;
               padding: clamp(24px, 5vw, 32px);
               border-radius: 36px;
               gap: 24px;
+              text-align: center;
             }
             .contact-hero-primary {
               order: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 0.75rem;
             }
             .contact-hero-secondary {
               order: 2;
@@ -726,10 +732,21 @@ export default function Contact() {
             }
             .contact-hero-subtitle {
               font-size: clamp(0.95rem, 3.2vw, 1.05rem);
+              max-width: 40ch;
             }
             .contact-hero-stats {
               flex-direction: column;
               align-items: stretch;
+              width: 100%;
+              max-width: 28rem;
+              margin-top: 0.75rem;
+            }
+            .contact-hero-cta {
+              width: 100%;
+              max-width: 20rem;
+            }
+            .contact-hero-stats li {
+              text-align: center;
             }
           }
         `}</style>
@@ -737,7 +754,6 @@ export default function Contact() {
     </>
   );
 }
-
 
 
 
