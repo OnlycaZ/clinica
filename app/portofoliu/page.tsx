@@ -169,7 +169,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
     gap: "20px",
-    minWidth: "480px",
+    minWidth: "320px",
     zIndex: 60
   },
   megaColumn: {

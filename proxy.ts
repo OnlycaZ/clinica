@@ -31,10 +31,15 @@ export function proxy(request: NextRequest) {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
-  response.headers.set(
-    "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.tile.openstreetmap.org https://*.dreamstime.com; connect-src 'self' https://*.tile.openstreetmap.org; frame-ancestors 'self'; form-action 'self'"
-  );
+
+  // In productie blocam embed-ul in iframe (frame-ancestors 'self'),
+  // dar in development lasam CSP-ul dezactivat pentru a permite preview-uri mobile in VS Code & tool-uri similare.
+  if (process.env.NODE_ENV === "production") {
+    response.headers.set(
+      "Content-Security-Policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.tile.openstreetmap.org https://*.dreamstime.com; connect-src 'self' https://*.tile.openstreetmap.org; frame-ancestors 'self'; form-action 'self'"
+    );
+  }
   response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
 
   // Basic path-based rate limit blocking repeated access to API entry points via middleware

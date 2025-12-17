@@ -1007,8 +1007,8 @@ export default function Home() {
           aria-labelledby="servicii-title"
           className="relative w-full px-4 lg:px-0 py-20 overflow-hidden"
         >
-          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#0f5132]/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#0f5132]/5 rounded-full blur-3xl pointer-events-none hero-orb-right" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none hero-orb-left" />
 
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-10">

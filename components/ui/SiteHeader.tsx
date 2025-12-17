@@ -95,21 +95,25 @@ const createHeaderStyles = (palette: Palette) => ({
   } as React.CSSProperties,
   mobileMenu: {
     position: "fixed",
-    inset: 0,
-    background: "rgba(4,23,20,0.85)",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: "auto",
+    background: "rgba(4,23,20,0.98)",
     color: "#fff",
-    display: "flex",
     flexDirection: "column",
-    padding: "120px 32px 32px",
+    padding: "96px 24px 32px",
     gap: "24px",
-    transform: "translateY(-100%)",
+    width: "100%",
+    maxWidth: "86vw",
+    transform: "translateX(100%)",
     opacity: 0,
     pointerEvents: "none",
     transition: "transform 0.3s ease, opacity 0.3s ease",
     zIndex: 110
   } as React.CSSProperties,
   mobileMenuVisible: {
-    transform: "translateY(0)",
+    transform: "translateX(0)",
     opacity: 1,
     pointerEvents: "auto"
   } as React.CSSProperties,
@@ -136,6 +140,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const closeButtonRef = React.useRef<HTMLButtonElement | null>(null);
   const styles = React.useMemo(() => createHeaderStyles(palette), [palette]);
 
   React.useEffect(() => {
@@ -161,6 +166,31 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", handleKeyDown);
+      if (closeButtonRef.current) {
+        closeButtonRef.current.focus();
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileOpen]);
+
   const computeActive = (href: string) => {
     if (!href) {
       return false;
@@ -178,49 +208,62 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         className={`site-header${isScrolled ? " scrolled" : ""}`}
       >
         <div style={styles.inner} className="site-header-inner">
-            <Link href="/" style={styles.brandLink} aria-label="DentNow">
-              <Image src="/cropped-CFT-1.webp" alt="DentNow" width={140} height={40} priority />
+          <Link href="/" style={styles.brandLink} aria-label="DentNow">
+            <Image src="/cropped-CFT-1.webp" alt="DentNow" width={140} height={40} priority />
+          </Link>
+          <nav style={styles.nav} aria-label="Navigare" className="site-navigation">
+            {navigation.map((item) => {
+              const isActive = computeActive(item.href);
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  style={{
+                    ...styles.navLink,
+                    ...(isScrolled ? styles.navLinkPinned : {}),
+                    ...(isActive ? styles.navLinkActive : {})
+                  }}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginLeft: "auto" }}>
+            <Link href="/rezerva-vizita" style={styles.ctaButton} className="cta-pill">
+              Rezerva vizita
             </Link>
-            <nav style={styles.nav} aria-label="Navigare" className="site-navigation">
-              {navigation.map((item) => {
-                const isActive = computeActive(item.href);
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    style={{
-                      ...styles.navLink,
-                      ...(isScrolled ? styles.navLinkPinned : {}),
-                      ...(isActive ? styles.navLinkActive : {})
-                    }}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginLeft: "auto" }}>
-              <Link href="/rezerva-vizita" style={styles.ctaButton} className="cta-pill">
-                Rezerva vizita
-              </Link>
-              <button
-                type="button"
-                aria-label="Deschide meniul mobil"
-                aria-expanded={mobileOpen}
-                onClick={() => setMobileOpen((prev) => !prev)}
-                style={styles.mobileToggle}
-                className="mobile-toggle"
-              >
-                <span aria-hidden="true">≡</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              aria-label="Deschide meniul mobil"
+              aria-controls="mobile-navigation"
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((prev) => !prev)}
+              style={styles.mobileToggle}
+              className="mobile-toggle"
+            >
+              <span aria-hidden="true">≡</span>
+            </button>
           </div>
+        </div>
+        <button
+          type="button"
+          className={`mobile-overlay${mobileOpen ? " is-open" : ""}`}
+          aria-hidden="true"
+          tabIndex={-1}
+          onClick={() => setMobileOpen(false)}
+        />
         <div
+          id="mobile-navigation"
           style={{ ...styles.mobileMenu, ...(mobileOpen ? styles.mobileMenuVisible : {}) }}
-          className="mobile-menu-panel"
+          className={`mobile-menu-panel${mobileOpen ? " is-open" : ""}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Meniu principal"
         >
           <button
+            ref={closeButtonRef}
             type="button"
             aria-label="Inchide meniul"
             style={styles.mobileMenuClose}
@@ -241,79 +284,127 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
           <Link
             href="/rezerva-vizita"
             style={{ ...styles.mobileMenuLink, marginTop: "32px" }}
+            className="mobile-cta"
             onClick={() => setMobileOpen(false)}
           >
             Rezerva vizita
           </Link>
         </div>
       </header>
-        <style jsx>{`
-          .site-header {
-            width: 100%;
-            z-index: 105;
-            background: transparent;
-            border-bottom: none;
-            box-shadow: none;
-            padding: 18px 0;
-            transition:
-              background 0.3s ease,
-              box-shadow 0.3s ease,
-              padding 0.3s ease,
-              backdrop-filter 0.3s ease,
-              transform 0.3s ease;
-          }
-          .site-header.scrolled {
-            background: rgba(255, 255, 255, 0.92);
-            border-bottom: 1px solid rgba(18, 60, 53, 0.12);
-            box-shadow: 0 20px 50px rgba(18, 60, 53, 0.15);
-            backdrop-filter: blur(14px);
-            padding: 10px 0;
-          }
-          .site-header-inner {
-            padding: 10px 32px;
-            transition: padding 0.3s ease, gap 0.3s ease, transform 0.4s ease;
-          }
-          .site-header.scrolled .site-header-inner {
-            gap: 12px;
-            transform: translateY(-1px);
-          }
+      <style jsx>{`
+        .site-header {
+          width: 100%;
+          z-index: 105;
+          background: transparent;
+          border-bottom: none;
+          box-shadow: none;
+          padding: 18px 0;
+          transition:
+            background 0.3s ease,
+            box-shadow 0.3s ease,
+            padding 0.3s ease,
+            backdrop-filter 0.3s ease,
+            transform 0.3s ease;
+        }
+        .site-header.scrolled {
+          background: rgba(255, 255, 255, 0.92);
+          border-bottom: 1px solid rgba(18, 60, 53, 0.12);
+          box-shadow: 0 20px 50px rgba(18, 60, 53, 0.15);
+          backdrop-filter: blur(14px);
+          padding: 10px 0;
+        }
+        .site-header-inner {
+          padding: 10px 32px;
+          transition: padding 0.3s ease, gap 0.3s ease, transform 0.4s ease;
+        }
+        .site-header.scrolled .site-header-inner {
+          gap: 12px;
+          transform: translateY(-1px);
+        }
+        .site-navigation {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 18px;
+          flex: 1 1 auto;
+          font-size: 14px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          margin-left: auto;
+        }
+        .site-navigation a:hover {
+          color: ${palette.teal};
+          box-shadow: 0 10px 30px rgba(255, 255, 255, 0.6);
+        }
+        .mobile-toggle {
+          display: none;
+        }
+        .mobile-overlay {
+          display: none;
+        }
+        .mobile-menu-panel {
+          display: none;
+        }
+        @media (max-width: 768px) {
           .site-navigation {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 18px;
-            flex: 1 1 auto;
-            font-size: 14px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-left: auto;
-          }
-          .site-navigation a:hover {
-            color: ${palette.teal};
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.6);
-          }
-          .mobile-toggle {
             display: none;
           }
-          @media (max-width: 768px) {
-            .site-navigation {
-              display: none;
-            }
-            .mobile-toggle {
-              display: inline-flex;
-            }
+          .mobile-toggle {
+            display: inline-flex;
           }
-          .cta-pill {
-            box-shadow: 0 25px 60px rgba(31, 182, 124, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            opacity: 0;
+            pointer-events: none;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            z-index: 109;
+            transition: opacity 0.3s ease;
           }
-          .cta-pill:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 30px 70px rgba(31, 182, 124, 0.55);
+          .mobile-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
           }
-        `}</style>
+          .mobile-menu-panel {
+            display: flex;
+            justify-content: flex-end;
+          }
+          .mobile-menu-panel.is-open a,
+          .mobile-menu-panel.is-open button {
+            touch-action: manipulation;
+          }
+          .mobile-cta {
+            margin-top: 32px;
+            padding: 14px 18px;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #ffffff, #f8fbff);
+            color: ${palette.night};
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+          }
+          .mobile-menu-panel a:focus-visible,
+          .mobile-menu-panel button:focus-visible {
+            outline: 2px solid ${palette.sand};
+            outline-offset: 3px;
+          }
+        }
+        .cta-pill {
+          box-shadow: 0 25px 60px rgba(31, 182, 124, 0.4);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta-pill:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 30px 70px rgba(31, 182, 124, 0.55);
+        }
+      `}</style>
     </>
   );
 };
 
 export default SiteHeader;
+

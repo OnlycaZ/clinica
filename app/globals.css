@@ -191,6 +191,20 @@ a {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 480px) {
+  .card-3d {
+    width: min(320px, 92vw);
+    height: auto;
+  }
+  .hero-orb-right,
+  .hero-orb-left {
+    width: 260px !important;
+    height: 260px !important;
+    right: -20% !important;
+    left: -20% !important;
+  }
+}
+
 .skeleton {
   position: relative;
   overflow: hidden;

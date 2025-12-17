@@ -81,11 +81,11 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: "1200px",
     margin: "0 auto",
     borderRadius: "48px",
-    padding: "48px",
+    padding: "clamp(32px, 5vw, 48px)",
     background: "linear-gradient(135deg, rgba(31,182,124,0.12), rgba(255,255,255,0.95))",
     boxShadow: "0 30px 80px rgba(18,75,60,0.12)",
     display: "grid",
-    gap: "32px",
+    gap: "clamp(24px, 4vw, 32px)",
     gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))"
   },
   heroBadge: {
@@ -96,11 +96,13 @@ const styles: Record<string, React.CSSProperties> = {
   },
   heroTitle: {
     margin: "12px 0 16px",
-    fontSize: "38px",
-    lineHeight: 1.2
+    fontSize: "clamp(2.1rem, 3vw, 2.6rem)",
+    lineHeight: 1.18,
+    maxWidth: "26ch"
   },
   heroText: {
     margin: "0 0 18px",
+    fontSize: "clamp(0.98rem, 1.5vw, 1.1rem)",
     color: palette.slate,
     lineHeight: 1.7
   },
@@ -393,17 +395,24 @@ export default function Contact() {
 
         <SiteHeader palette={palette} navigation={navigation} megaMenus={megaMenus} />
 
-        <section style={{ ...styles.hero, ...fadeIn(0.1) }} aria-labelledby="contact-hero-title">
-          <div>
+        <section
+          style={{ ...styles.hero, ...fadeIn(0.1) }}
+          className="contact-hero"
+          aria-labelledby="contact-hero-title"
+        >
+          <div className="contact-hero-primary">
             <p style={styles.heroBadge}>DentNow  Clinica familiei tale</p>
-            <h1 id="contact-hero-title" style={styles.heroTitle}>
+            <h1 id="contact-hero-title" style={styles.heroTitle} className="contact-hero-title">
               Programeaza-ti vizita in clinica DentNow
             </h1>
-            <p style={styles.heroText}>
+            <p style={styles.heroText} className="contact-hero-subtitle">
               Scrie-ne sau suna-ne, iar concierge-ul DentNow iti pregateste agenda, variantele de plata si ghidul pentru
               prezentarea in clinica Dristor.
             </p>
-            <ul style={styles.heroStats}>
+            <a href="#contact-form" className="contact-hero-cta">
+              Programeaza o discutie
+            </a>
+            <ul style={styles.heroStats} className="contact-hero-stats">
               {["24 rate fara dobanda", "Dosar medical securizat", "Sedinte online de clarificare"].map((item) => (
                 <li key={item} style={styles.statCard}>
                   {item}
@@ -411,7 +420,7 @@ export default function Contact() {
               ))}
             </ul>
           </div>
-          <div>
+          <div className="contact-hero-secondary">
             <ul style={styles.assuranceList}>
               {assurances.map((item) => (
                 <li key={item.title}>
@@ -679,14 +688,55 @@ export default function Contact() {
               transform: translateY(0);
             }
           }
+          .contact-hero-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0 12px;
+            padding: 0.85rem 1.6rem;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #ffffff, #f8fbff);
+            color: ${palette.night};
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: clamp(0.8rem, 1.6vw, 0.9rem);
+            text-decoration: none;
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.9), 0 10px 30px rgba(31, 182, 124, 0.4);
+          }
+          .contact-hero-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 26px 60px rgba(31, 182, 124, 0.5);
+          }
+          @media (max-width: 768px) {
+            .contact-hero {
+              padding: clamp(24px, 5vw, 32px);
+              border-radius: 36px;
+              gap: 24px;
+            }
+            .contact-hero-primary {
+              order: 1;
+            }
+            .contact-hero-secondary {
+              order: 2;
+            }
+            .contact-hero-title {
+              font-size: clamp(1.8rem, 6vw, 2.2rem);
+              max-width: 22ch;
+            }
+            .contact-hero-subtitle {
+              font-size: clamp(0.95rem, 3.2vw, 1.05rem);
+            }
+            .contact-hero-stats {
+              flex-direction: column;
+              align-items: stretch;
+            }
+          }
         `}</style>
       </main>
     </>
   );
 }
-
-
-
 
 
 
