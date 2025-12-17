@@ -578,7 +578,14 @@ export default function Preturi() {
             >
               <div style={styles.priceCardHeader}>
                 <div>
-                  <h3 style={{ margin: "0 0 6px" }}>{category.title}</h3>
+                  <h3
+                    style={{
+                      margin: "0 0 6px",
+                      fontSize: "clamp(1.2rem, 2.4vw, 1.4rem)"
+                    }}
+                  >
+                    {category.title}
+                  </h3>
                   <p style={{ margin: 0, color: palette.slate }}>{category.description}</p>
                 </div>
                 <span style={styles.priceCode}>{category.code}</span>
@@ -651,10 +658,22 @@ export default function Preturi() {
           transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
-        .interactive-card:hover,
-        .interactive-panel:hover {
-          transform: translateY(-12px);
-          box-shadow: 0 30px 80px rgba(18,75,60,0.18) !important;
+        @media (min-width: 769px) {
+          .interactive-card:hover,
+          .interactive-panel:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 80px rgba(18,75,60,0.18) !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .interactive-card {
+            touch-action: manipulation;
+          }
+          .interactive-card:active {
+            transform: scale(0.98) translateY(2px);
+            box-shadow: 0 22px 50px rgba(18,75,60,0.3);
+          }
         }
       `}</style>
       </main>

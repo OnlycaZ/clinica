@@ -1345,10 +1345,21 @@ export default function Home() {
             transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
             box-shadow: 0 20px 45px rgba(18, 60, 53, 0.08);
           }
-          .interactive-card:hover,
-          .interactive-panel:hover {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
+          @media (min-width: 769px) {
+            .interactive-card:hover,
+            .interactive-panel:hover {
+              transform: translateY(-3px) scale(1.01);
+              box-shadow: 0 30px 60px rgba(18, 60, 53, 0.16);
+            }
+          }
+          @media (max-width: 768px) {
+            .interactive-card {
+              touch-action: manipulation;
+            }
+            .interactive-card:active {
+              transform: scale(0.98) translateY(2px);
+              box-shadow: 0 24px 50px rgba(18, 60, 53, 0.28);
+            }
           }
           .sr-announcement {
             position: absolute;
