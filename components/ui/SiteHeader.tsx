@@ -236,6 +236,20 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
             </Link>
             <button
               type="button"
+              className="nav-icon-button nav-lang"
+              aria-label="Schimba limba"
+            >
+              <span aria-hidden="true">RO</span>
+            </button>
+            <a
+              href="tel:+40735223920"
+              className="nav-icon-button nav-phone"
+              aria-label="Suna la DentNow"
+            >
+              <span aria-hidden="true">☎</span>
+            </a>
+            <button
+              type="button"
               aria-label="Deschide meniul mobil"
               aria-controls="mobile-navigation"
               aria-expanded={mobileOpen}
@@ -345,7 +359,15 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         .mobile-menu-panel {
           display: none;
         }
+        .nav-icon-button {
+          display: none;
+        }
         @media (max-width: 768px) {
+          .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid rgba(18, 60, 53, 0.12);
+            box-shadow: 0 10px 30px rgba(18, 60, 53, 0.08);
+          }
           .site-header-inner {
             max-width: 72rem;
             margin: 0 auto;
@@ -363,6 +385,21 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
           }
           .mobile-toggle {
             display: inline-flex;
+          }
+          .nav-icon-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid rgba(18, 60, 53, 0.12);
+            background: #ffffff;
+            color: ${palette.navy};
+            padding: 0.35rem 0.6rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+          }
+          .nav-icon-button + .nav-icon-button {
+            margin-left: 0.25rem;
           }
           .mobile-overlay {
             position: fixed;
@@ -419,3 +456,4 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
 };
 
 export default SiteHeader;
+
