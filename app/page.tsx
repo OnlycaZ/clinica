@@ -1571,6 +1571,16 @@ export default function Home() {
             }
             .hero-section {
               padding: 80px 18px 60px !important;
+              margin-top: 4.5rem;
+            }
+            .home-page h1,
+            .home-page h2,
+            .home-page h3,
+            .home-page p,
+            .home-page span {
+              overflow-wrap: anywhere;
+              word-break: break-word;
+              hyphens: auto;
             }
             .hero-content {
               max-width: 40rem;
