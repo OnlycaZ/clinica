@@ -364,9 +364,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         }
         @media (max-width: 768px) {
           .site-header {
-            background: transparent;
-            border-bottom: none;
-            box-shadow: none;
+            background: linear-gradient(180deg, #ffffff, rgba(240, 253, 250, 0.96));
+            border-bottom: 1px solid rgba(18, 60, 53, 0.08);
+            box-shadow: 0 10px 30px rgba(18, 60, 53, 0.08);
           }
           .site-header-inner {
             max-width: 72rem;
