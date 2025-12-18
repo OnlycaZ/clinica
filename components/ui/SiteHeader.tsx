@@ -364,18 +364,18 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         }
         @media (max-width: 768px) {
           .site-header {
-            background: #ffffff;
-            border-bottom: 1px solid rgba(18, 60, 53, 0.12);
-            box-shadow: 0 10px 30px rgba(18, 60, 53, 0.08);
+            background: transparent;
+            border-bottom: none;
+            box-shadow: none;
           }
           .site-header-inner {
             max-width: 72rem;
             margin: 0 auto;
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
+            justify-content: flex-end;
+            gap: 0;
           }
           .site-navigation {
             display: none;
@@ -383,23 +383,14 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
           .cta-pill {
             display: none;
           }
+          .brand-link {
+            display: none;
+          }
           .mobile-toggle {
             display: inline-flex;
           }
           .nav-icon-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            border: 1px solid rgba(18, 60, 53, 0.12);
-            background: #ffffff;
-            color: ${palette.navy};
-            padding: 0.35rem 0.6rem;
-            font-size: 0.78rem;
-            font-weight: 600;
-          }
-          .nav-icon-button + .nav-icon-button {
-            margin-left: 0.25rem;
+            display: none;
           }
           .mobile-overlay {
             position: fixed;
@@ -456,4 +447,3 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
 };
 
 export default SiteHeader;
-

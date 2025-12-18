@@ -952,7 +952,7 @@ export default function Home() {
                 DentNow imbina expertiza medicala cu tehnologii digitale si finantare usor de accesat. Tratam adulti si
                 copii cu aceeasi grija, astfel incat fiecare vizita sa se termine cu un zambet relaxat.
               </p>
-              <div style={styles.heroCtas}>
+              <div style={styles.heroCtas} className="heroCtas">
                 <a href="/rezerva-vizita" style={styles.primaryButton} className="hero-primary btn-animate">
                   Programeaza consultatia
                 </a>
