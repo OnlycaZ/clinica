@@ -208,7 +208,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
         className={`site-header${isScrolled ? " scrolled" : ""}`}
       >
         <div style={styles.inner} className="site-header-inner">
-          <Link href="/" style={styles.brandLink} aria-label="DentNow">
+          <Link href="/" style={styles.brandLink} aria-label="DentNow" className="brand-link">
             <Image src="/cropped-CFT-1.webp" alt="DentNow" width={140} height={40} priority />
           </Link>
           <nav style={styles.nav} aria-label="Navigare" className="site-navigation">
@@ -378,19 +378,19 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
             gap: 0;
           }
           .site-navigation {
-            display: none;
+            display: none !important;
           }
           .cta-pill {
-            display: none;
+            display: none !important;
           }
           .brand-link {
-            display: none;
-          }
-          .mobile-toggle {
-            display: inline-flex;
+            display: none !important;
           }
           .nav-icon-button {
-            display: none;
+            display: none !important;
+          }
+          .mobile-toggle {
+            display: inline-flex !important;
           }
           .mobile-overlay {
             position: fixed;
