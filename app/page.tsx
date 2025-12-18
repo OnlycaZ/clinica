@@ -1590,12 +1590,14 @@ export default function Home() {
             .heroCtas {
               flex-direction: column;
               align-items: stretch;
-              max-width: 20rem;
+              max-width: 18rem;
               margin: 0 auto 16px;
-              gap: 0.75rem;
+              gap: 0.5rem;
             }
             .hero-primary {
-              display: none;
+              width: 100%;
+              padding: 0.7rem 1.2rem !important;
+              font-size: 0.95rem;
             }
             .hero-stats {
               display: grid;

@@ -295,14 +295,6 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ palette, navigation }) => {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/rezerva-vizita"
-            style={{ ...styles.mobileMenuLink, marginTop: "32px" }}
-            className="mobile-cta"
-            onClick={() => setMobileOpen(false)}
-          >
-            Rezerva vizita
-          </Link>
         </div>
       </header>
       <style jsx>{`
