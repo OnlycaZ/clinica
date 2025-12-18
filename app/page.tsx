@@ -956,7 +956,7 @@ export default function Home() {
                 <a href="/rezerva-vizita" style={styles.primaryButton} className="hero-primary btn-animate">
                   Programeaza consultatia
                 </a>
-                <a href="/portofoliu" style={styles.secondaryButton} className="btn-animate">
+                <a href="/portofoliu" style={styles.secondaryButton} className="hero-secondary btn-animate">
                   Vezi portofoliul
                 </a>
               </div>
@@ -1590,14 +1590,20 @@ export default function Home() {
             .heroCtas {
               flex-direction: column;
               align-items: stretch;
-              max-width: 18rem;
+              max-width: 20rem;
               margin: 0 auto 16px;
               gap: 0.5rem;
             }
             .hero-primary {
               width: 100%;
-              padding: 0.7rem 1.2rem !important;
-              font-size: 0.95rem;
+              padding: 0.85rem 1.4rem !important;
+              font-size: 0.98rem;
+            }
+            .hero-secondary {
+              width: 100%;
+              padding: 0.8rem 1.3rem;
+              border-radius: 999px;
+              text-align: center;
             }
             .hero-stats {
               display: grid;
