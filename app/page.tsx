@@ -1595,7 +1595,7 @@ export default function Home() {
               gap: 0.75rem;
             }
             .hero-primary {
-              width: 100%;
+              display: none;
             }
             .hero-stats {
               display: grid;
